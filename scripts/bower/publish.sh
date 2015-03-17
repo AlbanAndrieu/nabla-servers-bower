@@ -50,11 +50,6 @@ function prepare {
   # move i18n files
   #cp $BUILD_DIR/i18n/*.js $TMP_DIR/bower-angular-i18n/
 
-  # move bower.json
-  cp $BUILD_DIR/../bower.json $TMP_DIR/bower-$repo
-  # move package.json
-  cp $BUILD_DIR/../package.json $TMP_DIR/bower-$repo
-
   #
   # Run local precommit script if there is one
   #
@@ -69,7 +64,6 @@ function prepare {
     fi
   done
 
-
   #
   # update bower.json
   # tag each repo
@@ -77,11 +71,19 @@ function prepare {
   for repo in "${REPOS[@]}"
   do
     echo "-- Updating version in bower-$repo to $NEW_VERSION"
+
+    # move bower.json
+    cp $BUILD_DIR/../$repo-bower.json $TMP_DIR/bower-$repo/bower.json
+    # move .bowerrc
+    #cp $BUILD_DIR/../$repo/.bowerrc $TMP_DIR/bower-$repo
+    # move package.json
+    cp $BUILD_DIR/../$repo-package.json $TMP_DIR/bower-$repo/package.json
+
     cd $TMP_DIR/bower-$repo
     replaceJsonProp "bower.json" "version" ".*" "$NEW_VERSION"
-    replaceJsonProp "bower.json" "angular.*" ".*" "$NEW_VERSION"
+    #replaceJsonProp "bower.json" "angular.*" ".*" "$NEW_VERSION"
     replaceJsonProp "package.json" "version" ".*" "$NEW_VERSION"
-    replaceJsonProp "package.json" "angular.*" ".*" "$NEW_VERSION"
+    #replaceJsonProp "package.json" "angular.*" ".*" "$NEW_VERSION"
 
     git add -A
 

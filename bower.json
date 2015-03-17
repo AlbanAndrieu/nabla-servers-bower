@@ -1,9 +1,8 @@
 {
   "name": "bower-pom",
   "description": "Bower components",
-  "version": "1.0.0-local+sha.bf1ff34",
+  "version": "1.0.1",
   "author": "NABLA",
-  "private": "false",
   "ignore": [
     ".jshintrc",
     "**/*.txt"
