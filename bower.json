@@ -2,7 +2,7 @@
   "name": "bower-pom",
   "description": "Bower components",
   "version": "1.0.1",
-  "author": "NABLA",
+  "author": "Nabla Core Team <dev@home.nabla.mobi>",
   "ignore": [
     ".jshintrc",
     "**/*.txt"

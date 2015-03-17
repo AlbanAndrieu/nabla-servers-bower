@@ -1,8 +1,8 @@
 {
   "name": "sample-component",
   "description": "Sample bower component",
-  "version": "0.0.1",
-  "author": "NABLA",
+  "version": "1.0.1",
+  "author": "Nabla Core Team <dev@home.nabla.mobi>",
   "main": "src/sample-component.js",
   "ignore": [
     ".jshintrc",
