@@ -5,4 +5,4 @@ This project is publishing bower component inside another git repo https://githu
 
 This project is based on [AngularJS](https://github.com/angular/angular.js)
 
-Aim is to deploy bower component insie [private-bower](https://www.npmjs.com/package/private-bower)
+Aim is to deploy bower component inside [private-bower](https://www.npmjs.com/package/private-bower)
