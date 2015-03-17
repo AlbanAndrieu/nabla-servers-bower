@@ -81,7 +81,7 @@ module.exports = function(grunt) {
     },
 
     clean: {
-	    bower: ['.bower', 'bower_components'],
+	  bower: ['.bower', 'bower_components'],
       tmp: ['tmp'],
       build: ['build']
     },

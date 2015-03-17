@@ -15,7 +15,7 @@ function init {
   BUILD_DIR=$(resolveDir ../../build)
   NEW_VERSION=$(cat $BUILD_DIR/version.txt)
   REPOS=(
-    sample-ui-component
+    sample-component
   )
 }
 
@@ -27,7 +27,7 @@ function prepare {
   for repo in "${REPOS[@]}"
   do
     echo "-- Cloning bower-$repo"
-    git clone ssh://git@scm-git-eur.misys.global.ad:7999/risk/bower-fr-$repo.git $TMP_DIR/bower-fr-$repo
+    git clone git@github.com:AlbanAndrieu/nabla-bower-$repo.git $TMP_DIR/bower-$repo
   done
 
 
@@ -44,11 +44,31 @@ function prepare {
     fi
   done
 
+  # move csp.css
+  #cp $BUILD_DIR/angular-csp.css $TMP_DIR/bower-angular
+
   # move i18n files
   #cp $BUILD_DIR/i18n/*.js $TMP_DIR/bower-angular-i18n/
 
-  # move csp.css
-  #cp $BUILD_DIR/angular-csp.css $TMP_DIR/bower-angular
+  # move bower.json
+  cp $BUILD_DIR/../bower.json $TMP_DIR/bower-$repo
+  # move package.json
+  cp $BUILD_DIR/../package.json $TMP_DIR/bower-$repo
+
+  #
+  # Run local precommit script if there is one
+  #
+  for repo in "${REPOS[@]}"
+  do
+    if [ -f $TMP_DIR/bower-$repo/precommit.sh ]
+      then
+        echo "-- Running precommit.sh script for bower-$repo"
+        cd $TMP_DIR/bower-$repo
+        $TMP_DIR/bower-$repo/precommit.sh
+        cd $SCRIPT_DIR
+    fi
+  done
+
 
   #
   # update bower.json
@@ -57,7 +77,7 @@ function prepare {
   for repo in "${REPOS[@]}"
   do
     echo "-- Updating version in bower-$repo to $NEW_VERSION"
-    cd $TMP_DIR/bower-fr-$repo
+    cd $TMP_DIR/bower-$repo
     replaceJsonProp "bower.json" "version" ".*" "$NEW_VERSION"
     replaceJsonProp "bower.json" "angular.*" ".*" "$NEW_VERSION"
     replaceJsonProp "package.json" "version" ".*" "$NEW_VERSION"

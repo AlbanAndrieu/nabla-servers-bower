@@ -1,8 +1,8 @@
 {
-  "name": "ui-component",
-  "description": "UI component",
-  "version": "0.0.1",
-  "author": "MISYS",
+  "name": "bower-pom",
+  "description": "Bower components",
+  "version": "1.0.0-local+sha.bf1ff34",
+  "author": "NABLA",
   "private": "false",
   "ignore": [
     ".jshintrc",

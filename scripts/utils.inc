@@ -209,8 +209,9 @@ function replaceJsonProp {
 
 # replaceInFile(file, findPattern, replacePattern)
 function replaceInFile {
-  sed -i .tmp -E "s/$2/$3/" $1
-  rm $1.tmp
+#  sed -i .tmp -E "s/$2/$3/" $1
+#  rm $1.tmp
+  sed -E "s/$2/$3/" $1
 }
 
 # resolveDir(relativeDir)
