@@ -3,6 +3,8 @@
 //var files = require('./angularFiles').files;
 var util = require('./lib/grunt/utils.js');
 var versionInfo = require('./lib/versions/version-info');
+var path = require('path');
+//var e2e = require('./test/e2e/tools');
 
 module.exports = function(grunt) {
 
@@ -75,9 +77,47 @@ module.exports = function(grunt) {
       }
     },
 
+    shell: {
+      "npm-install": {
+        command: path.normalize('scripts/npm/install-dependencies.sh')
+      },
+
+//      "promises-aplus-tests": {
+//        options: {
+//          stdout: false,
+//          stderr: true,
+//          failOnError: true
+//        },
+//        command: path.normalize('./node_modules/.bin/promises-aplus-tests tmp/promises-aplus-adapter++.js')
+//      }
+    },
+
     write: {
       versionTXT: {file: 'build/version.txt', val: NG_VERSION.full},
       versionJSON: {file: 'build/version.json', val: JSON.stringify(NG_VERSION)}
+    },
+
+
+    tests: {
+//      jqlite: 'karma-jqlite.conf.js',
+//      jquery: 'karma-jquery.conf.js',
+//      docs: 'karma-docs.conf.js',
+      modules: 'karma-modules.conf.js'
+    },
+
+
+    autotest: {
+//      jqlite: 'karma-jqlite.conf.js',
+//      jquery: 'karma-jquery.conf.js',
+      docs: 'karma-docs.conf.js',
+      modules: 'karma-modules.conf.js'
+    },
+
+
+    protractor: {
+      normal: 'protractor-conf.js',
+      travis: 'protractor-travis-conf.js',
+      jenkins: 'protractor-jenkins-conf.js'
     },
 
     clean: {
@@ -126,10 +166,32 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', ['package']);
+  // global beforeEach task
+  //if (!process.env.TRAVIS) {
+  //  grunt.task.run('shell:npm-install');
+  //}
+
+  //alias tasks
+  //grunt.registerTask('test', 'Run unit, docs and e2e tests with Karma', ['package','test:unit']);
+  //grunt.registerTask('test', 'Run unit, docs and e2e tests with Karma', ['jshint', 'jscs', 'package','test:unit','test:promises-aplus', 'tests:docs', 'test:protractor']);
+  //grunt.registerTask('test:jqlite', 'Run the unit tests with Karma' , ['tests:jqlite']);
+  //grunt.registerTask('test:jquery', 'Run the jQuery unit tests with Karma', ['tests:jquery']);
+  //grunt.registerTask('test:modules', 'Run the Karma module tests with Karma', ['build', 'tests:modules']);
+  //grunt.registerTask('test:docs', 'Run the doc-page tests with Karma', ['package', 'tests:docs']);
+  //grunt.registerTask('test:unit', 'Run unit, jQuery and Karma module tests with Karma', ['test:jqlite', 'test:jquery', 'test:modules']);
+  //grunt.registerTask('test:protractor', 'Run the end to end tests with Protractor and keep a test server running in the background', ['webdriver', 'connect:testserver', 'protractor:normal']);
+  //grunt.registerTask('test:travis-protractor', 'Run the end to end tests with Protractor for Travis CI builds', ['connect:testserver', 'protractor:travis']);
+  //grunt.registerTask('test:ci-protractor', 'Run the end to end tests with Protractor for Jenkins CI builds', ['webdriver', 'connect:testserver', 'protractor:jenkins']);
+  //grunt.registerTask('test:e2e', 'Alias for test:protractor', ['test:protractor']);
+  //grunt.registerTask('test:promises-aplus',['build:promises-aplus-adapter','shell:promises-aplus-tests']);
 
   grunt.registerTask('minify', ['clean', 'bower', 'build', 'minall']);
 
-  grunt.registerTask('package', ['clean', 'bower', 'merge-conflict', 'jshint', 'jscs', 'buildall', 'minall', 'collect-errors', 'copy', 'write', 'compress']);
+  grunt.registerTask('build', ['clean', 'bower', 'merge-conflict', 'jshint', 'jscs', 'buildall', 'karma:unit']);
+
+  grunt.registerTask('package', ['build', 'minall', 'collect-errors', 'copy', 'write', 'compress']);
+  //grunt.registerTask('ci-checks', ['merge-conflict', 'jshint', 'jscs']);
+
+  grunt.registerTask('default', ['package']);
 
 };

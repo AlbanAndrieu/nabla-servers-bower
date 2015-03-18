@@ -7,8 +7,8 @@ target/
 .idea/workspace.xml
 *~
 *.swp
-/node/
-/node_modules/
+node/
+node_modules/
 .bower/
 bower_components/
 .idea
