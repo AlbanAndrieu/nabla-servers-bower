@@ -1,6 +1,5 @@
 'use strict';
 
-// Karma configuration
 module.exports = function(config) {
   config.set({
 
@@ -22,7 +21,10 @@ module.exports = function(config) {
     exclude: [],
 
     plugins: [
+      'karma-chrome-launcher',
+      'karma-firefox-launcher',
       'karma-phantomjs-launcher',
+      'karma-ie-launcher',
       'karma-junit-reporter',
       'karma-coverage',
       'karma-jasmine'
@@ -33,7 +35,7 @@ module.exports = function(config) {
     reporters: ['dots', 'progress', 'junit', 'coverage'],
 
     preprocessors: {
-      'src/**/*.js': ['coverage'],
+      'src/**/*.js': ['coverage']
     },
 
     //coverageReporter: {
