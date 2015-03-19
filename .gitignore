@@ -18,3 +18,4 @@ bower_components/
 /tmp/
 /scripts/bower/bower-*
 *.log
+/docs/

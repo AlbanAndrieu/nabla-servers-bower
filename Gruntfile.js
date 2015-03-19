@@ -13,6 +13,9 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
 
   grunt.loadTasks('lib/grunt');
+  grunt.loadNpmTasks('grunt-ngdocs');
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   var NG_VERSION = versionInfo.currentVersion;
   //NG_VERSION.cdn = versionInfo.cdnVersion;
@@ -29,7 +32,6 @@ module.exports = function(grunt) {
     NG_VERSION: NG_VERSION,
 
     pkg: grunt.file.readJSON('package.json'),
-
 
     globalConfig: globalConfig,
     bower: {
@@ -109,7 +111,7 @@ module.exports = function(grunt) {
     autotest: {
 //      jqlite: 'karma-jqlite.conf.js',
 //      jquery: 'karma-jquery.conf.js',
-      docs: 'karma-docs.conf.js',
+//      docs: 'karma-docs.conf.js',
       modules: 'karma-modules.conf.js'
     },
 
@@ -123,7 +125,8 @@ module.exports = function(grunt) {
     clean: {
 	  bower: ['.bower', 'bower_components'],
       tmp: ['tmp'],
-      build: ['build']
+      build: ['build'],
+      docs: ['docs']
     },
 
     jshint: {
@@ -159,6 +162,36 @@ module.exports = function(grunt) {
       },
     },
 
+	ngdocs: {
+      options: {
+        scripts: ['angular.js', '../src.js'],
+        html5Mode: false
+      },
+      all: ['src/**/*.js']
+    },
+    connect: {
+      options: {
+        port: 8001,
+		html5Mode: true,
+		startPage: '/api',
+		title: "My Awesome Nabla Docs",
+		imageLink: "http://home.nabla.mobi",
+		titleLink: "/api",
+		bestMatch: true,
+		analytics: {
+          account: 'UA-56011797-1',
+          domainName: 'nabla.mobi'
+		},
+		discussions: {
+          shortName: 'nabla',
+          url: 'http://home.nabla.mobi',
+          dev: false
+		},
+        keepalive: true
+      },
+      server: {}
+    },
+
     karma: {
       unit: {
         configFile: 'karma.conf.js'
@@ -189,8 +222,10 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', ['clean', 'bower', 'merge-conflict', 'jshint', 'jscs', 'buildall', 'karma:unit']);
 
-  grunt.registerTask('package', ['build', 'minall', 'collect-errors', 'copy', 'write', 'compress']);
+  grunt.registerTask('package', ['build', 'minall', 'collect-errors', 'copy', 'write', 'compress', 'ngdocs']);
   //grunt.registerTask('ci-checks', ['merge-conflict', 'jshint', 'jscs']);
+
+  grunt.registerTask('docs', ['package', 'connect']);
 
   grunt.registerTask('default', ['package']);
 

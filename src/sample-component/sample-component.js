@@ -1,3 +1,17 @@
+/**
+ * @ngdoc directive
+ * @name truncate
+ * @element data
+ * @function
+ *
+ * @description
+ * Truncate data.
+ *
+ * **Note:** TODO add a note
+ *
+ * @example
+   TODO add a sample
+ */
 (function() {
   'use strict';
 
