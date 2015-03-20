@@ -40,7 +40,7 @@ module.exports = function(grunt) {
           targetDir: 'bower_components',
           install: true,
           verbose: true,
-          cleanTargetDir: true,
+//          cleanTargetDir: true,
           cleanBowerDir: false,
           bowerOptions: {},
           copy: true
@@ -100,27 +100,21 @@ module.exports = function(grunt) {
     },
 
 
-    tests: {
-//      jqlite: 'karma-jqlite.conf.js',
-//      jquery: 'karma-jquery.conf.js',
-//      docs: 'karma-docs.conf.js',
-      modules: 'karma-modules.conf.js'
-    },
+//    tests: {
+//      modules: 'karma-modules.conf.js'
+//    },
 
 
-    autotest: {
-//      jqlite: 'karma-jqlite.conf.js',
-//      jquery: 'karma-jquery.conf.js',
-//      docs: 'karma-docs.conf.js',
-      modules: 'karma-modules.conf.js'
-    },
+//    autotest: {
+//      modules: 'karma-modules.conf.js'
+//    },
 
 
-    protractor: {
-      normal: 'protractor-conf.js',
-      travis: 'protractor-travis-conf.js',
-      jenkins: 'protractor-jenkins-conf.js'
-    },
+//    protractor: {
+//      normal: 'protractor-conf.js',
+//      travis: 'protractor-travis-conf.js',
+//      jenkins: 'protractor-jenkins-conf.js'
+//    },
 
     clean: {
 	  bower: ['.bower', 'bower_components'],
@@ -147,12 +141,16 @@ module.exports = function(grunt) {
     jscs: {
       src: ['src/**/*.js', 'test/**/*.js'],
       options: {
-        config: ".jscs.json"
+        config: '.jscs.json'
       }
     },
 
-    min: {
-      sampleComponent: 'build/sample-component.js'
+    uglify: {
+      sampleComponent: {
+        files: {
+          'build/sample-component.min.js': ['build/sample-component.js']
+        }
+      }
     },
 
     build: {
@@ -169,9 +167,13 @@ module.exports = function(grunt) {
       },
       all: ['src/**/*.js']
     },
+
     connect: {
       options: {
         port: 8001,
+        // Change this to '0.0.0.0' to access the server from outside.
+        hostname: 'localhost',
+        livereload: 35729,
 		html5Mode: true,
 		startPage: '/api',
 		title: "My Awesome Nabla Docs",
@@ -188,6 +190,47 @@ module.exports = function(grunt) {
           dev: false
 		},
         keepalive: true
+      },
+//      livereload: {
+//        options: {
+//          open: true,
+//          middleware: function (connect) {
+//            return [
+//              connect.static('.tmp'),
+//              connect().use(
+//                '/bower_components',
+//                connect.static('./bower_components')
+//              ),
+//              connect().use(
+//                '/app/styles',
+//                connect.static('./app/styles')
+//              ),
+//              connect.static(appConfig.app)
+//            ];
+//          }
+//        }
+//	  },
+//      test: {
+//        options: {
+//          port: 9001,
+//          middleware: function (connect) {
+//            return [
+//              connect.static('.tmp'),
+//              connect.static('test'),
+//              connect().use(
+//                '/bower_components',
+//                connect.static('./bower_components')
+//              ),
+//              connect.static(appConfig.app)
+//            ];
+//          }
+//        }
+//      },
+      dist: {
+        options: {
+          open: true,
+          base: '<%= yeoman.dist %>'
+        }
       },
       server: {}
     },
@@ -218,11 +261,11 @@ module.exports = function(grunt) {
   //grunt.registerTask('test:e2e', 'Alias for test:protractor', ['test:protractor']);
   //grunt.registerTask('test:promises-aplus',['build:promises-aplus-adapter','shell:promises-aplus-tests']);
 
-  grunt.registerTask('minify', ['clean', 'bower', 'build', 'minall']);
+  grunt.registerTask('minify', ['clean', 'bower', 'build', 'uglify']);
 
   grunt.registerTask('build', ['clean', 'bower', 'merge-conflict', 'jshint', 'jscs', 'buildall', 'karma:unit']);
 
-  grunt.registerTask('package', ['build', 'minall', 'collect-errors', 'copy', 'write', 'compress', 'ngdocs']);
+  grunt.registerTask('package', ['build', 'uglify', 'collect-errors', 'copy', 'write', 'compress', 'ngdocs']);
   //grunt.registerTask('ci-checks', ['merge-conflict', 'jshint', 'jscs']);
 
   grunt.registerTask('docs', ['package', 'connect']);
