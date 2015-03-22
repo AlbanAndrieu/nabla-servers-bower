@@ -13,14 +13,14 @@
 	<artifactId>bower-pom</artifactId>
 	<packaging>pom</packaging>
 	<!--<version>1.0</version> -->
-	<name>bower-pon</name>
+	<name>bower-pom</name>
 	<description>Bower components POM</description>
     <url>https://github.com/AlbanAndrieu/nabla-servers-bower</url>
 
     <scm>
-            <connection>scm:git:git://github.com/AlbanAndrieu/nabla-bower.git</connection>
-            <developerConnection>scm:git:git@github.com:AlbanAndrieu/nabla-bower.git</developerConnection>
-            <url>https://github.com/AlbanAndrieu/nabla-bower</url>
+            <connection>scm:git:git://github.com/AlbanAndrieu/nabla-servers-bower.git</connection>
+            <developerConnection>scm:git:git@github.com:AlbanAndrieu/nabla-servers-bower.git</developerConnection>
+            <url>https://github.com/AlbanAndrieu/nabla-servers-bower</url>
     </scm>
 
 	<ciManagement>
@@ -30,7 +30,7 @@
 	</ciManagement>
 
 	<issueManagement>
-		<url>https://github.com/AlbanAndrieu/nabla-bower/issues</url>
+		<url>https://github.com/AlbanAndrieu/nabla-servers-bower/issues</url>
 		<system>GitHub Issues</system>
 	</issueManagement>
 
