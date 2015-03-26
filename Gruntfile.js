@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 
   var NG_VERSION = versionInfo.currentVersion;
   //NG_VERSION.cdn = versionInfo.cdnVersion;
-  var dist = 'bower-'+ NG_VERSION.full;
+  var dist = 'bower-' + NG_VERSION.full;
 
   //global beforeEach
   util.init();
@@ -48,12 +48,52 @@ module.exports = function(grunt) {
       }
     },
 
+    html2js: {
+      options: {
+        useStrict: true,
+        singleModule: true,
+        module: 'nabla-notifications.tpl.html',
+        rename: function(moduleName) {
+          return '/' + moduleName.replace('.html', '');
+        }
+      },
+      main: {
+        src: ['src/nabla-notifications/views/*.html'],
+        dest: 'build/nabla-notifications/nabla-notifications.tpl.js'
+      }
+    },
+
+    concat: {
+      options: {
+        separator: ';'
+      },
+      dist: {
+        src: ['src/nabla-notifications/nabla-notifications.js', 'src/nabla-notifications/parts/*.js'],
+        dest: 'build/nabla-notifications/nabla-notifications.js'
+      }
+    },
+
     copy: {
+      nablaHeaderImg: {
+        files: [{
+          expand: true,
+          cwd: 'src/nabla-header/img',
+          src: ['*.png'],
+          dest: 'build/nabla-header/img/'
+        }]
+      },
+//      nablaNotifications: {
+//        src: ['src/nabla-notifications/less/*.less'],
+//        dest: 'build/nabla-notifications/less',
+//        flatten: true,
+//        filter: 'isFile',
+//        expand: true
+//      },
       main: {
         files: [{
           expand: true,
-          cwd: 'sample-component/src/',
-          src: '<%= globalConfig.componentName %>.js',
+          cwd: 'src/',
+          src: ['<%= globalConfig.componentName %>.js'],
           dest: 'build/'
         }]
       }
@@ -70,7 +110,7 @@ module.exports = function(grunt) {
 
     compress: {
       build: {
-        options: {archive: 'build/' + dist +'.zip', mode: 'zip'},
+        options: {archive: 'build/' + dist + '.zip', mode: 'zip'},
         src: ['build/*', 'src/*', 'target/**', 'test/*', '.*', '*.js', '*.md', '*.json', '*.xml'],
         cwd: 'build',
         expand: true,
@@ -82,8 +122,7 @@ module.exports = function(grunt) {
     shell: {
       "npm-install": {
         command: path.normalize('scripts/npm/install-dependencies.sh')
-      },
-
+      }
 //      "promises-aplus-tests": {
 //        options: {
 //          stdout: false,
@@ -99,16 +138,13 @@ module.exports = function(grunt) {
       versionJSON: {file: 'build/version.json', val: JSON.stringify(NG_VERSION)}
     },
 
-
 //    tests: {
 //      modules: 'karma-modules.conf.js'
 //    },
 
-
 //    autotest: {
 //      modules: 'karma-modules.conf.js'
 //    },
-
 
 //    protractor: {
 //      normal: 'protractor-conf.js',
@@ -117,7 +153,7 @@ module.exports = function(grunt) {
 //    },
 
     clean: {
-	  bower: ['.bower', 'bower_components'],
+      bower: ['.bower', 'bower_components'],
       tmp: ['tmp'],
       build: ['build'],
       docs: ['docs']
@@ -125,42 +161,107 @@ module.exports = function(grunt) {
 
     jshint: {
       options: {
-        jshintrc: true,
+        jshintrc: true
       },
       node: {
-        files: { src: ['*.js', 'lib/**/*.js'] },
+        files: { src: ['*.js', 'lib/**/*.js'] }
       },
       sampleComponent: {
-        files: { src: 'src/sample-component/**/*.js' },
-      },
-//      tests: {
-//        files: { src: 'test/**/*.js' },
+        files: { src: 'src/sample-component/**/*.js' }
+      }
+//      nablaAuth: {
+//        files: { src: 'src/nabla-auth/**/*.js' }
 //      },
+//      nablaHeader: {
+//        files: { src: 'src/nabla-header/**/*.js' }
+//      },
+//      nablaNotifications: {
+//        files: { src: 'src/nabla-notifications/**/*.js' }
+//      }
     },
 
     jscs: {
-      src: ['src/**/*.js', 'test/**/*.js'],
+//      src: ['src/**/*.js', 'test/**/*.js'],
       options: {
-        config: '.jscs.json'
+        config: ".jscs.json"
+      },
+      node: {
+        files: { src: ['*.js'] }
+      },
+//      publish: {
+//        files: { src: ['lib/**/*.js'] }
+//      },
+      sampleComponent: {
+        files: { src: 'src/sample-component/**/*.js' }
+      }
+//      nablaAuth: {
+//        files: { src: 'src/nabla-auth/**/*.js' }
+//      },
+//      nablaHeader: {
+//        files: { src: 'src/nabla-header/**/*.js' }
+//      },
+//      nablaNotifications: {
+//        files: { src: 'src/nabla-notifications/**/*.js' }
+//      }
+    },
+
+    build: {
+      sampleComponent: {
+        dest: 'build/sample-component/sample-component.js',
+        src:['src/sample-component/sample-component.js']
+      },
+      nablaAuth: {
+        dest: 'build/nabla-auth/nabla-auth.js',
+        src:['src/nabla-auth/nabla-auth.js']
+      },
+      nablaHeader: {
+        dest: 'build/nabla-header/nabla-header.js',
+        src:['src/nabla-header/nabla-header.js']
+      },
+      nablaNotification: {
+        dest: 'build/nabla-notifications/nabla-notification.js',
+        src:['src/nabla-notifications/nabla-notification.js']
       }
     },
 
     uglify: {
       sampleComponent: {
         files: {
-          'build/sample-component.min.js': ['build/sample-component.js']
+          'build/sample-component/sample-component.min.js': ['build/sample-component/sample-component.js']
+        }
+      },
+      nablaAuth: {
+        files: {
+          'build/nabla-auth/nabla-auth.min.js': ['build/nabla-auth/nabla-auth.js']
+        }
+      },
+      nablaHeader: {
+        files: {
+          'build/nabla-header/nabla-header.min.js': ['build/nabla-header/nabla-header.js']
+        }
+      },
+      nablaNotification: {
+        files: {
+          'build/nabla-notifications/nabla-notification.min.js': ['build/nabla-notifications/nabla-notification.js']
         }
       }
     },
 
-    build: {
-      sampleComponent: {
-        dest: 'build/sample-component.js',
-        src:['src/sample-component/sample-component.js']
-      },
+    // Less processing
+    less: {
+      nablaHeader: {
+        files: {
+          'build/nabla-header/styles/css/nabla-header.css': ['src/nabla-header/less/nabla-header.less']
+        }
+      }
+//      nablaNotification: {
+//        files: {
+//          'build/nabla-header/styles/css/nabla-notifications.css': ['src/nabla-notifications/less/nabla-notifications.less']
+//        }
+//      }
     },
 
-	ngdocs: {
+    ngdocs: {
       options: {
         scripts: ['angular.js', '../src.js'],
         html5Mode: false
@@ -174,21 +275,21 @@ module.exports = function(grunt) {
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: 'localhost',
         livereload: 35729,
-		html5Mode: true,
-		startPage: '/api',
-		title: "My Awesome Nabla Docs",
-		imageLink: "http://home.nabla.mobi",
-		titleLink: "/api",
-		bestMatch: true,
-		analytics: {
+        html5Mode: true,
+        startPage: '/api',
+        title: "My Awesome Nabla Docs",
+        imageLink: "http://home.nabla.mobi",
+        titleLink: "/api",
+        bestMatch: true,
+        analytics: {
           account: 'UA-56011797-1',
           domainName: 'nabla.mobi'
-		},
-		discussions: {
+        },
+        discussions: {
           shortName: 'nabla',
           url: 'http://home.nabla.mobi',
           dev: false
-		},
+        },
         keepalive: true
       },
 //      livereload: {
@@ -209,7 +310,7 @@ module.exports = function(grunt) {
 //            ];
 //          }
 //        }
-//	  },
+//    },
 //      test: {
 //        options: {
 //          port: 9001,
@@ -236,9 +337,29 @@ module.exports = function(grunt) {
     },
 
     karma: {
-      unit: {
-        configFile: 'karma.conf.js'
+      sampleComponent: {
+        configFile: 'karma-sample-component.conf.js'
       }
+//      nablaAuth: {
+//        configFile: 'karma-nabla-auth.conf.js'
+//      },
+//      nablaConfiguration: {
+//        configFile: 'karma-nabla-configuration.conf.js'
+//      },
+//      nablaHeader: {
+//        configFile: 'karma-nabla-header.conf.js',
+//        //browsers: ['PhantomJS', 'Chrome'],
+//        //singleRun: false,
+//        //logLevel: 'DEBUG',
+//        autoWatch: true
+//      },
+//      nablaNotifications: {
+//        configFile: 'karma-nabla-notifications.conf.js',
+//        //browsers: ['PhantomJS', 'Chrome'],
+//        //singleRun: false,
+//        //logLevel: 'DEBUG',
+//        autoWatch: true
+//      }
     }
   });
 
@@ -263,12 +384,17 @@ module.exports = function(grunt) {
 
   grunt.registerTask('minify', ['clean', 'bower', 'build', 'uglify']);
 
-  grunt.registerTask('build', ['clean', 'bower', 'merge-conflict', 'jshint', 'jscs', 'buildall', 'karma:unit']);
+  grunt.registerTask('css', ['less']);
 
-  grunt.registerTask('package', ['build', 'uglify', 'collect-errors', 'copy', 'write', 'compress', 'ngdocs']);
+  grunt.registerTask('build', ['clean', 'bower', 'merge-conflict', 'jshint', 'jscs', 'concat', 'buildall']);
+
+//grunt.registerTask('unittest', ['karma:sampleComponent', 'karma:nablaAuth', 'karma:nablaConfiguration', 'karma:nablaHeader', 'karma:nablaNotifications']);
+  grunt.registerTask('unit-test', ['karma:sampleComponent']);
+
+  grunt.registerTask('package', ['build', 'uglify', 'html2js', 'collect-errors', 'copy', 'css', 'unit-test', 'write', 'compress', 'ngdocs']);
   //grunt.registerTask('ci-checks', ['merge-conflict', 'jshint', 'jscs']);
 
-  grunt.registerTask('docs', ['package', 'connect']);
+  grunt.registerTask('docs-test', ['package', 'connect']);
 
   grunt.registerTask('default', ['package']);
 

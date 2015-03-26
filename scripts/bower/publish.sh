@@ -16,6 +16,10 @@ function init {
   NEW_VERSION=$(cat $BUILD_DIR/version.txt)
   REPOS=(
     sample-component
+    nabla-auth
+    nabla-configuration
+    nabla-header
+    nabla-notifications
   )
 }
 
@@ -34,13 +38,15 @@ function prepare {
   #
   # move the files from the build
   #
-
   for repo in "${REPOS[@]}"
   do
-    if [ -f $BUILD_DIR/$repo.js ] # ignore i18l
+    if [ -f $BUILD_DIR/$repo/$repo.js ] # ignore i18l
       then
+        echo "-- Cleaning files in bower-$repo"
+        rm -Rf $TMP_DIR/bower-$repo/*
+
         echo "-- Updating files in bower-$repo"
-        cp $BUILD_DIR/$repo.* $TMP_DIR/bower-$repo/
+        cp -R $BUILD_DIR/$repo/* $TMP_DIR/bower-$repo/
     fi
   done
 
@@ -74,16 +80,14 @@ function prepare {
 
     # move bower.json
     cp $BUILD_DIR/../$repo-bower.json $TMP_DIR/bower-$repo/bower.json
-    # move .bowerrc
-    #cp $BUILD_DIR/../$repo/.bowerrc $TMP_DIR/bower-$repo
     # move package.json
     cp $BUILD_DIR/../$repo-package.json $TMP_DIR/bower-$repo/package.json
+    # move .bowerrc
+    cp $BUILD_DIR/../.bowerrc $TMP_DIR/bower-$repo
 
     cd $TMP_DIR/bower-$repo
     replaceJsonProp "bower.json" "version" ".*" "$NEW_VERSION"
-    #replaceJsonProp "bower.json" "angular.*" ".*" "$NEW_VERSION"
     replaceJsonProp "package.json" "version" ".*" "$NEW_VERSION"
-    #replaceJsonProp "package.json" "angular.*" ".*" "$NEW_VERSION"
 
     git add -A
 

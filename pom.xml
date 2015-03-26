@@ -9,10 +9,8 @@
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<!--<groupId>com.nabla.project.servers.sample</groupId> -->
 	<artifactId>bower-pom</artifactId>
 	<packaging>pom</packaging>
-	<!--<version>1.0</version> -->
 	<name>bower-pom</name>
 	<description>Bower components POM</description>
     <url>https://github.com/AlbanAndrieu/nabla-servers-bower</url>
@@ -25,7 +23,6 @@
 
 	<ciManagement>
 		<system>Jenkins</system>
-		<!--<url>${JENKINS_URL}/job/${JOB_NAME}</url>-->
         <url>${JOB_URL}</url>
 	</ciManagement>
 
@@ -113,6 +110,69 @@
                     </execution>
                 </executions>
             </plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>publish-bower</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>./publish.sh</executable>
+							<workingDirectory>${basedir}</workingDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+                        <id>lcovFileForSonar</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+								<echo message="Copying LCOV file -> lcof.info for Sonar purpose to target directory" />
+                                <copy todir="${basedir}/target" flatten="true">
+                                    <fileset dir="${basedir}/target">
+                                        <include name="karma-coverage/PhantomJS*/lcov.info" />
+                                    </fileset>
+                                </copy>
+
+								<!--
+                                <path id="sourceDirectory.path">
+                                  <pathelement location="${basedir}/app/scripts"/>
+                                </path>
+
+                                <pathconvert targetos="unix" property="relativeSourceDirectory" refid="sourceDirectory.path">
+                                  <map from="${basedir}/" to=""/>
+                                </pathconvert>
+
+								<echo message="Base dir: ${basedir} " />
+								<echo message="Source directory: ${project.build.sourceDirectory}" />
+								<echo message="Relative source directory: ${relativeSourceDirectory}" />
+								<echo message="Fixing a problem with a path to the JavaScript path" />
+                                <replaceregexp byline="true">
+                                    <regexp pattern="SF:\./todo/(.*)" />
+                                    <substitution expression="SF:${relativeSourceDirectory}/\1" />
+                                    <fileset dir="target">
+                                        <include name="lcov.info" />
+                                    </fileset>
+                                </replaceregexp>
+                                -->
+
+                            </target>
+                        </configuration>
+                    </execution>
+				</executions>
+			</plugin>
         </plugins>
     </build>
 
@@ -127,6 +187,8 @@
             <properties>
                 <sonar.language>js</sonar.language>
                 <!--<sonar.exclusions>${basedir}/src/main/webapp/lib/**</sonar.exclusions>-->
+                <sonar.sources>src</sonar.sources>
+                <sonar.tests>test</sonar.tests>
                 <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
                 <sonar.javascript.lcov.reportPath>${basedir}/target/lcov.info</sonar.javascript.lcov.reportPath>
 	        </properties>
