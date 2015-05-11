@@ -1,11 +1,11 @@
 {
-  "name": "sample-component",
-  "description": "Sample bower component",
+  "name": "nabla-auth",
+  "description": "Nabla Authorization Module",
   "branchVersion": "^1.0.1",
   "branchPattern": "1.0.*",
   "version": "1.0.1",
   "keywords": [
-    "sample-component",
+    "auth",
     "nabla",
     "bower"
   ],
@@ -19,15 +19,14 @@
   "homepage": "http://home.nabla.mobi",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AlbanAndrieu/nabla-bower-sample-component.git"
+    "url": "https://github.com/AlbanAndrieu/nabla-bower-auth.git"
 
   },
   "bugs": {
-    "url": "https://github.com/AlbanAndrieu/nabla-bower-sample-component/issues"
+    "url": "https://github.com/AlbanAndrieu/nabla-bower-auth/issues"
   },
   "main": [
-    "sample-component.js",
-    "square.js"
+    "nabla-auth.js"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

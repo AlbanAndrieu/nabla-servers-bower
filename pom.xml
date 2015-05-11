@@ -81,12 +81,12 @@
                 </configuration>
 
                 <executions>
-
-                    <execution>
+					<execution>
                         <id>install node and npm</id>
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>
+						<phase>validate</phase>
                     </execution>
 
                     <execution>
@@ -94,18 +94,66 @@
                         <goals>
                             <goal>npm</goal>
                         </goals>
+						<phase>initialize</phase>
                         <configuration>
                             <arguments>install</arguments>
                         </configuration>
                     </execution>
 
                     <execution>
-                        <id>grunt build</id>
+                        <id>grunt bower</id>
                         <goals>
                             <goal>grunt</goal>
                         </goals>
+						<phase>generate-sources</phase>
                         <configuration>
-                            <arguments>build</arguments>
+                            <arguments>prepare</arguments>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>grunt check</id>
+                        <goals>
+                            <goal>grunt</goal>
+                        </goals>
+						<phase>compile</phase>
+                        <configuration>
+                            <arguments>check</arguments>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>grunt unit-test</id>
+                        <goals>
+                            <goal>grunt</goal>
+                        </goals>
+						<phase>test</phase>
+                        <configuration>
+                            <arguments>unit-test</arguments>
+                        </configuration>
+                    </execution>
+
+					<!-- TODO
+                    <execution>
+                        <id>grunt integration-test</id>
+                        <goals>
+                            <goal>grunt</goal>
+                        </goals>
+						<phase>integration-test</phase>
+                        <configuration>
+                            <arguments>integration-test</arguments>
+                        </configuration>
+                    </execution>
+                    -->
+
+                    <execution>
+                        <id>grunt prepare-package</id>
+                        <goals>
+                            <goal>grunt</goal>
+                        </goals>
+						<phase>prepare-package</phase>
+                        <configuration>
+                            <arguments>package</arguments>
                         </configuration>
                     </execution>
                 </executions>

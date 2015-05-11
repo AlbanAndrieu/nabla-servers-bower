@@ -153,7 +153,7 @@ module.exports = function(grunt) {
 //    },
 
     clean: {
-      bower: ['.bower', 'bower_components'],
+      //bower: ['.bower', 'bower_components'],
       tmp: ['tmp'],
       build: ['build'],
       docs: ['docs']
@@ -382,14 +382,24 @@ module.exports = function(grunt) {
   //grunt.registerTask('test:e2e', 'Alias for test:protractor', ['test:protractor']);
   //grunt.registerTask('test:promises-aplus',['build:promises-aplus-adapter','shell:promises-aplus-tests']);
 
-  grunt.registerTask('minify', ['clean', 'bower', 'build', 'uglify']);
+  grunt.registerTask('prepare', [
+    //'clean:bower',
+    'bower'
+  ]);
+
+  grunt.registerTask('check', [
+    'jshint',
+    'jscs'
+  ]);
+
+  grunt.registerTask('minify', ['clean', 'prepare', 'build', 'uglify']);
 
   grunt.registerTask('css', ['less']);
 
-  grunt.registerTask('build', ['clean', 'bower', 'merge-conflict', 'jshint', 'jscs', 'concat', 'buildall']);
+  grunt.registerTask('build', ['clean', 'prepare', 'merge-conflict', 'check', 'concat', 'buildall']);
 
 //grunt.registerTask('unittest', ['karma:sampleComponent', 'karma:nablaAuth', 'karma:nablaConfiguration', 'karma:nablaHeader', 'karma:nablaNotifications']);
-  grunt.registerTask('unit-test', ['karma:sampleComponent']);
+  grunt.registerTask('unit-test', ['check', 'karma:sampleComponent']);
 
   grunt.registerTask('package', ['build', 'uglify', 'html2js', 'collect-errors', 'copy', 'css', 'unit-test', 'write', 'compress', 'ngdocs']);
   //grunt.registerTask('ci-checks', ['merge-conflict', 'jshint', 'jscs']);

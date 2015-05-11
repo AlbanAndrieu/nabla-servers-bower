@@ -1,11 +1,11 @@
 {
-  "name": "sample-component",
-  "description": "Sample bower component",
+  "name": "nabla-notification",
+  "description": "Nabla Notification Module",
   "branchVersion": "^1.0.1",
   "branchPattern": "1.0.*",
   "version": "1.0.1",
   "keywords": [
-    "sample-component",
+    "notification",
     "nabla",
     "bower"
   ],
@@ -19,15 +19,14 @@
   "homepage": "http://home.nabla.mobi",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AlbanAndrieu/nabla-bower-sample-component.git"
+    "url": "https://github.com/AlbanAndrieu/nabla-bower-notification.git"
 
   },
   "bugs": {
-    "url": "https://github.com/AlbanAndrieu/nabla-bower-sample-component/issues"
+    "url": "https://github.com/AlbanAndrieu/nabla-bower-notification/issues"
   },
   "main": [
-    "sample-component.js",
-    "square.js"
+    "nabla-notification.js"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -44,6 +43,7 @@
     "grunt-concurrent": "0.4.3",
     "grunt-contrib-uglify": "0.6.0",
     "grunt-contrib-copy": "0.7.0",
+    "grunt-html2js": "^0.3.0",
     "load-grunt-tasks": "0.2.1",
     "grunt-contrib-watch": "0.6.1",
     "karma": "0.12.17",
@@ -60,6 +60,7 @@
     "grunt-contrib-clean": "^0.6.0",
     "grunt-bower-task": "^0.4.0",
     "grunt-contrib-compress": "^0.13.0",
+    "grunt-contrib-concat": "^0.5.0",
     "time-grunt": "^1.0.0",
     "lodash": "~2.4.1",
     "semver": "~4.0.3",

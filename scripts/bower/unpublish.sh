@@ -15,6 +15,10 @@ function init {
   TMP_DIR=$(resolveDir ../../tmp)
   REPOS=(
     sample-component
+    auth
+    configuration
+    notification
+    header
   )
 }
 

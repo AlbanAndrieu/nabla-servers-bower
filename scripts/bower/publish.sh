@@ -16,10 +16,10 @@ function init {
   NEW_VERSION=$(cat $BUILD_DIR/version.txt)
   REPOS=(
     sample-component
-    nabla-auth
-    nabla-configuration
-    nabla-header
-    nabla-notifications
+    auth
+    configuration
+    notification
+    header
   )
 }
 
@@ -92,7 +92,7 @@ function prepare {
     git add -A
 
     echo "-- Committing and tagging bower-$repo"
-    git commit -m "v$NEW_VERSION"
+    git commit -m "v$NEW_VERSION" || true
     git tag v$NEW_VERSION
     cd $SCRIPT_DIR
   done
@@ -101,8 +101,18 @@ function prepare {
 function publish {
   for repo in "${REPOS[@]}"
   do
-    echo "-- Pushing bower-$repo"
     cd $TMP_DIR/bower-$repo
+
+	#remove the older tag created by jenkins
+	echo "-- Remove older bower-$repo tag"
+	git tag -l 'v*' | sort | head -1 | xargs git tag -d
+	git fetch
+	git tag -l 'v*' | sort | head -1 | xargs -n 1 git push --delete origin
+
+	#git ls-remote --tags --heads ssh://git@github.com:AlbanAndrieu/nabla-bower-$repo.git | grep -o 'refs/tags/v[0-9]*\.[0-9]*\.[0-9]*-build.\w*+sha.\w*' | sort | head -20 | grep -o '[^\/]*$' | xargs git tag -d $1
+	#git ls-remote --tags --heads ssh://git@github.com:AlbanAndrieu/nabla-bower-$repo.git | grep -o 'refs/tags/v[0-9]*\.[0-9]*\.[0-9]*-build.\w*+sha.\w*' | sort | head -20 | grep -o '[^\/]*$' | xargs git push origin :$1
+
+	echo "-- Pushing bower-$repo"
     git push origin master
     git push origin v$NEW_VERSION
 

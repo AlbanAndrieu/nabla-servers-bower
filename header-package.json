@@ -1,11 +1,11 @@
 {
-  "name": "sample-component",
-  "description": "Sample bower component",
+  "name": "nabla-header",
+  "description": "Nabla Header Module",
   "branchVersion": "^1.0.1",
   "branchPattern": "1.0.*",
   "version": "1.0.1",
   "keywords": [
-    "sample-component",
+    "header",
     "nabla",
     "bower"
   ],
@@ -19,15 +19,14 @@
   "homepage": "http://home.nabla.mobi",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AlbanAndrieu/nabla-bower-sample-component.git"
+    "url": "https://github.com/AlbanAndrieu/nabla-bower-header.git"
 
   },
   "bugs": {
-    "url": "https://github.com/AlbanAndrieu/nabla-bower-sample-component/issues"
+    "url": "https://github.com/AlbanAndrieu/nabla-bower-header/issues"
   },
   "main": [
-    "sample-component.js",
-    "square.js"
+    "nabla-header.js"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -49,7 +48,7 @@
     "karma": "0.12.17",
     "grunt-karma": "~0.9.0",
     "karma-jasmine": "0.1.5",
-    "karma-phantomjs-launcher": "~0.1.4",
+    "karma-phantomjs-launcher": "~0.1.2",
     "karma-chrome-launcher": "0.1.5",
     "karma-coverage": "0.2.6",
     "karma-firefox-launcher": "0.1.3",
