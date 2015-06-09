@@ -106,6 +106,7 @@ function publish {
 	#remove the older tag created by jenkins
 	echo "-- Remove older bower-$repo tag"
 	git tag -l 'v*' | sort | head -1 | xargs git tag -d
+	#git fetch --prune --tags
 	git fetch
 	git tag -l 'v*' | sort | head -1 | xargs -n 1 git push --delete origin
 
