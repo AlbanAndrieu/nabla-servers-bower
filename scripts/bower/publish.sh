@@ -101,10 +101,10 @@ function publish {
 
 	#remove the older tag created by jenkins
 	echo "-- Remove older bower-$repo tag"
-	#git tag -l 'v*' | sort | head -1 | xargs git tag -d
-	##git fetch --prune --tags
-	#git fetch
-	#git tag -l 'v*' | sort | head -1 | xargs -n 1 git push --delete origin
+	git tag -l 'v*' | sort | head -1 | xargs git tag -d
+	#git fetch --prune --tags
+	git fetch
+	git tag -l 'v*' | sort | head -1 | xargs -n 1 git push --delete origin
 
 	#git ls-remote --tags --heads ssh://git@github.com:AlbanAndrieu/nabla-bower-$repo.git | grep -o 'refs/tags/v[0-9]*\.[0-9]*\.[0-9]*-build.\w*+sha.\w*' | sort | head -20 | grep -o '[^\/]*$' | xargs git tag -d $1
 	#git ls-remote --tags --heads ssh://git@github.com:AlbanAndrieu/nabla-bower-$repo.git | grep -o 'refs/tags/v[0-9]*\.[0-9]*\.[0-9]*-build.\w*+sha.\w*' | sort | head -20 | grep -o '[^\/]*$' | xargs git push origin :$1
