@@ -16,6 +16,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-ngdocs');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-release');
+  grunt.loadNpmTasks('grunt-version-check');
+  grunt.loadNpmTasks('grunt-installed-check');
+  grunt.loadNpmTasks('grunt-check-dependencies');
 
   var NG_VERSION = versionInfo.currentVersion;
   //NG_VERSION.cdn = versionInfo.cdnVersion;
@@ -360,6 +364,32 @@ module.exports = function(grunt) {
 //        //logLevel: 'DEBUG',
 //        autoWatch: true
 //      }
+    },
+
+    versioncheck: {
+      options: {
+        skip: ["semver", "npm", "lodash"],
+        hideUpToDate: false
+      }
+    },
+
+    checkDependencies: {
+        this: {}
+    },
+
+    release: {
+      options: {
+        additionalFiles: ['bower.json'],
+        npm: false, //default: true
+        github: {
+          //apiRoot: 'https://git.example.com/v3', // Default: https://github.com
+          repo: '<%= pkg.repository.url %>', //put your user/repo here
+          accessTokenVar: 'GITHUB_ACCESS_TOKEN', //ENVIRONMENT VARIABLE that contains GitHub Access Token
+          // Or you can use username and password env variables, we discourage you to do so
+          usernameVar: 'GITHUB_USERNAME', //ENVIRONMENT VARIABLE that contains GitHub username
+          passwordVar: 'GITHUB_PASSWORD' //ENVIRONMENT VARIABLE that contains GitHub password
+        }
+      }
     }
   });
 
@@ -389,7 +419,10 @@ module.exports = function(grunt) {
 
   grunt.registerTask('check', [
     'jshint',
-    'jscs'
+    'jscs',
+    'installed_check',
+    'checkDependencies',
+    'versioncheck'
   ]);
 
   grunt.registerTask('minify', ['clean', 'prepare', 'build', 'uglify']);
