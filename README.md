@@ -1,6 +1,12 @@
 # nabla-servers-bower
 
-A bower project sample.
+[![Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/AlbanAndrieu/nabla-servers-bower)
+[![Jenkins Build Status](http://home.nabla.mobi:8380/jenkins/job/nabla-servers-bower-nightly/badge/icon)](http://home.nabla.mobi:8380/jenkins/job/nabla-servers-bower-nightly)
+
+[![Code Climate](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower/badges/gpa.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower) [![Test Coverage](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower/badges/coverage.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower/coverage)
+[![Dependency Status](https://img.shields.io/david/AlbanAndrieu/nabla-servers-bower.svg?style=flat-square)](https://david-dm.org/AlbanAndrieu/nabla-servers-bower) [![devDependency Status](https://img.shields.io/david/dev/AlbanAndrieu/nabla-servers-bower.svg?style=flat-square)](https://david-dm.org/AlbanAndrieu/nabla-servers-bower#info=devDependencies)
+
+A bower project.
 =============
 
 This project is publishing bower component inside another git repo https://github.com/AlbanAndrieu/nabla-bower-sample-component
@@ -80,7 +86,7 @@ curl -X POST http://home.nabla.mobi:5678/removePackage -d '{"name":"nabla-header
 curl -X POST http://home.nabla.mobi:5678/removePackage -d '{"name":"nabla-notification"}' -H "Content-Type: application/json" --header "Auth-Key:TODO"
 ```
 
-## Register to private-bower with SSH
+## Register to private-bower with SSH (deprecated)
 
 ```
 #bower register sample-component ssh://git@github.com:AlbanAndrieu/nabla-bower-sample-component.git
@@ -101,13 +107,8 @@ bower register nabla-notification https://github.com/AlbanAndrieu/nabla-bower-no
 ```
 
 ## Deploy to git
+
+Use maven release feature in Jenkins
 ```
-#cd ./scripts/bower/bower-sample-component
-#How to remove a wrong tag in git
-#git tag -d v0.0.0-local+sha.a6d3020
-#git push origin :refs/tags/v0.0.0-local+sha.a6d3020
-#create a tag
-#git tag 0.0.1-beta.1
-#git push origin tag 0.0.1-beta.1
-#git tag
+grunt bump
 ```
