@@ -11,15 +11,16 @@ module.exports = function(grunt) {
   //grunt plugins
   require('time-grunt')(grunt);
   require('load-grunt-tasks')(grunt);
+  //require('jit-grunt')(grunt);
 
-  grunt.loadTasks('lib/grunt');
-  grunt.loadNpmTasks('grunt-ngdocs');
-  grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-release');
-  grunt.loadNpmTasks('grunt-version-check');
-  grunt.loadNpmTasks('grunt-installed-check');
-  grunt.loadNpmTasks('grunt-check-dependencies');
+  //grunt.loadTasks('lib/grunt');
+  //grunt.loadNpmTasks('grunt-ngdocs');
+  //grunt.loadNpmTasks('grunt-contrib-connect');
+  //grunt.loadNpmTasks('grunt-contrib-clean');
+  //grunt.loadNpmTasks('grunt-release');
+  //grunt.loadNpmTasks('grunt-version-check');
+  //grunt.loadNpmTasks('grunt-installed-check');
+  //grunt.loadNpmTasks('grunt-check-dependencies');
 
   var NG_VERSION = versionInfo.currentVersion;
   //NG_VERSION.cdn = versionInfo.cdnVersion;
@@ -417,13 +418,22 @@ module.exports = function(grunt) {
     'bower'
   ]);
 
-  grunt.registerTask('check', [
-    'jshint',
+  grunt.registerTask('check', function(target) {
+    grunt.task.run([
+    'newer:jshint',
     'jscs',
-    'installed_check',
     'checkDependencies',
     'versioncheck'
-  ]);
+    ]);
+
+    if (typeof process.env.MVN_RELEASE_VERSION !== 'undefined') {
+    //if (target === 'release') {
+      grunt.task.run([
+        //'validate-package',
+        'installed_check'
+      ]);
+    }
+  });
 
   grunt.registerTask('minify', ['clean', 'prepare', 'build', 'uglify']);
 
