@@ -1,5 +1,13 @@
 {
   "name": "nabla-styles",
+  "main": "app/views/styles.html",
+  "keywords": [
+    "nabla",
+    "bootstrap",
+    "less",
+    "sass",
+    "css"
+  ],    
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-autoprefixer": "^1.0.0",
