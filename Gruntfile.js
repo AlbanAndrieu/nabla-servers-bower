@@ -101,18 +101,9 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     globalConfig: globalConfig,
+
     bower: {
-      install: {
-        options: {
-          targetDir: 'bower_components',
-          install: true,
-          verbose: true,
-//          cleanTargetDir: true,
-          cleanBowerDir: false,
-          bowerOptions: {},
-          copy: true
-        }
-      }
+      bower: require('./bower.json')
     },
 
     concurrent: {
