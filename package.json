@@ -93,11 +93,12 @@
     "q-io": "^1.10.9",
     "qq": "^0.3.5",
     "rewire": "~2.1.0",
-    "semver": "~4.0.3",
+    "semver": "^5.0.1",
     "shelljs": "~0.3.0",
     "sorted-object": "^1.0.0",
     "stringmap": "^0.2.2",
-    "time-grunt": "^1.0.0"
+    "time-grunt": "^1.0.0",
+    "xml2js": "0.4.5"
   },
   "scripts": {
     "preinstall": "node/node node/npm/bin/npm-cli.js link components/*",

@@ -33,9 +33,13 @@
 
 	<properties>
 		<!-- TODO remove maven.frontend.plugin.version once super pom 1.1.15-SNAPSHOT will be available -->
-        <maven.frontend.plugin.version>0.0.19</maven.frontend.plugin.version>
+        <maven.frontend.plugin.version>0.0.24</maven.frontend.plugin.version>
+        <!--
         <node.version>v0.10.24</node.version>
         <npm.version>2.5.0</npm.version>
+        -->
+        <node.version>v0.10.32</node.version>
+        <npm.version>2.13.0</npm.version>
 	</properties>
 
    <build>

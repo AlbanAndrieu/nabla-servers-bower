@@ -8,10 +8,12 @@ var path = require('path');
 
 module.exports = function(grunt) {
 
-  //grunt plugins
-  require('time-grunt')(grunt);
+
+  // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
   //require('jit-grunt')(grunt);
+  // Time how long tasks take. Can help when optimizing build times
+  require('time-grunt')(grunt);
 
   //grunt.loadTasks('lib/grunt');
   //grunt.loadNpmTasks('grunt-ngdocs');
@@ -21,10 +23,70 @@ module.exports = function(grunt) {
   //grunt.loadNpmTasks('grunt-version-check');
   //grunt.loadNpmTasks('grunt-installed-check');
   //grunt.loadNpmTasks('grunt-check-dependencies');
+  //grunt.loadNpmTasks('grunt-nsp-package');
 
-  var NG_VERSION = versionInfo.currentVersion;
-  //NG_VERSION.cdn = versionInfo.cdnVersion;
-  var dist = 'bower-' + NG_VERSION.full;
+  var parseVersionFromPomXml = function() {
+      var fs = require('fs');
+      var parseString = require('xml2js').parseString;
+      var version;
+      var pomFile = 'pom.xml';
+      if (typeof process.env.MVN_RELEASE_VERSION !== 'undefined') {
+        pomFile = 'pom.xml.tag';
+      }
+      //TODO use pom.xml.tag
+      //pom.xml.next
+      var pomXml;
+      try {
+        pomXml = fs.readFileSync(pomFile, 'utf8');
+      } catch (err) {
+
+        // If the type is not what you want, then just throw the error again.
+        if (err.code !== 'ENOENT') { throw err; }
+        // Handle a file-not-found error
+
+        try {
+          pomXml = fs.readFileSync('pom.xml', 'utf8');
+        } catch (err) {
+          // If the type is not what you want, then just throw the error again.
+          if (err.code !== 'ENOENT') { throw err; }
+
+          // Handle a file-not-found error
+          console.log('Missing pom.xml');
+        }
+
+      }
+      parseString(pomXml, function(err, result) {
+          version = result.project.parent[0].version;
+          //console.dir(result.project.parent[0]);
+          //version = result.project.version[0];
+      });
+      return version;
+  };
+
+  //console.log('Done.');
+
+  var getVersion = function() {
+    // TODO use https://www.npmjs.com/package/grunt-jenkins-build-info
+    var POM_VERSION = parseVersionFromPomXml();
+    var JENKINS_VERSION = process.env.BUILD_NUMBER || '0';
+    // TODO use https://www.npmjs.com/package/grunt-jenkins-build-number for 0
+    var RELEASE_VERSION = process.env.MVN_RELEASE_VERSION || POM_VERSION;
+    if (typeof process.env.MVN_RELEASE_VERSION === 'undefined') {
+      RELEASE_VERSION = RELEASE_VERSION + '.' + JENKINS_VERSION;
+    }
+    var pattern = /SNAPSHOT/i;
+    RELEASE_VERSION = RELEASE_VERSION.replace(pattern, 'build');
+    //MVN_ISDRYRUN
+    //MVN_DEV_VERSION
+    //console.log('RELEASE_VERSION : ' + RELEASE_VERSION);
+    return RELEASE_VERSION;
+  };
+
+  var VERSION = getVersion();
+
+  var NABLA_VERSION = versionInfo.currentVersion;
+  //NABLA_VERSION.cdn = versionInfo.cdnVersion;
+  var dist = 'bower-' + NABLA_VERSION.full;
 
   //global beforeEach
   util.init();
@@ -34,7 +96,7 @@ module.exports = function(grunt) {
   };
 
   grunt.initConfig({
-    NG_VERSION: NG_VERSION,
+    NABLA_VERSION: NABLA_VERSION,
 
     pkg: grunt.file.readJSON('package.json'),
 
@@ -53,40 +115,67 @@ module.exports = function(grunt) {
       }
     },
 
-    html2js: {
-      options: {
-        useStrict: true,
-        singleModule: true,
-        module: 'nabla-notifications.tpl.html',
-        rename: function(moduleName) {
-          return '/' + moduleName.replace('.html', '');
+    concurrent: {
+      publish: {
+        tasks: [
+          'publish:nabla-styles'
+        ],
+        options: {
+          limit: 8
         }
       },
-      main: {
-        src: ['src/nabla-notifications/views/*.html'],
-        dest: 'build/nabla-notifications/nabla-notifications.tpl.js'
+      bump: {
+        tasks: [
+          'spawn-bump:nabla-styles'
+        ],
+        options: {
+          limit: 8
+        }
+      },
+      default: {
+        tasks: [
+          'default:nabla-styles'
+        ],
+        options: {
+          limit: 8
+        }
       }
     },
 
-    concat: {
-      options: {
-        separator: ';'
-      },
-      dist: {
-        src: ['src/nabla-notifications/nabla-notifications.js', 'src/nabla-notifications/parts/*.js'],
-        dest: 'build/nabla-notifications/nabla-notifications.js'
-      }
-    },
+    //html2js: {
+    //  options: {
+    //    useStrict: true,
+    //    singleModule: true,
+    //    module: 'nabla-notifications.tpl.html',
+    //    rename: function(moduleName) {
+    //      return '/' + moduleName.replace('.html', '');
+    //    }
+    //  },
+    //  main: {
+    //    src: ['src/nabla-notifications/views/*.html'],
+    //    dest: 'build/nabla-notifications/nabla-notifications.tpl.js'
+    //  }
+    //},
+
+    //concat: {
+    //  options: {
+    //    separator: ';'
+    //  },
+    //  dist: {
+    //    src: ['src/nabla-notifications/nabla-notifications.js', 'src/nabla-notifications/parts/*.js'],
+    //    dest: 'build/nabla-notifications/nabla-notifications.js'
+    //  }
+    //},
 
     copy: {
-      nablaHeaderImg: {
-        files: [{
-          expand: true,
-          cwd: 'src/nabla-header/img',
-          src: ['*.png'],
-          dest: 'build/nabla-header/img/'
-        }]
-      },
+//      nablaHeaderImg: {
+//        files: [{
+//          expand: true,
+//          cwd: 'src/nabla-header/img',
+//          src: ['*.png'],
+//          dest: 'build/nabla-header/img/'
+//        }]
+//      },
 //      nablaNotifications: {
 //        src: ['src/nabla-notifications/less/*.less'],
 //        dest: 'build/nabla-notifications/less',
@@ -113,34 +202,26 @@ module.exports = function(grunt) {
       ]
     },
 
-    compress: {
-      build: {
-        options: {archive: 'build/' + dist + '.zip', mode: 'zip'},
-        src: ['build/*', 'src/*', 'target/**', 'test/*', '.*', '*.js', '*.md', '*.json', '*.xml'],
-        cwd: 'build',
-        expand: true,
-        dot: true,
-        dest: dist + '/'
-      }
-    },
-
-    shell: {
-      "npm-install": {
-        command: path.normalize('scripts/npm/install-dependencies.sh')
-      }
-//      "promises-aplus-tests": {
-//        options: {
-//          stdout: false,
-//          stderr: true,
-//          failOnError: true
-//        },
-//        command: path.normalize('./node_modules/.bin/promises-aplus-tests tmp/promises-aplus-adapter++.js')
-//      }
-    },
+    //compress: {
+    //  build: {
+    //    options: {archive: 'build/' + dist + '.zip', mode: 'zip'},
+    //    src: ['build/*', 'src/*', 'target/**', 'test/*', '.*', '*.js', '*.md', '*.json', '*.xml'],
+    //    cwd: 'build',
+    //    expand: true,
+    //    dot: true,
+    //    dest: dist + '/'
+    //  }
+    //},
+    //
+    //shell: {
+    //  "npm-install": {
+    //    command: path.normalize('scripts/npm/install-dependencies.sh')
+    //  }
+    //},
 
     write: {
-      versionTXT: {file: 'build/version.txt', val: NG_VERSION.full},
-      versionJSON: {file: 'build/version.json', val: JSON.stringify(NG_VERSION)}
+      versionTXT: {file: 'build/version.txt', val: NABLA_VERSION.full},
+      versionJSON: {file: 'build/version.json', val: JSON.stringify(NABLA_VERSION)}
     },
 
 //    tests: {
@@ -214,18 +295,18 @@ module.exports = function(grunt) {
       sampleComponent: {
         dest: 'build/sample-component/sample-component.js',
         src:['src/sample-component/sample-component.js']
-      },
-      nablaAuth: {
-        dest: 'build/nabla-auth/nabla-auth.js',
-        src:['src/nabla-auth/nabla-auth.js']
-      },
-      nablaHeader: {
-        dest: 'build/nabla-header/nabla-header.js',
-        src:['src/nabla-header/nabla-header.js']
-      },
-      nablaNotification: {
-        dest: 'build/nabla-notifications/nabla-notification.js',
-        src:['src/nabla-notifications/nabla-notification.js']
+      //},
+      //nablaAuth: {
+      //  dest: 'build/nabla-auth/nabla-auth.js',
+      //  src:['src/nabla-auth/nabla-auth.js']
+      //},
+      //nablaHeader: {
+      //  dest: 'build/nabla-header/nabla-header.js',
+      //  src:['src/nabla-header/nabla-header.js']
+      //},
+      //nablaNotification: {
+      //  dest: 'build/nabla-notifications/nabla-notification.js',
+      //  src:['src/nabla-notifications/nabla-notification.js']
       }
     },
 
@@ -234,21 +315,21 @@ module.exports = function(grunt) {
         files: {
           'build/sample-component/sample-component.min.js': ['build/sample-component/sample-component.js']
         }
-      },
-      nablaAuth: {
-        files: {
-          'build/nabla-auth/nabla-auth.min.js': ['build/nabla-auth/nabla-auth.js']
-        }
-      },
-      nablaHeader: {
-        files: {
-          'build/nabla-header/nabla-header.min.js': ['build/nabla-header/nabla-header.js']
-        }
-      },
-      nablaNotification: {
-        files: {
-          'build/nabla-notifications/nabla-notification.min.js': ['build/nabla-notifications/nabla-notification.js']
-        }
+      //},
+      //nablaAuth: {
+      //  files: {
+      //    'build/nabla-auth/nabla-auth.min.js': ['build/nabla-auth/nabla-auth.js']
+      //  }
+      //},
+      //nablaHeader: {
+      //  files: {
+      //    'build/nabla-header/nabla-header.min.js': ['build/nabla-header/nabla-header.js']
+      //  }
+      //},
+      //nablaNotification: {
+      //  files: {
+      //    'build/nabla-notifications/nabla-notification.min.js': ['build/nabla-notifications/nabla-notification.js']
+      //  }
       }
     },
 
@@ -435,20 +516,155 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('minify', ['clean', 'prepare', 'build', 'uglify']);
+  grunt.registerTask('minify', [
+	'clean',
+	'prepare',
+	'build',
+	'uglify'
+  ]);
 
-  grunt.registerTask('css', ['less']);
+  grunt.registerTask('css', [
+    'less'
+  ]);
 
-  grunt.registerTask('build', ['clean', 'prepare', 'merge-conflict', 'check', 'concat', 'buildall']);
+  grunt.registerTask('build', [
+    'clean',
+    'prepare',
+    'merge-conflict',
+     'check',
+     'concat',
+     'buildall'
+  ]);
 
 //grunt.registerTask('unittest', ['karma:sampleComponent', 'karma:nablaAuth', 'karma:nablaConfiguration', 'karma:nablaHeader', 'karma:nablaNotifications']);
-  grunt.registerTask('unit-test', ['check', 'karma:sampleComponent']);
+  grunt.registerTask('unit-test', [
+    'check',
+    'karma:sampleComponent'
+  ]);
 
-  grunt.registerTask('package', ['build', 'uglify', 'html2js', 'collect-errors', 'copy', 'css', 'unit-test', 'write', 'compress', 'ngdocs']);
+  grunt.registerTask('package', [
+    'build',
+    'uglify',
+    //'html2js',
+    'collect-errors',
+    'copy',
+    //'css',
+    'unit-test',
+    'write',
+    //'compress',
+    'ngdocs'
+  ]);
   //grunt.registerTask('ci-checks', ['merge-conflict', 'jshint', 'jscs']);
 
   grunt.registerTask('docs-test', ['package', 'connect']);
 
-  grunt.registerTask('default', ['package']);
+  //grunt.registerTask('default', ['package']);
+
+  grunt.registerTask('spawn-publish', function(project) {
+    var cb = this.async();
+    grunt.util.spawn({
+      grunt: true,
+      args: ['publish'],
+      opts: {
+        stdio: 'inherit',
+        cwd: 'components/' + project + '/'
+      }
+    }, function(error) {
+      if (error) {
+        cb(error);
+      }
+      cb();
+    });
+  });
+
+  grunt.registerTask('spawn-bump', function(project) {
+    var cb = this.async();
+    var setversion = grunt.option('setversion');
+    if (setversion === undefined) {
+      setversion = VERSION;
+    }
+    //console.log('--setversion=' + setversion);
+    grunt.util.spawn({
+      grunt: true,
+      args: ['bump', '--setversion=' + setversion],
+      opts: {
+        stdio: 'inherit',
+        cwd: 'components/' + project + '/'
+      }
+    }, function(error) {
+      if (error) {
+        cb(error);
+      }
+      cb();
+    });
+  });
+
+  grunt.registerTask('spawn-default', function(project) {
+    var cb = this.async();
+    grunt.util.spawn({
+      grunt: true,
+      args: ['default'],
+      opts: {
+        stdio: 'inherit',
+        cwd: 'components/' + project + '/'
+      }
+    }, function(error) {
+      if (error) {
+        cb(error);
+      }
+      cb();
+    });
+  });
+
+  grunt.registerTask('publish', function(arg) {
+    if (arg === undefined) {
+      arg = 'all';
+    }
+
+    if (arg == 'all') {
+      grunt.task.run([
+        'concurrent:publish'
+      ]);
+    } else {
+      grunt.task.run([
+        'spawn-publish:' + arg
+      ]);
+    }
+
+  });
+
+  grunt.registerTask('bump', function(arg) {
+    if (arg === undefined) {
+      arg = 'all';
+    }
+
+    if (arg == 'all') {
+      grunt.task.run([
+        'concurrent:bump'
+      ]);
+    } else {
+      grunt.task.run([
+        'spawn-bump:' + arg
+      ]);
+    }
+
+  });
+
+  grunt.registerTask('default', function(arg) {
+    if (arg === undefined) {
+      arg = 'all';
+    }
+
+    if (arg == 'all') {
+      grunt.task.run([
+        'concurrent:default'
+      ]);
+    } else {
+      grunt.task.run([
+        'spawn-default:' + arg
+      ]);
+    }
+
+  });
 
 };

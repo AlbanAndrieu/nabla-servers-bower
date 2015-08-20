@@ -1,0 +1,1725 @@
+/*!
+ * Bootstrap v3.3.5 (http://getbootstrap.com)
+ * Copyright 2011-2015 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+//
+// Load core variables and mixins
+// --------------------------------------------------
+
+@import "variables.less";
+@import "mixins.less";
+
+
+//
+// Buttons
+// --------------------------------------------------
+
+
+// Base styles
+// --------------------------------------------------
+
+.btn {
+  transition: all 0.25s ease 0s;
+  &:active,
+  &.active {
+    box-shadow: none;
+  }
+  i {
+    margin-right: 5px;
+    line-height: 1em;
+  }
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: none;
+  }
+}
+
+
+
+
+// Mixin for generating new styles
+.btn-styles(@btn-color: #555) {
+
+  &:hover,
+  &:focus  {
+    background-color: mix(@btn-color, white, 80%);
+  }
+
+  &:active,
+  &.active {
+    background-color: darken(@btn-color, 10%);
+  }
+
+  &.disabled,
+  &:disabled,
+  &[disabled] {
+    background-color: mix(@btn-color, white, 20%);
+    background-image: none;
+  }
+}
+
+// Common styles
+.btn {
+  outline: 0 !important;
+  &:active,
+  &.active {
+    background-image: none;
+  }
+}
+
+// Apply the mixin to the buttons
+.btn-default {
+  .btn-styles(@btn-default-bg);
+  border-color: #ccc;
+  &:active,
+  &.active {
+    color: @brand-primary;
+    background-color: mix(@brand-primary, white, 10%);
+  }
+  &:hover,
+  &:focus  {
+    background-color: mix(@brand-primary, white, 5%);
+  }
+  &.disabled,
+  &:disabled,
+  &[disabled] {
+    color: #ccc;
+    background-color: darken(@btn-default-bg, 10%);
+  }
+}
+.btn-primary { .btn-styles(@btn-primary-bg); }
+.btn-success { .btn-styles(@btn-success-bg); }
+.btn-info    { .btn-styles(@btn-info-bg); }
+.btn-warning { .btn-styles(@btn-warning-bg); }
+.btn-danger  { .btn-styles(@btn-danger-bg); }
+
+
+
+
+
+
+// -------------------- animated button (extend bootstrap) -------------------- //
+.btn {
+  &.animated {
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease 0s;
+    .hidden-content {
+      position: absolute;
+      height: auto;
+      width: 100%;
+      transition: all 0.3s ease 0s;
+    }
+    .visible-content {
+      transition: all 0.3s ease 0s;
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &.animated-from-left {
+    .hidden-content {
+      left: -100%;
+    }
+  }
+  &.animated-from-right {
+    .hidden-content {
+      left: 100%;
+    }
+  }
+  &.animated-from-left:hover {
+    .visible-content {
+      transform: translateX(200%);
+    }
+    .hidden-content {
+      left: 0;
+    }
+  }
+  &.animated-from-right:hover {
+    .visible-content {
+      transform: translateX(-200%);
+    }
+    .hidden-content {
+      left: 0;
+    }
+  }
+}
+
+
+
+
+
+
+// -------------------- single icon button (extend bootstrap) -------------------- //
+.btn {
+  &.btn-single-icon {
+    i {
+      // remove margin before text
+    margin-right: 0;
+    }
+  }
+}
+
+
+
+// -------------------- rotated close button (extend bootstrap) -------------------- //
+
+button {
+  line-height: 1em;
+  &.close {
+    font-size: (@font-size-base * 2);
+    width: 40px;
+    height: 40px;
+    line-height: (@font-size-base * 2);
+    transition: all 0.3s ease-out 0s;
+    transform-origin: 20px 21px;
+    font-weight: 400;
+    // border: 1px solid red;
+    &:hover {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+
+
+
+
+// -------------------- Button-groups -------------------- //
+// dropdown button selected
+.btn-group.open .dropdown-toggle {
+  box-shadow: none;
+}
+
+
+
+
+
+
+
+
+// -------------------- Forms -------------------- //
+// forms focus
+.form-control:focus,
+.has-warning .form-control:focus,
+.has-error .form-control:focus,
+.has-success .form-control:focus
+{
+  box-shadow: none;
+}
+
+.form-control:focus {
+  border-color: @brand-primary;
+  background-color: mix(@brand-primary, white, 10%);
+}
+.has-warning .form-control:focus {
+  border-color: @brand-warning;
+  background-color: white;
+}
+.has-error .form-control:focus{
+  border-color: @brand-danger;
+  background-color: white;
+}
+.has-success .form-control:focus {
+  border-color: @brand-success;
+  background-color: white;
+}
+
+// default
+.form-control {
+  border-color: mix(@brand-primary, white, 50%);
+  box-shadow: none !important;
+}
+.has-warning .form-control {
+  border-color: mix(@brand-warning, white, 70%);
+}
+.has-error .form-control {
+  color: @brand-danger;
+  border-color: mix(@brand-danger, white, 50%);
+  background-color: mix(@brand-danger, white, 10%);
+}
+.has-success .form-control {
+  border-color: mix(@brand-success, white, 50%);
+}
+
+// disabled
+.form-control[disabled], fieldset[disabled] .form-control {
+    border-color: @gray-lighter;
+}
+
+
+// form in navbar
+.navbar-inverse {
+  .form-control {
+    background-color: @gray-dark;
+    border-color: @gray-dark;
+    box-shadow: none !important;
+    &:focus {
+      color: white;
+      background-color: @gray-darker;
+
+    }
+  }
+}
+
+
+
+// legend
+legend {
+  font-size: (@font-size-base * 1.5);
+  padding-bottom: 5px;
+  color: @gray;
+}
+
+
+
+// labels
+label {
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: @gray !important;
+}
+
+
+
+
+
+
+
+// -------------------- navbar -------------------- //
+    @media (max-width: @grid-float-breakpoint-max) {
+      // Dropdowns get custom display when collapsed
+      .navbar-nav {
+        .dropdown-menu {
+          transition: all 0s;
+        }
+      }
+    }
+
+
+
+
+
+
+// -------------------- Tables -------------------- //
+.table > caption + thead > tr:first-child > th, .table > colgroup + thead > tr:first-child > th, .table > thead:first-child > tr:first-child > th, .table > caption + thead > tr:first-child > td, .table > colgroup + thead > tr:first-child > td, .table > thead:first-child > tr:first-child > td {
+    font-weight: 600;
+    color: @brand-primary;
+}
+
+// add 1px border to last tr
+.table {
+  > tbody,
+  > tfoot {
+    > tr:last-child {
+      > th,
+      > td {
+        border-bottom: 1px solid @gray-base-90;
+      }
+    }
+  }
+}
+
+// sorted arrow
+.table th.sorted::after {
+  font-family: fontAwesome;
+  color: #A8BDDB;
+  content: "\f107";
+  margin-left: 5px;
+}
+
+
+
+
+
+
+
+// -------------------- Navs -------------------- //
+// tabs
+.nav-tabs {
+  > li {
+    > a {
+      color: @gray;
+      &:hover {
+        color: @gray;
+        border-color: @gray-lighter;
+        border-bottom: 1px solid @body-bg;
+      }
+    }
+    &.active > a {
+      border-top: 4px solid @brand-primary;
+      &:hover,
+      &:focus {
+        border-top: 4px solid @brand-primary;
+      }
+    }
+  }
+}
+
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+  border-color: @gray-lighter;
+}
+
+// pills
+.nav-pills {
+  > li {
+    > a {
+      color: @gray;
+      border: 1px solid transparent;
+      &:hover {
+        border: 1px solid @gray-base-85;
+      }
+    }
+
+    // Active state
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        color: @brand-primary;
+        background-color: mix(@brand-primary, white, 5%); //
+        border: 1px solid @gray-base-85;
+      }
+    }
+  }
+}
+
+
+// simple tabs (extend bootstrap)
+.nav-tabs {
+  // remove dot selections
+  ::-moz-focus-inner, :active, :focus {
+    outline:none;
+    border:0;
+    -moz-outline-style: none;
+  }
+  border-bottom: none;
+  &.nav-tabs-simple-horizontal {
+      border-bottom: 1px solid @gray-lighter;
+    > li {
+      //padding-right: 10px;
+      border-bottom: 1px solid @gray-lighter;
+      i {
+        display: inline-block;
+        line-height: inherit;
+        height: 1.28571em;
+        margin: 0 5px auto 0;
+        text-align: center;
+      }
+      &.disabled > a {
+        box-shadow: inset 0 0 @brand-primary !important;
+      }
+      > a {
+        box-shadow: inset 0 0 white;
+        -webkit-transition: color 0.3s, box-shadow 0.3s;
+        transition: color 0.3s, box-shadow 0.3s;
+        background-color: transparent;
+        border: transparent;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 15px;
+        margin-right: 0;
+        &:hover {
+          box-shadow: inset 0 -4px mix(@brand-primary, white, 50%);
+        }
+      }
+      &.active > a {
+        border: transparent;
+        box-shadow: inset 0 -4px @brand-primary;
+        color: @brand-primary;
+        &:hover,
+        &:focus {
+          border: transparent;
+        }
+      }
+      &.dropdown {
+        &.open > a {
+          background-color: transparent;
+        }
+      }
+    }
+    .label {
+      margin-left: 5px;
+      vertical-align: middle;
+      padding: 0.1em 0.5em 0.2em;
+      font-size: 9px;
+    }
+    &.nav-tabs-simple-large-icon {
+    > li {
+      i {
+        // display icon above text if large icon
+        display: block;
+        font-size: 2em;
+        line-height: inherit;
+        height: 1.28571em;
+        margin: 0 auto 0;
+        text-align: center;
+        }
+      }
+    }
+  }
+
+
+
+  &.nav-tabs-simple-vertical {
+      // border-right: 1px solid @gray-lighter;
+    > li {
+      // display li vertical
+      float: none;
+      width: 100%;
+      padding-right: 0;
+      text-align: center;
+      i {
+        // display icon above text
+        display: block;
+        margin: 10px auto 0.3em;
+        text-align: center;
+        -webkit-transition: transform 0.3s ease;
+        transition: transform 0.3s ease;
+      }
+      &.disabled > a {
+        box-shadow: inset 0 0 @brand-primary !important;
+      }
+      > a {
+        box-shadow: inset 0 0 white;
+        -webkit-transition: color 0.4s, box-shadow 0.4s, background-color 0.3s;
+        transition: color 0.4s, box-shadow 0.4s, background-color 0.3s;
+        background-color: transparent;
+        border: transparent;
+        margin-right: 0;
+        font-size: @font-size-h6;
+        &:hover {
+          box-shadow: inset 5px 0 mix(@brand-primary, white, 50%);
+          background-color: rgba(255, 255, 255, 0.3);
+        }
+      }
+      &.active > a {
+        border: transparent;
+        box-shadow: inset 5px 0 @brand-primary;
+        background-color: rgba(255, 255, 255, 0.5);
+        color: @brand-primary;
+        i {
+          transform: translateY(3px);
+        }
+        &:hover,
+        &:focus {
+          border: transparent;
+        }
+      }
+      &.dropdown {
+        &.open > a {
+          background-color: transparent;
+        }
+      }
+    }
+    &.nav-tabs-simple-large-icon {
+    > li {
+      i {
+        font-size: 3em;
+        line-height: 1em;
+        }
+      }
+    }
+  }
+
+}
+
+
+@media (max-width: @screen-phone) {
+  .nav-tabs {
+    &.nav-tabs-simple-horizontal {
+      > li {
+        // take full space
+        width: 100%;
+        padding-right: 0;
+      }
+      &.nav-tabs-simple-large-icon > li {
+        a {
+          i {
+            // display icon at the left of the text
+            font-size: @font-size-h3;
+            display: inline-block;
+            padding-right: 10px;
+            text-align: center;
+          }
+        }
+
+      }
+    }
+  }
+}
+
+
+
+
+
+
+// Breadcrumbs
+.breadcrumb {
+  > li {
+      + li:before {
+        color: @gray-lighter;
+      }
+      a {
+        color: @gray;
+        text-decoration: none;
+        &:hover {
+          color: mix(@brand-primary, white, 70%);
+        }
+    }
+  }
+
+  > .active {
+    color: @breadcrumb-active-color;
+  }
+}
+
+
+// Pagination
+.pagination {
+
+  > li > a,
+  > li > span {
+    &:hover,
+    &:focus {
+      color: @gray-light;
+    }
+  }
+}
+
+
+
+
+
+// -------------------- Dropdown -------------------- //
+.dropdown-menu {
+  margin: -2px 0px 0px 0px;
+  box-shadow: none;
+  font-size: @font-size-small;
+  padding: 5px 5px;
+
+  backface-visibility: hidden;
+  opacity: 0;
+  display: block;
+  transform-origin: center top -30px;
+  transform: scale(1, 0);
+  transition: all 150ms cubic-bezier(0.05, 0.74, 0.27, 0.99) 0.1s;
+
+  > li >a {
+    padding: 10px 10px;
+    margin-bottom: 1px;
+transition: all 0.3s ease;
+  }
+
+  .divider {
+    margin: 5px 0px;
+  }
+
+}
+
+
+// Active state
+.dropdown-menu > .active > a {
+  //margin-left: -5px;
+  &,
+  &:hover,
+  &:focus {
+    border-left: 3px solid @brand-primary;
+    padding-left: 7px;
+  }
+}
+
+
+
+// Open state for the dropdown
+.open {
+  // Show the menu
+  > .dropdown-menu {
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+}
+
+
+
+// dropup
+
+.dropup,
+.navbar-fixed-bottom .dropdown {
+  // Different positioning for bottom up menu
+  .dropdown-menu {
+    transform-origin: center bottom +30px;
+  }
+}
+
+
+
+
+
+
+//
+// Progress bars
+// --------------------------------------------------
+
+.progress {
+  height: 8px;
+  margin-bottom: 0;
+  box-shadow: none;
+  margin-top: 7px;
+  &.progress-small {
+    height: 5px;
+  }
+}
+
+
+
+
+
+//
+// List groups
+// --------------------------------------------------
+
+.list-group-item {
+  padding: 15px 10px;
+  border-left: none;
+  border-right: none;
+  border-top: 1px solid @list-group-border;
+  border-bottom: 1px solid @list-group-border;
+  // Active class on item itself, not parent
+  &.active,
+  &.active:hover,
+  &.active:focus {
+    border-left: 3px solid @brand-primary;
+    padding-left: 7px;
+  }
+  .list-group-item-heading {
+    font-size: @font-size-base;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .list-group-item-text {
+    color: @gray-light;
+  }
+}
+
+
+a.list-group-item {
+  .list-group-item-heading {
+    color: @gray;
+  }
+}
+
+
+
+
+
+
+// -------------------- modals -------------------- //
+.modal-content {
+  box-shadow: none;
+  padding: 0px 20px;
+  .modal-header {
+    padding-top: 30px;
+    padding-bottom: 5px;
+    padding-left: 0px;
+    padding-right: 0px;
+    .close {
+      margin-top: -20px;
+      margin-right: -10px;
+    }
+  }
+  .modal-body {
+    padding: 20px 0px;
+  }
+  .modal-footer {
+    padding: 15px 0px;
+  }
+}
+
+
+
+
+
+
+
+// -------------------- alerts -------------------- //
+.alert-dismissable, // The misspelled .alert-dismissable was deprecated in 3.2.0.
+.alert-dismissible {
+  .close {
+    top: -10px;
+    right: -30px;
+  }
+}
+
+
+
+
+
+
+
+
+
+// -------------------- popovers -------------------- //
+.popover {
+  box-shadow: none;
+  .popover-title {
+    text-transform: uppercase;
+    font-size: ceil((@font-size-base * 0.75));
+    color: @gray-light;
+    border-bottom: 1px solid @gray-base-85;
+  }
+  .popover-content {
+    font-size: @font-size-h6;
+  }
+}
+
+
+
+
+
+
+
+// -------------------- labels -------------------- //
+.label {
+  font-weight: normal;
+  font-size: ceil((@font-size-base * 0.65));
+  margin-left: 5px;
+  vertical-align: middle;
+  padding: 0.1em 0.5em 0.2em;
+  &.label-default {
+    color: @gray-light;
+    background-color: #fff;
+    border: 1px solid @gray-base-85;
+  }
+}
+
+
+
+
+
+
+
+// -------------------- panels -------------------- //
+.panel {
+  box-shadow: none;
+  padding: 0px 20px;
+  .panel-heading {
+    padding-top: 30px;
+    padding-bottom: 5px;
+    padding-left: 0px;
+    padding-right: 0px;
+    font-size: @font-size-h3;
+  }
+  .panel-body {
+    padding: 20px 0px;
+  }
+  .panel-footer {
+    text-align: right;
+    padding: 15px 0px;
+    .btn {
+      margin-left: 5px;
+    }
+  }
+}
+
+
+
+
+
+
+// -------------------- Typography -------------------- //
+a {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+code {
+  font-size: 12px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+
+
+
+
+
+// -------------------- Typography (extend bootstrap) -------------------- //
+
+// ***** nabla custom class *******
+.desc-small {
+  font-size: floor((100% * @font-size-small / @font-size-base));
+  line-height: 1.4em;
+  color: @text-muted;
+  margin-bottom: 10px;
+  white-space:normal;
+}
+
+.overflow-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// -------------------- Input icon (extend bootstrap) -------------------- //
+.form-control-feedback {
+  color: @brand-primary;
+}
+
+.form-group-search {
+  ::-moz-focus-inner, :active, :focus {
+    outline:none;
+  }
+  .form-control-feedback-icon-search {
+    transition: all 0.3s ease-in;
+    opacity: .5;
+  }
+  .form-control-feedback-icon-reset {
+    transition: all 0.3s ease-in;
+    opacity: 0;
+    font-weight: 100;
+  }
+  .input-group .input-group-input-with-feedback {
+    display: table-cell;
+    position: relative;
+
+    input {
+      display: block;
+    }
+  }
+
+  input {
+    &:focus {
+      ~ .form-control-feedback-icon-search {
+        transition: none;
+        opacity: 0;
+      }
+      ~ .form-control-feedback-icon-reset {
+        opacity: 0.5;
+        pointer-events: visible;
+        cursor: pointer;
+        transform-origin: 50% 50%;
+        &:hover {
+          opacity: 1;
+          transform: rotate(89deg);
+        }
+      }
+    }
+  }
+  .input-lg ~ .form-control-feedback {
+    width: @input-height-large;
+    height: @input-height-large;
+    line-height: @input-height-large;
+  }
+  .input-sm ~ .form-control-feedback {
+    width: @input-height-small;
+    height: @input-height-small;
+    line-height: @input-height-small;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+// responsive table
+// For correct display you must add 'data-title' to each 'td'
+.table-responsive-vertical {
+
+  @media (max-width: @screen-tablet) {
+
+    // Tighten up spacing
+    > .table {
+      margin-bottom: 0;
+      > thead,
+      > tfoot {
+        display: none;
+      }
+
+      > tbody {
+        display: block;
+
+        > tr {
+          display: block;
+          border: 1px solid @gray-base-90;
+          margin-bottom: 30px;
+
+          > td {
+            display: block;
+            vertical-align: middle;
+            text-align: right;
+            padding: 10px 20px;
+            &:first-child {
+              border-top: 0;
+            }
+            .progress {
+              // remove inline margin-right
+              margin-right: 0 !important;
+              margin-left: 30%;
+            }
+            .desc-small {
+              max-width: 60%;
+              margin-left: 40%;
+            }
+          }
+          > td[data-title]:before {
+            content: attr(data-title);
+            float: left;
+            font-size: inherit;
+            font-weight: 600;
+            color: @brand-primary;
+            margin-right: 20px;
+            }
+        }
+      }
+    }
+  }
+}
+
+
+
+//scaffolding.less
+
+// -------------------- Images (extend bootstrap) -------------------- //
+.img-circle {
+  &.img-circle-16 {
+    width: 16px;
+    height: 16px;
+  }
+  &.img-circle-24 {
+    width: 24px;
+    height: 24px;
+  }
+  &.img-circle-32 {
+    width: 32px;
+    height: 32px;
+  }
+  &.img-circle-48 {
+    width: 48px;
+    height: 48px;
+  }
+  &.img-circle-64 {
+    width: 64px;
+    height: 64px;
+  }
+  &.img-circle-96 {
+    width: 96px;
+    height: 96px;
+  }
+  &.img-circle-128 {
+    width: 128px;
+    height: 128px;
+  }
+}
+
+
+
+
+
+// -------------------- Spaces -------------------- //
+.margin-left-5 {
+  margin-left: 5px
+}
+.margin-left-10 {
+  margin-left: 10px
+}
+
+.margin-right-5 {
+  margin-right: 5px
+}
+.margin-right-10 {
+  margin-right: 10px
+}
+
+.margin-top-5 {
+  margin-top: 5px
+}
+.margin-top-10 {
+  margin-top: 10px
+}
+
+.margin-bottom-5 {
+  margin-bottom: 5px
+}
+.margin-bottom-10 {
+  margin-bottom: 10px
+}
+.margin-bottom-30 {
+  margin-bottom: 30px
+}
+
+
+
+
+
+
+// -------------------- Action-menu -------------------- //
+.action-menu-hover {
+  .action-menu {
+    transition: opacity 0.3s ease;
+    opacity: 0.4;
+  }
+  &:hover {
+    .action-menu  {
+      opacity: 1;
+    }
+  }
+  .action-menu.open {
+      opacity: 1;
+  }
+}
+
+
+
+
+
+
+
+// -------------------- Tiles   -------------------- //
+// ***** nabla custom class *******
+
+figure > div {
+  margin: 1em auto;
+}
+
+.tile-app {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  padding: 10px 10px 10px 10px;
+  height: 256px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  background-color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+  border: 1px solid transparent;
+  .tile-app-icon {
+    position: relative;
+    //display: block;
+    //width: 128px;
+    //height: 128px;
+    height: 0;
+    width: 100%;
+    padding: 0;
+    padding-bottom: 100%;
+    overflow: visible;
+    margin-left: auto ;
+    margin-right: auto ;
+    background-repeat: no-repeat;
+    background-position: center center;
+    //background-size: cover;
+    transition: all 0.3s ease;
+    &.tile-app-icon-default {
+      //background-size: cover;
+      height: 100%;
+      width: 100%;
+      padding: 0; /* reset */
+      //padding-bottom: 260%;
+      //position: absolute;
+      //border: thin dotted darkgrey;
+      left: 0;
+      top:0;
+    }
+    &.tile-app-icon-angular {
+      //background-image: url("../../images/angular.svg");
+      //background-size: cover;
+      height: 100%;
+      width: 100%;
+	  //height: 1px;
+      padding: 0; /* reset */
+      //padding-bottom: 260%;
+      //position: absolute;
+      //border: thin dotted darkgrey;
+      left: 0;
+      top:0;
+    }
+    &.tile-app-icon-bootstrap {
+      //background-image: url("../../images/bootstrap.svg");
+      //background-size: cover;
+      height: 100%;
+      width: 100%;
+      padding: 0; /* reset */
+      //padding-bottom: 90%;
+      //border: thin dotted darkgrey;
+    }
+    &.tile-app-icon-bower {
+      //background-image: url("../../images/bower.svg");
+      padding-bottom: 90%;
+      width: 90%;
+    }
+    &.tile-app-icon-compass {
+      //background-image: url("../../images/compass.svg");
+      padding-bottom: 90%;
+      width: 100%;
+    }
+    &.tile-app-icon-css-3 {
+      //background-image: url("../../images/css-3.svg");
+      //padding-bottom: 142%;
+      width: 100%;
+    }
+    &.tile-app-icon-html-5 {
+      //background-image: url("../../images/html-5.svg");
+      //padding-bottom: 142%;
+      height: auto;
+      width: 100%;
+    }
+    &.tile-app-icon-grunt {
+      //background-image: url("../../images/grunt.svg");
+      //padding-bottom: 136%;
+      width: 100%;
+    }
+  }
+  .tile-app-name {
+    display: block;
+    text-align: center;
+    font-size: @font-size-h6;
+    line-height: @font-size-base;
+    margin-top: 0px;
+  }
+  &:hover {
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    .tile-app-icon {
+      margin-top:3px;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+// -------------------- Media (extend bootstrap)  -------------------- //
+.media-group {
+  line-height: 0;
+  .media {
+    display: inline-block;
+    margin: 0 40px 10px 0;
+  }
+  .media-body {
+    width: auto;
+  }
+}
+
+.media-icon {
+  // extend if icon instead of an image
+  .media-body {
+    .media-heading {
+      margin-bottom: 0;
+    }
+    .media-meta {
+      // extend Media with a meta wrapper
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+  }
+}
+
+
+
+
+
+
+
+// -------------------- Switch [nabla custom class]  -------------------- //
+
+.form-group {
+  //border: 1px solid green;
+}
+.control-label {
+  ///border: 1px solid blue;
+}
+.radio {
+  //border: 1px solid red;
+}
+
+
+
+.switch {
+  white-space: nowrap;
+  label {
+    padding-left: 0;
+    user-select: none;
+  }
+  input {
+    display: none;
+  }
+  span {
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-bottom: 0.3em;
+    padding-left: 0;
+    margin-right: 0.6em;
+    transition: all ease 0.2s;
+    box-shadow: inset 0 0 1px rgba(0,0,0,.5);
+    background-color: @gray-lighter;
+    &:before {
+      // handle
+      display: block;
+      content: '';
+      background: white;
+      box-shadow: 0 1px 2px rgba(0,0,0,.5);
+      transition: all ease 0.2s;
+    }
+  }
+  & :checked + span {
+    padding-right: 0;
+  }
+  &.disabled {
+    cursor: not-alowed;
+    opacity: 0.5;
+  }
+}
+
+
+
+// Switch sizes (include size,radius, line option)
+.switch-size(@switch-width;) {
+  .switch-radius(@switch-width);
+  span {
+    padding-right: (@switch-width * 1.5);
+    &:before {
+      width: @switch-width;
+      height: @switch-width;
+    }
+  }
+  &.switch-line {
+    span {
+      height: 2px;
+      transition: all ease-in 0.2s;
+      &:before {
+        margin-top: -(@switch-width/2) + 1px;
+      }
+    }
+  }
+  &.switch-square {
+    span {
+      &:before {
+        width: @switch-width;
+        height: @switch-width * 0.7;
+      }
+    }
+  }
+  & :checked + span {
+    padding-left: (@switch-width * 1.5);
+  }
+}
+
+
+.switch {
+  .switch-size(@input-height-base/2;);
+}
+
+.switch-sm {
+  .switch-size(@input-height-small/2.3;);
+}
+
+.switch-lg {
+  .switch-size(@input-height-large/2;);
+}
+
+
+
+
+
+// Switch radius
+.switch-radius (@switch-radius) {
+  span {
+    border-radius: @switch-radius;
+    &:before {
+      border-radius: @switch-radius;
+    }
+  }
+}
+
+
+.switch-square {
+  .switch-radius(0);
+}
+
+
+
+// Switch colors
+.switch-color(@switch-color) {
+  & :checked + span {
+    box-shadow: inset 0 0 1px rgba(0,0,0,.5), inset 0 0 80px @switch-color;
+  }
+}
+
+.switch {
+  .switch-color(@gray);
+  &.switch-line {
+    & :checked + :before {
+      background-color: @gray;
+      box-shadow:none;
+    }
+  }
+}
+
+.switch-default {
+  .switch-color(@gray);
+  &.switch-line {
+    & :checked + :before {
+      background-color: @gray;
+    }
+  }
+}
+
+.switch-primary {
+  .switch-color(@btn-primary-bg);
+  &.switch-line {
+    & :checked + :before {
+      background-color: @btn-primary-bg;
+    }
+  }
+}
+
+.switch-success {
+  .switch-color(@btn-success-bg);
+  &.switch-line {
+    & :checked + :before {
+      background-color: @btn-success-bg;
+    }
+  }
+}
+
+.switch-info {
+  .switch-color(@btn-info-bg);
+  &.switch-line {
+    & :checked + :before {
+      background-color: @btn-info-bg;
+    }
+  }
+}
+
+.switch-warning {
+  .switch-color(@btn-warning-bg);
+  &.switch-line {
+    & :checked + :before {
+      background-color: @btn-warning-bg;
+    }
+  }
+}
+
+.switch-danger {
+  .switch-color(@btn-danger-bg);
+  &.switch-line {
+    & :checked + :before {
+      background-color: @btn-danger-bg;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+// -------------------- Checkbox [nabla custom class]  -------------------- //
+.checkbox-nice {
+  position: relative;
+  display: block;
+  backface-visibility: hidden;
+  outline: none;
+  white-space: nowrap;
+
+  label {
+    padding-left: 0;
+    outline: none;
+    user-select: none;
+  }
+  input {
+    display: none;
+  }
+  span {
+    position: relative;
+    display: inline-block;
+    vertical-align: sub;
+    outline: none;
+    padding-left: 0;
+    margin-right: 0.6em;
+    font-size: 17px;
+    &:before {
+      // box
+      position: relative;
+      display: block;
+      content: '';
+      background: white;
+      border-radius: 0;
+      border: 1px solid @gray-lighter;
+      transition: all ease 0.2s;
+    }
+    &:after {
+      opacity: 0;
+    }
+  }
+  & :checked + span {
+    &:after {
+      //mark
+      position: absolute;
+      top: 0em;
+      left: 0.25em;
+      font-family: fontAwesome;
+      font-weight: 100;
+      color: white;
+      content: "\f00c";
+      opacity: 1;
+      transition: all ease 0.2s;
+    }
+  }
+  &.disabled {
+    cursor: not-alowed;
+    opacity: 0.5;
+  }
+  &.checkbox-inline {
+    // override bootstrap 20px left padding
+    padding-left: 0;
+    label {
+      margin-right: 1em;
+    }
+  }
+}
+
+
+
+
+// checkbox-nice sizes (include size)
+.checkbox-nice-size(@checkbox-nice-size;) {
+  span {
+    &:before {
+      width: @checkbox-nice-size;
+      height: @checkbox-nice-size;
+    }
+    &:after {
+      font-size: @checkbox-nice-size * 0.7 ;
+    }
+  }
+  & :checked + span {
+    &:before {
+      border-width: @checkbox-nice-size/2;
+    }
+  }
+  &.checkbox-nice-round {
+    span {
+      &:before {
+        border-radius: @checkbox-nice-size;
+      }
+    }
+  }
+}
+
+
+.checkbox-nice {
+  .checkbox-nice-size(@input-height-base/2;);
+}
+
+.checkbox-nice-sm {
+  .checkbox-nice-size(@input-height-small/2.3;);
+}
+
+.checkbox-nice-lg {
+  .checkbox-nice-size(@input-height-large/2;);
+}
+
+
+
+// Checkbox colors
+.checkbox-nice-color(@checkbox-nice-color) {
+  & :checked + span {
+    &:before {
+      border-color: @checkbox-nice-color;
+    }
+  }
+}
+
+.checkbox-nice {
+  .checkbox-nice-color(@gray);
+}
+
+.checkbox-nice-default {
+  .checkbox-nice-color(@gray);
+}
+
+.checkbox-nice-primary {
+  .checkbox-nice-color(@btn-primary-bg);
+}
+
+.checkbox-nice-success {
+  .checkbox-nice-color(@btn-success-bg);
+}
+
+.checkbox-nice-info {
+  .checkbox-nice-color(@btn-info-bg);
+}
+
+.checkbox-nice-warning {
+  .checkbox-nice-color(@btn-warning-bg);
+}
+
+.checkbox-nice-danger {
+  .checkbox-nice-color(@btn-danger-bg);
+}
+
+
+
+
+
+
+
+
+
+
+// -------------------- Radio [nabla custom class]  -------------------- //
+.radio-nice {
+  position: relative;
+  display: block;
+  backface-visibility: hidden;
+  outline: none;
+  white-space: nowrap;
+
+  label {
+    padding-left: 0;
+    outline: none;
+    user-select: none;
+  }
+  input {
+    display: none;
+  }
+  span {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    outline: none;
+    padding-left: 0;
+    margin-right: 0.6em;
+    font-size: 17px;
+    border-radius: 50%;
+    &:before {
+      // box
+      position: relative;
+      display: block;
+      content: '';
+      background: white;
+      border-radius: 0;
+      border: 0 solid @gray-lighter;
+      transition: all ease 0.2s;
+    }
+  }
+  &.disabled {
+    cursor: not-alowed;
+    opacity: 0.5;
+  }
+  &.radio-inline {
+    // override bootstrap 20px left padding
+    padding-left: 0;
+    label {
+      margin-right: 1em;
+    }
+  }
+}
+
+
+
+
+// radio-nice sizes (include size)
+.radio-nice-size(@radio-nice-size;) {
+  span {
+    border: 1px solid @gray-lighter;
+    &:before {
+      width: @radio-nice-size;
+      height: @radio-nice-size;
+      border-radius: @radio-nice-size;
+    }
+    &:after {
+      font-size: @radio-nice-size * 0.7 ;
+    }
+  }
+  & :checked + span {
+    &:before {
+      border-width: @radio-nice-size/3.5;
+      border-color: white;
+    }
+  }
+}
+
+
+.radio-nice {
+  .radio-nice-size(@input-height-base/2;);
+}
+
+.radio-nice-sm {
+  .radio-nice-size(@input-height-small/2.3;);
+}
+
+.radio-nice-lg {
+  .radio-nice-size(@input-height-large/2;);
+}
+
+
+
+// radio colors
+.radio-nice-color(@radio-nice-color) {
+  & :checked + span {
+    &:before {
+      background-color: @radio-nice-color;
+    }
+  }
+}
+
+.radio-nice {
+  .radio-nice-color(@gray);
+}
+
+.radio-nice-default {
+  .radio-nice-color(@gray);
+}
+
+.radio-nice-primary {
+  .radio-nice-color(@btn-primary-bg);
+}
+
+.radio-nice-success {
+  .radio-nice-color(@btn-success-bg);
+}
+
+.radio-nice-info {
+  .radio-nice-color(@btn-info-bg);
+}
+
+.radio-nice-warning {
+  .radio-nice-color(@btn-warning-bg);
+}
+
+.radio-nice-danger {
+  .radio-nice-color(@btn-danger-bg);
+}
