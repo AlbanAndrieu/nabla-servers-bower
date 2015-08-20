@@ -9,17 +9,18 @@
     "grunt-contrib-connect": "^0.8.0",
     "grunt-contrib-copy": "^0.5.0",
     "grunt-contrib-cssmin": "^0.10.0",
-    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-jshint": "^0.11.2",
     "grunt-contrib-less": "^0.12.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-mocha": "^0.4.10",
-    "grunt-newer": "^0.7.0",
-    "grunt-wiredep": "^1.7.0",
-    "jshint-stylish": "^0.4.0",
-    "load-grunt-tasks": "^0.4.0",
-    "time-grunt": "^0.4.0"
+    "grunt-newer": "^1.1.0",
+    "grunt-wiredep": "^2.0.0",
+    "jshint-stylish": "^2.0.1",
+    "load-grunt-tasks": "^3.1.0",
+    "time-grunt": "^1.0.0"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=0.10.0",
+    "npm": ">=2.5"
   }
 }
