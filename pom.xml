@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<parent>
-		<groupId>com.nabla.project.servers.sample</groupId>
-		<artifactId>sample</artifactId>
-		<version>1.0.1-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <groupId>com.nabla.project.servers.sample</groupId>
+        <artifactId>sample</artifactId>
+        <version>1.0.1-SNAPSHOT</version>
+    </parent>
 
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>bower-pom</artifactId>
-	<packaging>pom</packaging>
-	<name>bower-pom</name>
-	<description>Bower components POM</description>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>bower-pom</artifactId>
+    <packaging>pom</packaging>
+    <name>bower-pom</name>
+    <description>Bower components POM</description>
     <url>https://github.com/AlbanAndrieu/nabla-servers-bower</url>
 
     <scm>
@@ -21,18 +21,18 @@
             <url>https://github.com/AlbanAndrieu/nabla-servers-bower</url>
     </scm>
 
-	<ciManagement>
-		<system>Jenkins</system>
+    <ciManagement>
+        <system>Jenkins</system>
         <url>${JOB_URL}</url>
-	</ciManagement>
+    </ciManagement>
 
-	<issueManagement>
-		<url>https://github.com/AlbanAndrieu/nabla-servers-bower/issues</url>
-		<system>GitHub Issues</system>
-	</issueManagement>
+    <issueManagement>
+        <url>https://github.com/AlbanAndrieu/nabla-servers-bower/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
 
-	<properties>
-		<!-- TODO remove maven.frontend.plugin.version once super pom 1.1.15-SNAPSHOT will be available -->
+    <properties>
+        <!-- TODO remove maven.frontend.plugin.version once super pom 1.1.15-SNAPSHOT will be available -->
         <maven.frontend.plugin.version>0.0.24</maven.frontend.plugin.version>
         <!--
         <node.version>v0.10.24</node.version>
@@ -40,10 +40,10 @@
         -->
         <node.version>v0.10.32</node.version>
         <npm.version>2.13.0</npm.version>
-	</properties>
+    </properties>
 
    <build>
-	    <!--
+        <!--
         <sourceDirectory>src</sourceDirectory>
         <testSourceDirectory>test</testSourceDirectory>
         -->
@@ -65,7 +65,7 @@
                                                     <include>node_modules/</include>
                                                     <include>node/</include>
                                                     <include>bower_components/</include>
-													<include>lib/</include>
+                                                    <!--<include>lib/</include>-->
                                                     <!--<include>build/</include>-->
                                                     <include>docs/</include>
                                                     <include>dist/</include>
@@ -91,12 +91,12 @@
                 </configuration>
 
                 <executions>
-					<execution>
+                    <execution>
                         <id>install node and npm</id>
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>
-						<phase>validate</phase>
+                        <phase>validate</phase>
                     </execution>
 
                     <execution>
@@ -104,20 +104,9 @@
                         <goals>
                             <goal>npm</goal>
                         </goals>
-						<phase>initialize</phase>
+                        <phase>initialize</phase>
                         <configuration>
                             <arguments>install</arguments>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>grunt bower</id>
-                        <goals>
-                            <goal>grunt</goal>
-                        </goals>
-						<phase>generate-sources</phase>
-                        <configuration>
-                            <arguments>prepare</arguments>
                         </configuration>
                     </execution>
 
@@ -126,70 +115,71 @@
                         <goals>
                             <goal>grunt</goal>
                         </goals>
-						<phase>compile</phase>
+                        <phase>compile</phase>
                         <configuration>
                             <arguments>check</arguments>
                         </configuration>
                     </execution>
 
                     <execution>
-                        <id>grunt unit-test</id>
-                        <goals>
-                            <goal>grunt</goal>
+                        <id>grunt build</id>
+						<goals>
+							<goal>grunt</goal>
                         </goals>
-						<phase>test</phase>
+                        <phase>compile</phase>
                         <configuration>
-                            <arguments>unit-test</arguments>
+							<arguments>default</arguments>
                         </configuration>
                     </execution>
 
-					<!-- TODO
+                    <!--release:prepare
+                    release:update-versions-->
                     <execution>
-                        <id>grunt integration-test</id>
+                        <id>grunt bump</id>
                         <goals>
-                            <goal>grunt</goal>
+							<goal>grunt</goal>
                         </goals>
-						<phase>integration-test</phase>
+                        <!--<phase>prepare-package</phase>-->
+                        <phase>install</phase>
                         <configuration>
-                            <arguments>integration-test</arguments>
+							<arguments>bump</arguments>
                         </configuration>
                     </execution>
-                    -->
 
                     <execution>
-                        <id>grunt prepare-package</id>
+                        <id>grunt publish</id>
                         <goals>
-                            <goal>grunt</goal>
+							<goal>grunt</goal>
                         </goals>
-						<phase>prepare-package</phase>
+                        <phase>deploy</phase>
                         <configuration>
-                            <arguments>package</arguments>
+							<arguments>publish</arguments>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>publish-bower</id>
-						<phase>deploy</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>./publish.sh</executable>
-							<workingDirectory>${basedir}</workingDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<execution>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>publish-bower</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>./publish.sh</executable>
+                            <workingDirectory>${basedir}</workingDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
                         <id>lcovFileForSonar</id>
                         <phase>test</phase>
                         <goals>
@@ -197,14 +187,14 @@
                         </goals>
                         <configuration>
                             <target>
-								<echo message="Copying LCOV file -> lcof.info for Sonar purpose to target directory" />
+                                <echo message="Copying LCOV file -> lcof.info for Sonar purpose to target directory" />
                                 <copy todir="${basedir}/target" flatten="true">
                                     <fileset dir="${basedir}/target">
                                         <include name="karma-coverage/PhantomJS*/lcov.info" />
                                     </fileset>
                                 </copy>
 
-								<!--
+                                <!--
                                 <path id="sourceDirectory.path">
                                   <pathelement location="${basedir}/app/scripts"/>
                                 </path>
@@ -213,10 +203,10 @@
                                   <map from="${basedir}/" to=""/>
                                 </pathconvert>
 
-								<echo message="Base dir: ${basedir} " />
-								<echo message="Source directory: ${project.build.sourceDirectory}" />
-								<echo message="Relative source directory: ${relativeSourceDirectory}" />
-								<echo message="Fixing a problem with a path to the JavaScript path" />
+                                <echo message="Base dir: ${basedir} " />
+                                <echo message="Source directory: ${project.build.sourceDirectory}" />
+                                <echo message="Relative source directory: ${relativeSourceDirectory}" />
+                                <echo message="Fixing a problem with a path to the JavaScript path" />
                                 <replaceregexp byline="true">
                                     <regexp pattern="SF:\./todo/(.*)" />
                                     <substitution expression="SF:${relativeSourceDirectory}/\1" />
@@ -229,8 +219,8 @@
                             </target>
                         </configuration>
                     </execution>
-				</executions>
-			</plugin>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -238,10 +228,10 @@
         <profile>
             <id>sonar</id>
             <activation>
-			    <property>
-				     <name>!profile.activation</name>
-				 </property>
-		    </activation>
+                <property>
+                     <name>!profile.activation</name>
+                 </property>
+            </activation>
             <properties>
                 <sonar.language>js</sonar.language>
                 <!--<sonar.exclusions>${basedir}/src/main/webapp/lib/**</sonar.exclusions>-->
@@ -249,7 +239,7 @@
                 <sonar.tests>test</sonar.tests>
                 <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
                 <sonar.javascript.lcov.reportPath>${basedir}/target/lcov.info</sonar.javascript.lcov.reportPath>
-	        </properties>
-	     </profile>
+            </properties>
+         </profile>
     </profiles>
 </project>

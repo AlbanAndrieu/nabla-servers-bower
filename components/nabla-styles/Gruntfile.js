@@ -13,8 +13,29 @@ module.exports = function (grunt) {
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
-  // Load grunt tasks automatically
-  require('load-grunt-tasks')(grunt);
+  // Load grunt tasks automatically, when needed
+  require('jit-grunt')(grunt, {
+	bower: 'grunt-bower-task',
+	versioncheck: 'grunt-version-check',
+	//configureProxies: 'grunt-connect-proxy',
+	//'zap_start': 'grunt-zaproxy',
+	//'zap_spider': 'grunt-zaproxy',
+	//'zap_scan': 'grunt-zaproxy',
+	//'zap_alert': 'grunt-zaproxy',
+	//'zap_report': 'grunt-zaproxy',
+	//'zap_stop': 'grunt-zaproxy',
+	//'zap_results': 'grunt-zaproxy',
+    useminPrepare: 'grunt-usemin',
+    //ngtemplates: 'grunt-angular-templates',
+    //cdnify: 'grunt-google-cdn',
+    protractor: 'grunt-protractor-runner'
+    //buildcontrol: 'grunt-build-control'
+  });
+
+  var TAG_PREFIX = '';
+  if (typeof process.env.MVN_RELEASE_VERSION === 'undefined') {
+    TAG_PREFIX = 'v';
+  }
 
   // Configurable paths
   var config = {
@@ -25,6 +46,34 @@ module.exports = function (grunt) {
   // Define the configuration for all the tasks
   grunt.initConfig({
 
+    // Project settings
+    config: config,
+    pkg: grunt.file.readJSON('package.json'),
+
+    // Empties folders to start fresh
+    clean: {
+      dist: {
+        files: [{
+          dot: true,
+          src: [
+            '.tmp',
+            '<%= config.dist %>/*',
+            '!<%= config.dist %>/.git*',
+            'bower_repo'
+          ]
+        }]
+      },
+      bower_repo: {
+        files: [{
+          dot: true,
+          src: [
+            'bower_repo/*', '!bower_repo/.git'
+          ]
+        }]
+      },
+      server: '.tmp'
+    },
+
     // Install bower dependencies
     bower: {
       install: {
@@ -33,9 +82,6 @@ module.exports = function (grunt) {
         }
       }
     },
-
-    // Project settings
-    config: config,
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
@@ -122,21 +168,6 @@ module.exports = function (grunt) {
       }
     },
 
-    // Empties folders to start fresh
-    clean: {
-      dist: {
-        files: [{
-          dot: true,
-          src: [
-            '.tmp',
-            '<%= config.dist %>/*',
-            '!<%= config.dist %>/.git*'
-          ]
-        }]
-      },
-      server: '.tmp'
-    },
-
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
@@ -159,9 +190,7 @@ module.exports = function (grunt) {
         },
         files: {
           '<%= config.app %>/styles/css/nabla-theme.css': '<%= config.app %>/styles/less/nabla-theme.less',
-          '<%= config.app %>/styles/css/nabla-bootstrap.css': '<%= config.app %>/styles/less/nabla-bootstrap.less',
-          '<%= config.app %>/styles/css/nabla-font-icon.css': '<%= config.app %>/styles/less/nabla-font-icon.less',
-          '<%= config.app %>/styles/css/nicescroll.css': '<%= config.app %>/styles/less/nicescroll.less'
+          '<%= config.app %>/styles/css/nabla-bootstrap.css': '<%= config.app %>/styles/less/nabla-bootstrap.less'
         }
       }
     },
@@ -200,7 +229,6 @@ module.exports = function (grunt) {
       }
     },
 
-
     // Copies remaining files to places other tasks can use
     copy: {
       dist: {
@@ -231,6 +259,76 @@ module.exports = function (grunt) {
         cwd: '<%= config.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      bower_repo: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>',
+          src: [
+            '<%= config.app %>/styles/sass/*.scss',
+            '<%= config.app %>/styles/less/*.less',
+            '<%= config.app %>/images/*.svg',
+            '*.json'
+          ],
+          dest: 'bower_repo'
+        }]
+      }
+    },
+
+    bump: {
+      options: {
+        files: ['package.json', 'bower.json'],
+        updateConfigs: ['pkg'],
+        prereleaseName: 'build',
+        commit: false,
+        createTag: false,
+        push: false
+      }
+    },
+
+    gitclone: {
+      dist: {
+        options: {
+          repository: 'https://github.com/AlbanAndrieu/nabla-bower-nabla-styles.git',
+          directory: 'bower_repo'
+        }
+      }
+    },
+
+    gitadd: {
+      dist: {
+        options: {
+          cwd: 'bower_repo',
+          all: true
+        }
+      }
+    },
+
+    gitcommit: {
+      dist: {
+        options: {
+          cwd: 'bower_repo',
+          message: 'Release ' + TAG_PREFIX + '<%= pkg.version %>'
+        }
+      }
+    },
+
+    gittag: {
+      dist: {
+        options: {
+          cwd: 'bower_repo',
+          tag: TAG_PREFIX + '<%= pkg.version %>'
+        }
+      }
+    },
+
+    gitpush: {
+      dist: {
+        options: {
+          cwd: 'bower_repo',
+          branch: 'master',
+          tags: true
+        }
       }
     },
 
@@ -285,6 +383,25 @@ module.exports = function (grunt) {
     'autoprefixer',
     'copy:dist'
   ]);
+
+  grunt.registerTask('publish', function(releaseType) {
+    grunt.task.run([
+      //'bump:' + releaseType,
+      'deploy'
+    ]);
+  });
+
+  grunt.registerTask('deploy', function(arg) {
+    grunt.task.run([
+      'gitclone',
+      'clean:bower_repo',
+      'copy:bower_repo',
+      'gitadd',
+      'gitcommit',
+      'gittag',
+      'gitpush'
+    ]);
+  });
 
   grunt.registerTask('default', [
     'newer:jshint',

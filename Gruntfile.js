@@ -3,7 +3,7 @@
 //var files = require('./angularFiles').files;
 var util = require('./lib/grunt/utils.js');
 var versionInfo = require('./lib/versions/version-info');
-var path = require('path');
+//var path = require('path');
 //var e2e = require('./test/e2e/tools');
 
 module.exports = function(grunt) {
@@ -500,11 +500,6 @@ module.exports = function(grunt) {
   //grunt.registerTask('test:ci-protractor', 'Run the end to end tests with Protractor for Jenkins CI builds', ['webdriver', 'connect:testserver', 'protractor:jenkins']);
   //grunt.registerTask('test:e2e', 'Alias for test:protractor', ['test:protractor']);
   //grunt.registerTask('test:promises-aplus',['build:promises-aplus-adapter','shell:promises-aplus-tests']);
-
-  grunt.registerTask('prepare', [
-    //'clean:bower',
-    'bower'
-  ]);
 
   grunt.registerTask('check', function(target) {
     grunt.task.run([
