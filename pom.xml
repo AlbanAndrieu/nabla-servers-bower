@@ -59,10 +59,16 @@
                                             <directory>${project.basedir}</directory>
                                             <includes>
                                                     <include>.bower/</include>
+                                                    <include>.node_cache/</include>
+                                                    <include>.node_tmp/</include>
+                                                    <include>.tmp/</include>
                                                     <include>node_modules/</include>
                                                     <include>node/</include>
                                                     <include>bower_components/</include>
-                                                    <include>build/</include>
+													<include>lib/</include>
+                                                    <!--<include>build/</include>-->
+                                                    <include>docs/</include>
+                                                    <include>dist/</include>
                                             </includes>
                                             <excludes>
                                                     <!-- Allow mvn clean install > install.log -->

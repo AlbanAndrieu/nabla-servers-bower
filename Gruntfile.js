@@ -8,12 +8,27 @@ var path = require('path');
 
 module.exports = function(grunt) {
 
-
-  // Load grunt tasks automatically
-  require('load-grunt-tasks')(grunt);
-  //require('jit-grunt')(grunt);
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
+
+  // Load grunt tasks automatically, when needed
+  require('jit-grunt')(grunt, {
+	bower: 'grunt-bower-task',
+	versioncheck: 'grunt-version-check',
+	//configureProxies: 'grunt-connect-proxy',
+	//'zap_start': 'grunt-zaproxy',
+	//'zap_spider': 'grunt-zaproxy',
+	//'zap_scan': 'grunt-zaproxy',
+	//'zap_alert': 'grunt-zaproxy',
+	//'zap_report': 'grunt-zaproxy',
+	//'zap_stop': 'grunt-zaproxy',
+	//'zap_results': 'grunt-zaproxy',
+    useminPrepare: 'grunt-usemin',
+    //ngtemplates: 'grunt-angular-templates',
+    //cdnify: 'grunt-google-cdn',
+    protractor: 'grunt-protractor-runner'
+    //buildcontrol: 'grunt-build-control'
+  });
 
   //grunt.loadTasks('lib/grunt');
   //grunt.loadNpmTasks('grunt-ngdocs');
