@@ -23,6 +23,7 @@ module.exports = function(grunt) {
 	//'zap_report': 'grunt-zaproxy',
 	//'zap_stop': 'grunt-zaproxy',
 	//'zap_results': 'grunt-zaproxy',
+	'validate-package': 'grunt-nsp-package',
     useminPrepare: 'grunt-usemin',
     //ngtemplates: 'grunt-angular-templates',
     //cdnify: 'grunt-google-cdn',
