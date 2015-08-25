@@ -268,7 +268,7 @@ module.exports = function (grunt) {
       bower_repo: {
         files: [{
           expand: true,
-          cwd: '<%= yeoman.app %>',
+          cwd: '<%= config.app %>',
           src: [
             '<%= config.app %>/styles/sass/*.scss',
             '<%= config.app %>/styles/less/*.less',
