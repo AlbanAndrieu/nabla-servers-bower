@@ -27,7 +27,6 @@
     "node": ">=0.10.0",
     "npm": ">=2.5"
   },
-  "engineStrict": true,
   "dependencies": {
     "google-cdn": "^0.5.1"
   },

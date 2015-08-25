@@ -11,6 +11,6 @@ SCRIPT_DIR=$(pwd)
 #grunt
 #export BUILD_NUMBER=1
 #export DRY_RUN_OPT="--git-push-dryrun=true"
-$SCRIPT_DIR/scripts/bower/publish.sh --action=clean-tag ${DRY_RUN_OPT} --verbose=true
+$SCRIPT_DIR/scripts/bower/clean.sh --action=clean-tag ${DRY_RUN_OPT} --verbose=true
 
 git tag -l 'v0.0.*'
