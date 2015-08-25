@@ -26,6 +26,11 @@ module.exports = function (grunt) {
 	//'zap_stop': 'grunt-zaproxy',
 	//'zap_results': 'grunt-zaproxy',
     useminPrepare: 'grunt-usemin',
+	gitclone: 'grunt-git',
+	gitadd: 'grunt-git',
+	gitcommit: 'grunt-git',
+	gittag: 'grunt-git',
+	gitpush: 'grunt-git',
     //ngtemplates: 'grunt-angular-templates',
     //cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner'
