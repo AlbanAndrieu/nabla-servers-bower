@@ -9,6 +9,7 @@
     "bower"
   ],
   "author": "Nabla Core Team <dev@home.nabla.mobi>",
+  "license": "MIT",
   "licenses": [
     {
       "type": "MIT",

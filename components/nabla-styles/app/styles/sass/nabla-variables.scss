@@ -2,6 +2,10 @@
 // Variables
 // --------------------------------------------------
 
+// Core variables and mixins
+@import "../../../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_variables.scss";
+//@import "../../../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_mixin.scss";
+
 //== Colors
 //
 //## Gray and brand colors for use across Bootstrap.
@@ -30,6 +34,8 @@ $brand-danger:          #b60300 !default;
 //** Global text color on `<body>`.
 $text-color:            $gray !default;
 
+//** Global textual link color.
+$link-color:            $brand-primary !default;
 //** Link hover color set via `darken()` function.
 $link-hover-color:      lighten($link-color, 10%) !default;
 //** Link hover decoration.

@@ -276,5 +276,4 @@ function main {
   fi
 }
 
-
 main "$@"

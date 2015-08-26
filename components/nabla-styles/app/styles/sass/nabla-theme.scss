@@ -8,9 +8,12 @@
 // Load core variables and mixins
 // --------------------------------------------------
 
-@import "variables";
-@import "mixins";
+@import "nabla-variables";
 
+// bower:scss
+@import "../../../bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+@import "../../../bower_components/components-font-awesome/scss/font-awesome.scss";
+// endbower
 
 //
 // Buttons
@@ -37,27 +40,37 @@
   }
 }
 
-
-
-
 // Mixin for generating new styles
-.btn-styles(@btn-color: #555) {
+@mixin btn-styles($btn-color: #555) {
+  @include gradient-vertical($start-color: $btn-color, $end-color: darken($btn-color, 12%));
+  @include reset-filter; // Disable gradients for IE9 because filter bleeds through rounded corners; see https://github.com/twbs/bootstrap/issues/10620
+  background-repeat: repeat-x;
+  border-color: darken($btn-color, 14%);
 
   &:hover,
   &:focus  {
-    background-color: mix(@btn-color, white, 80%);
+    background-color: darken($btn-color, 80%);
+    background-position: 0 -15px;
   }
 
   &:active,
   &.active {
-    background-color: darken(@btn-color, 10%);
+    background-color: darken($btn-color, 10%);
+    border-color: darken($btn-color, 14%);
   }
 
   &.disabled,
-  &:disabled,
-  &[disabled] {
-    background-color: mix(@btn-color, white, 20%);
-    background-image: none;
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active {
+      background-color: darken($btn-color, 20%);
+      background-image: none;
+    }
   }
 }
 
@@ -69,36 +82,6 @@
     background-image: none;
   }
 }
-
-// Apply the mixin to the buttons
-.btn-default {
-  .btn-styles(@btn-default-bg);
-  border-color: #ccc;
-  &:active,
-  &.active {
-    color: @brand-primary;
-    background-color: mix(@brand-primary, white, 10%);
-  }
-  &:hover,
-  &:focus  {
-    background-color: mix(@brand-primary, white, 5%);
-  }
-  &.disabled,
-  &:disabled,
-  &[disabled] {
-    color: #ccc;
-    background-color: darken(@btn-default-bg, 10%);
-  }
-}
-.btn-primary { .btn-styles(@btn-primary-bg); }
-.btn-success { .btn-styles(@btn-success-bg); }
-.btn-info    { .btn-styles(@btn-info-bg); }
-.btn-warning { .btn-styles(@btn-warning-bg); }
-.btn-danger  { .btn-styles(@btn-danger-bg); }
-
-
-
-
 
 
 // -------------------- animated button (extend bootstrap) -------------------- //
@@ -166,14 +149,13 @@
 
 
 // -------------------- rotated close button (extend bootstrap) -------------------- //
-
 button {
   line-height: 1em;
   &.close {
-    font-size: (@font-size-base * 2);
+    font-size: ($font-size-base * 2);
     width: 40px;
     height: 40px;
-    line-height: (@font-size-base * 2);
+    line-height: ($font-size-base * 2);
     transition: all 0.3s ease-out 0s;
     transform-origin: 20px 21px;
     font-weight: 400;
@@ -183,7 +165,6 @@ button {
     }
   }
 }
-
 
 
 
@@ -212,66 +193,63 @@ button {
 }
 
 .form-control:focus {
-  border-color: @brand-primary;
-  background-color: mix(@brand-primary, white, 10%);
+  border-color: $brand-primary;
+  background-color: mix($brand-primary, white, 10%);
 }
 .has-warning .form-control:focus {
-  border-color: @brand-warning;
+  border-color: $brand-warning;
   background-color: white;
 }
 .has-error .form-control:focus{
-  border-color: @brand-danger;
+  border-color: $brand-danger;
   background-color: white;
 }
 .has-success .form-control:focus {
-  border-color: @brand-success;
+  border-color: $brand-success;
   background-color: white;
 }
 
 // default
 .form-control {
-  border-color: mix(@brand-primary, white, 50%);
+  border-color: mix($brand-primary, white, 50%);
   box-shadow: none !important;
 }
 .has-warning .form-control {
-  border-color: mix(@brand-warning, white, 70%);
+  border-color: mix($brand-warning, white, 70%);
 }
 .has-error .form-control {
-  color: @brand-danger;
-  border-color: mix(@brand-danger, white, 50%);
-  background-color: mix(@brand-danger, white, 10%);
+  color: $brand-danger;
+  border-color: mix($brand-danger, white, 50%);
+  background-color: mix($brand-danger, white, 10%);
 }
 .has-success .form-control {
-  border-color: mix(@brand-success, white, 50%);
+  border-color: mix($brand-success, white, 50%);
 }
 
 // disabled
 .form-control[disabled], fieldset[disabled] .form-control {
-    border-color: @gray-lighter;
+    border-color: $gray-lighter;
 }
-
 
 // form in navbar
 .navbar-inverse {
   .form-control {
-    background-color: @gray-dark;
-    border-color: @gray-dark;
+    background-color: $gray-dark;
+    border-color: $gray-dark;
     box-shadow: none !important;
     &:focus {
       color: white;
-      background-color: @gray-darker;
+      background-color: $gray-darker;
 
     }
   }
 }
 
-
-
 // legend
 legend {
-  font-size: (@font-size-base * 1.5);
+  font-size: ($font-size-base * 1.5);
   padding-bottom: 5px;
-  color: @gray;
+  color: $gray;
 }
 
 
@@ -280,17 +258,12 @@ legend {
 label {
     margin-bottom: 5px;
     font-weight: 600;
-    color: @gray !important;
+    color: $gray !important;
 }
 
 
-
-
-
-
-
 // -------------------- navbar -------------------- //
-    @media (max-width: @grid-float-breakpoint-max) {
+    @media (max-width: $grid-float-breakpoint-max) {
       // Dropdowns get custom display when collapsed
       .navbar-nav {
         .dropdown-menu {
@@ -300,14 +273,10 @@ label {
     }
 
 
-
-
-
-
 // -------------------- Tables -------------------- //
 .table > caption + thead > tr:first-child > th, .table > colgroup + thead > tr:first-child > th, .table > thead:first-child > tr:first-child > th, .table > caption + thead > tr:first-child > td, .table > colgroup + thead > tr:first-child > td, .table > thead:first-child > tr:first-child > td {
     font-weight: 600;
-    color: @brand-primary;
+    color: $brand-primary;
 }
 
 // add 1px border to last tr
@@ -317,7 +286,7 @@ label {
     > tr:last-child {
       > th,
       > td {
-        border-bottom: 1px solid @gray-base-90;
+        border-bottom: 1px solid $gray-base-90;
       }
     }
   }
@@ -332,45 +301,40 @@ label {
 }
 
 
-
-
-
-
-
 // -------------------- Navs -------------------- //
 // tabs
 .nav-tabs {
   > li {
     > a {
-      color: @gray;
+      color: $gray;
       &:hover {
-        color: @gray;
-        border-color: @gray-lighter;
-        border-bottom: 1px solid @body-bg;
+        color: $gray;
+        border-color: $gray-lighter;
+        border-bottom: 1px solid $body-bg;
       }
     }
     &.active > a {
-      border-top: 4px solid @brand-primary;
+      border-top: 4px solid $brand-primary;
       &:hover,
       &:focus {
-        border-top: 4px solid @brand-primary;
+        border-top: 4px solid $brand-primary;
       }
     }
   }
 }
 
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
-  border-color: @gray-lighter;
+  border-color: $gray-lighter;
 }
 
 // pills
 .nav-pills {
   > li {
     > a {
-      color: @gray;
+      color: $gray;
       border: 1px solid transparent;
       &:hover {
-        border: 1px solid @gray-base-85;
+        border: 1px solid $gray-base-85;
       }
     }
 
@@ -379,9 +343,9 @@ label {
       &,
       &:hover,
       &:focus {
-        color: @brand-primary;
-        background-color: mix(@brand-primary, white, 5%); //
-        border: 1px solid @gray-base-85;
+        color: $brand-primary;
+        background-color: mix($brand-primary, white, 5%); //
+        border: 1px solid $gray-base-85;
       }
     }
   }
@@ -398,10 +362,10 @@ label {
   }
   border-bottom: none;
   &.nav-tabs-simple-horizontal {
-      border-bottom: 1px solid @gray-lighter;
+      border-bottom: 1px solid $gray-lighter;
     > li {
       //padding-right: 10px;
-      border-bottom: 1px solid @gray-lighter;
+      border-bottom: 1px solid $gray-lighter;
       i {
         display: inline-block;
         line-height: inherit;
@@ -410,7 +374,7 @@ label {
         text-align: center;
       }
       &.disabled > a {
-        box-shadow: inset 0 0 @brand-primary !important;
+        box-shadow: inset 0 0 $brand-primary !important;
       }
       > a {
         box-shadow: inset 0 0 white;
@@ -423,13 +387,13 @@ label {
         padding-bottom: 15px;
         margin-right: 0;
         &:hover {
-          box-shadow: inset 0 -4px mix(@brand-primary, white, 50%);
+          box-shadow: inset 0 -4px mix($brand-primary, white, 50%);
         }
       }
       &.active > a {
         border: transparent;
-        box-shadow: inset 0 -4px @brand-primary;
-        color: @brand-primary;
+        box-shadow: inset 0 -4px $brand-primary;
+        color: $brand-primary;
         &:hover,
         &:focus {
           border: transparent;
@@ -465,7 +429,7 @@ label {
 
 
   &.nav-tabs-simple-vertical {
-      // border-right: 1px solid @gray-lighter;
+      // border-right: 1px solid $gray-lighter;
     > li {
       // display li vertical
       float: none;
@@ -481,7 +445,7 @@ label {
         transition: transform 0.3s ease;
       }
       &.disabled > a {
-        box-shadow: inset 0 0 @brand-primary !important;
+        box-shadow: inset 0 0 $brand-primary !important;
       }
       > a {
         box-shadow: inset 0 0 white;
@@ -490,17 +454,17 @@ label {
         background-color: transparent;
         border: transparent;
         margin-right: 0;
-        font-size: @font-size-h6;
+        font-size: $font-size-h6;
         &:hover {
-          box-shadow: inset 5px 0 mix(@brand-primary, white, 50%);
+          box-shadow: inset 5px 0 mix($brand-primary, white, 50%);
           background-color: rgba(255, 255, 255, 0.3);
         }
       }
       &.active > a {
         border: transparent;
-        box-shadow: inset 5px 0 @brand-primary;
+        box-shadow: inset 5px 0 $brand-primary;
         background-color: rgba(255, 255, 255, 0.5);
-        color: @brand-primary;
+        color: $brand-primary;
         i {
           transform: translateY(3px);
         }
@@ -528,7 +492,7 @@ label {
 }
 
 
-@media (max-width: @screen-phone) {
+@media (max-width: $screen-phone) {
   .nav-tabs {
     &.nav-tabs-simple-horizontal {
       > li {
@@ -540,7 +504,7 @@ label {
         a {
           i {
             // display icon at the left of the text
-            font-size: @font-size-h3;
+            font-size: $font-size-h3;
             display: inline-block;
             padding-right: 10px;
             text-align: center;
@@ -552,28 +516,23 @@ label {
   }
 }
 
-
-
-
-
-
 // Breadcrumbs
 .breadcrumb {
   > li {
       + li:before {
-        color: @gray-lighter;
+        color: $gray-lighter;
       }
       a {
-        color: @gray;
+        color: $gray;
         text-decoration: none;
         &:hover {
-          color: mix(@brand-primary, white, 70%);
+          color: mix($brand-primary, white, 70%);
         }
     }
   }
 
   > .active {
-    color: @breadcrumb-active-color;
+    color: $breadcrumb-active-color;
   }
 }
 
@@ -585,20 +544,17 @@ label {
   > li > span {
     &:hover,
     &:focus {
-      color: @gray-light;
+      color: $gray-light;
     }
   }
 }
-
-
-
 
 
 // -------------------- Dropdown -------------------- //
 .dropdown-menu {
   margin: -2px 0px 0px 0px;
   box-shadow: none;
-  font-size: @font-size-small;
+  font-size: $font-size-small;
   padding: 5px 5px;
 
   backface-visibility: hidden;
@@ -627,7 +583,7 @@ transition: all 0.3s ease;
   &,
   &:hover,
   &:focus {
-    border-left: 3px solid @brand-primary;
+    border-left: 3px solid $brand-primary;
     padding-left: 7px;
   }
 }
@@ -655,11 +611,6 @@ transition: all 0.3s ease;
   }
 }
 
-
-
-
-
-
 //
 // Progress bars
 // --------------------------------------------------
@@ -681,41 +632,35 @@ transition: all 0.3s ease;
 //
 // List groups
 // --------------------------------------------------
-
 .list-group-item {
   padding: 15px 10px;
   border-left: none;
   border-right: none;
-  border-top: 1px solid @list-group-border;
-  border-bottom: 1px solid @list-group-border;
+  border-top: 1px solid $list-group-border;
+  border-bottom: 1px solid $list-group-border;
   // Active class on item itself, not parent
   &.active,
   &.active:hover,
   &.active:focus {
-    border-left: 3px solid @brand-primary;
+    border-left: 3px solid $brand-primary;
     padding-left: 7px;
   }
   .list-group-item-heading {
-    font-size: @font-size-base;
+    font-size: $font-size-base;
     font-weight: 700;
     text-transform: uppercase;
   }
   .list-group-item-text {
-    color: @gray-light;
+    color: $gray-light;
   }
 }
 
 
 a.list-group-item {
   .list-group-item-heading {
-    color: @gray;
+    color: $gray;
   }
 }
-
-
-
-
-
 
 // -------------------- modals -------------------- //
 .modal-content {
@@ -767,40 +712,28 @@ a.list-group-item {
   box-shadow: none;
   .popover-title {
     text-transform: uppercase;
-    font-size: ceil((@font-size-base * 0.75));
-    color: @gray-light;
-    border-bottom: 1px solid @gray-base-85;
+    font-size: ceil(($font-size-base * 0.75));
+    color: $gray-light;
+    border-bottom: 1px solid $gray-base-85;
   }
   .popover-content {
-    font-size: @font-size-h6;
+    font-size: $font-size-h6;
   }
 }
-
-
-
-
-
-
 
 // -------------------- labels -------------------- //
 .label {
   font-weight: normal;
-  font-size: ceil((@font-size-base * 0.65));
+  font-size: ceil(($font-size-base * 0.65));
   margin-left: 5px;
   vertical-align: middle;
   padding: 0.1em 0.5em 0.2em;
   &.label-default {
-    color: @gray-light;
+    color: $gray-light;
     background-color: #fff;
-    border: 1px solid @gray-base-85;
+    border: 1px solid $gray-base-85;
   }
 }
-
-
-
-
-
-
 
 // -------------------- panels -------------------- //
 .panel {
@@ -811,7 +744,7 @@ a.list-group-item {
     padding-bottom: 5px;
     padding-left: 0px;
     padding-right: 0px;
-    font-size: @font-size-h3;
+    font-size: $font-size-h3;
   }
   .panel-body {
     padding: 20px 0px;
@@ -824,11 +757,6 @@ a.list-group-item {
     }
   }
 }
-
-
-
-
-
 
 // -------------------- Typography -------------------- //
 a {
@@ -852,9 +780,9 @@ code {
 
 // ***** nabla custom class *******
 .desc-small {
-  font-size: floor((100% * @font-size-small / @font-size-base));
+  font-size: floor((100% * $font-size-small / $font-size-base));
   line-height: 1.4em;
-  color: @text-muted;
+  color: $text-muted;
   margin-bottom: 10px;
   white-space:normal;
 }
@@ -865,21 +793,9 @@ code {
   text-overflow: ellipsis;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 // -------------------- Input icon (extend bootstrap) -------------------- //
 .form-control-feedback {
-  color: @brand-primary;
+  color: $brand-primary;
 }
 
 .form-group-search {
@@ -923,31 +839,22 @@ code {
     }
   }
   .input-lg ~ .form-control-feedback {
-    width: @input-height-large;
-    height: @input-height-large;
-    line-height: @input-height-large;
+    width: $input-height-large;
+    height: $input-height-large;
+    line-height: $input-height-large;
   }
   .input-sm ~ .form-control-feedback {
-    width: @input-height-small;
-    height: @input-height-small;
-    line-height: @input-height-small;
+    width: $input-height-small;
+    height: $input-height-small;
+    line-height: $input-height-small;
   }
 }
-
-
-
-
-
-
-
-
-
 
 // responsive table
 // For correct display you must add 'data-title' to each 'td'
 .table-responsive-vertical {
 
-  @media (max-width: @screen-tablet) {
+  @media (max-width: $screen-tablet) {
 
     // Tighten up spacing
     > .table {
@@ -962,7 +869,7 @@ code {
 
         > tr {
           display: block;
-          border: 1px solid @gray-base-90;
+          border: 1px solid $gray-base-90;
           margin-bottom: 30px;
 
           > td {
@@ -988,7 +895,7 @@ code {
             float: left;
             font-size: inherit;
             font-weight: 600;
-            color: @brand-primary;
+            color: $brand-primary;
             margin-right: 20px;
             }
         }
@@ -1194,8 +1101,8 @@ figure > div {
   .tile-app-name {
     display: block;
     text-align: center;
-    font-size: @font-size-h6;
-    line-height: @font-size-base;
+    font-size: $font-size-h6;
+    line-height: $font-size-base;
     margin-top: 0px;
   }
   &:hover {
@@ -1206,15 +1113,6 @@ figure > div {
     }
   }
 }
-
-
-
-
-
-
-
-
-
 
 // -------------------- Media (extend bootstrap)  -------------------- //
 .media-group {
@@ -1261,7 +1159,7 @@ figure > div {
 }
 
 
-
+/*
 .switch {
   white-space: nowrap;
   label {
@@ -1280,7 +1178,7 @@ figure > div {
     margin-right: 0.6em;
     transition: all ease 0.2s;
     box-shadow: inset 0 0 1px rgba(0,0,0,.5);
-    background-color: @gray-lighter;
+    background-color: $gray-lighter;
     &:before {
       // handle
       display: block;
@@ -1298,7 +1196,6 @@ figure > div {
     opacity: 0.5;
   }
 }
-
 
 
 // Switch sizes (include size,radius, line option)
@@ -1335,15 +1232,15 @@ figure > div {
 
 
 .switch {
-  .switch-size(@input-height-base/2;);
+  .switch-size($input-height-base/2;);
 }
 
 .switch-sm {
-  .switch-size(@input-height-small/2.3;);
+  .switch-size($input-height-small/2.3;);
 }
 
 .switch-lg {
-  .switch-size(@input-height-large/2;);
+  .switch-size($input-height-large/2;);
 }
 
 
@@ -1375,20 +1272,20 @@ figure > div {
 }
 
 .switch {
-  .switch-color(@gray);
+  .switch-color($gray);
   &.switch-line {
     & :checked + :before {
-      background-color: @gray;
+      background-color: $gray;
       box-shadow:none;
     }
   }
 }
 
 .switch-default {
-  .switch-color(@gray);
+  .switch-color($gray);
   &.switch-line {
     & :checked + :before {
-      background-color: @gray;
+      background-color: $gray;
     }
   }
 }
@@ -1437,15 +1334,10 @@ figure > div {
     }
   }
 }
-
-
-
-
-
-
-
+*/
 
 // -------------------- Checkbox [nabla custom class]  -------------------- //
+/*
 .checkbox-nice {
   position: relative;
   display: block;
@@ -1476,7 +1368,7 @@ figure > div {
       content: '';
       background: white;
       border-radius: 0;
-      border: 1px solid @gray-lighter;
+      border: 1px solid $gray-lighter;
       transition: all ease 0.2s;
     }
     &:after {
@@ -1510,9 +1402,6 @@ figure > div {
   }
 }
 
-
-
-
 // checkbox-nice sizes (include size)
 .checkbox-nice-size(@checkbox-nice-size;) {
   span {
@@ -1540,15 +1429,15 @@ figure > div {
 
 
 .checkbox-nice {
-  .checkbox-nice-size(@input-height-base/2;);
+  .checkbox-nice-size($input-height-base/2;);
 }
 
 .checkbox-nice-sm {
-  .checkbox-nice-size(@input-height-small/2.3;);
+  .checkbox-nice-size($input-height-small/2.3;);
 }
 
 .checkbox-nice-lg {
-  .checkbox-nice-size(@input-height-large/2;);
+  .checkbox-nice-size($input-height-large/2;);
 }
 
 
@@ -1563,11 +1452,11 @@ figure > div {
 }
 
 .checkbox-nice {
-  .checkbox-nice-color(@gray);
+  .checkbox-nice-color($gray);
 }
 
 .checkbox-nice-default {
-  .checkbox-nice-color(@gray);
+  .checkbox-nice-color($gray);
 }
 
 .checkbox-nice-primary {
@@ -1589,17 +1478,10 @@ figure > div {
 .checkbox-nice-danger {
   .checkbox-nice-color(@btn-danger-bg);
 }
-
-
-
-
-
-
-
-
-
+*/
 
 // -------------------- Radio [nabla custom class]  -------------------- //
+/*
 .radio-nice {
   position: relative;
   display: block;
@@ -1631,7 +1513,7 @@ figure > div {
       content: '';
       background: white;
       border-radius: 0;
-      border: 0 solid @gray-lighter;
+      border: 0 solid $gray-lighter;
       transition: all ease 0.2s;
     }
   }
@@ -1654,7 +1536,7 @@ figure > div {
 // radio-nice sizes (include size)
 .radio-nice-size(@radio-nice-size;) {
   span {
-    border: 1px solid @gray-lighter;
+    border: 1px solid $gray-lighter;
     &:before {
       width: @radio-nice-size;
       height: @radio-nice-size;
@@ -1674,15 +1556,15 @@ figure > div {
 
 
 .radio-nice {
-  .radio-nice-size(@input-height-base/2;);
+  .radio-nice-size($input-height-base/2;);
 }
 
 .radio-nice-sm {
-  .radio-nice-size(@input-height-small/2.3;);
+  .radio-nice-size($input-height-small/2.3;);
 }
 
 .radio-nice-lg {
-  .radio-nice-size(@input-height-large/2;);
+  .radio-nice-size($input-height-large/2;);
 }
 
 
@@ -1697,11 +1579,11 @@ figure > div {
 }
 
 .radio-nice {
-  .radio-nice-color(@gray);
+  .radio-nice-color($gray);
 }
 
 .radio-nice-default {
-  .radio-nice-color(@gray);
+  .radio-nice-color($gray);
 }
 
 .radio-nice-primary {
@@ -1723,3 +1605,4 @@ figure > div {
 .radio-nice-danger {
   .radio-nice-color(@btn-danger-bg);
 }
+*/

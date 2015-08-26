@@ -3,6 +3,7 @@
   "description": "Bower components",
   "version": "1.0.2",
   "author": "Nabla Core Team <dev@home.nabla.mobi>",
+  "license": "MIT",
   "private": "false",
   "main": "src/index.js",
   "ignore": [

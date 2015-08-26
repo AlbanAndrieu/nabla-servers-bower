@@ -1,9 +1,11 @@
-// Import Bootstrap Compass integration
-@import "nabla-compass"
-// Import custom Bootstrap variables
-@import "nabla-variables"
-// Import Bootstrap for Sass
-@import "bootstrap"
+
+@import "nabla-variables";
+
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+// bower:scss
+@import "../../../bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+@import "../../../bower_components/components-font-awesome/scss/font-awesome.scss";
+// endbower
 
 // Custom theme
 @import "nabla-theme";

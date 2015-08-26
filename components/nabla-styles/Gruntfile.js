@@ -8,7 +8,7 @@
 // If you want to recursively match all subfolders, use:
 // 'test/spec/**/*.js'
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
@@ -116,11 +116,11 @@ module.exports = function (grunt) {
         }
       },
       less: {
-        files: ['<%= config.app %>/styles/less{,*/}*.less'],
+        files: ['<%= config.app %>/styles/less/{,*/}*.less'],
         tasks: ['less']
       },
       compass: {
-        files: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
+        files: ['<%= config.app %>/styles/sass/{,*/}*.{scss,sass}'],
         tasks: ['compass:server', 'postcss']
       },
       livereload: {
@@ -240,15 +240,15 @@ module.exports = function (grunt) {
         exclude: ['bower_components/bootstrap/dist/css/bootstrap.css']
       },
       sass: {
-        src: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
-        ignorePath: /(\.\.\/){1,2}bower_components\//
+        src: ['<%= config.app %>/styles/sass/{,*/}*.{scss,sass}']
+        //ignorePath: /(\.\.\/){1,2}bower_components\//
       }
     },
 
     // Compiles Sass to CSS and generates necessary files if requested
     compass: {
       options: {
-        sassDir: '<%= config.app %>/styles',
+        sassDir: '<%= config.app %>/styles/sass',
         cssDir: '.tmp/styles',
         generatedImagesDir: '.tmp/images/generated',
         imagesDir: '<%= config.app %>/images',
@@ -294,6 +294,144 @@ module.exports = function (grunt) {
         //server: '<%= config.app %>'
         proxy: 'localhost:8001'
         //proxy: SERVER_HOST + ":" + SERVER_PORT
+      }
+    },
+
+    // Renames files for browser caching purposes
+    filerev: {
+      //options: {
+      //  encoding: 'utf8',
+      //  algorithm: 'md5',
+      //  length: 20
+      //},
+      dist: {
+        src: [
+          '<%= config.dist %>/scripts/{,*/}*.js',
+          '<%= config.dist %>/styles/{,*/}*.css',
+          '<%= config.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+          '!<%= config.dist %>/images/no-filerev/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+          //'<%= config.dist %>/*.{ico,png}',
+          '<%= config.dist %>/styles/fonts/*'
+        ]
+      }
+    },
+
+    // Reads HTML for usemin blocks to enable smart builds that automatically
+    // concat, minify and revision files. Creates configurations in memory so
+    // additional tasks can operate on them
+    useminPrepare: {
+      html: '<%= config.app %>/**/*.html',
+      //html: '<%= config.app %>/index.html',
+      options: {
+        dest: '<%= config.dist %>',
+        flow: {
+          html: {
+            steps: {
+              js: ['concat'],
+              //js: ['concat', 'uglifyjs'] //when using uncss
+              // Disabled as we'll be using a manual
+              // cssmin configuration later. This is
+              // to ensure we work well with grunt-uncss
+              css: ['cssmin'] //disable when using uncss
+            },
+            post: {}
+          }
+        }
+      }
+    },
+
+    // Performs rewrites based on filerev and the useminPrepare configuration
+    usemin: {
+      html: ['<%= config.dist %>/{,*/}*.html'],
+      css: ['<%= config.dist %>/styles/{,*/}*.css'],
+      //js: ['<%= config.dist %>/scripts/**/*.js'],
+      options: {
+        assetsDirs: [
+          '<%= config.dist %>',
+          '<%= config.dist %>/images',
+          '<%= config.dist %>/styles'
+        ]
+      }
+    },
+
+    // The following *-min tasks will produce minified files in the dist folder
+    // By default, your `index.html`'s <!-- Usemin block --> will take care of
+    // minification. These next options are pre-configured if you do not wish
+    // to use the Usemin blocks.
+    // cssmin: {
+    //   dist: {
+    //     files: {
+    //       '<%= config.dist %>/styles/main.css': [
+    //         '.tmp/styles/{,*/}*.css'
+    //       ]
+    //     }
+    //   }
+    // },
+    uglify: {
+      dist: {
+        files: {
+          '<%= config.dist %>/scripts/scripts.js': [
+            '<%= config.dist %>/scripts/scripts.js'
+          ],
+          '<%= config.dist %>/scripts/vendor.js': [
+            '<%= config.dist %>/scripts/vendor.js'
+          ]
+        }
+      }
+    },
+    // concat: {
+    //   dist: {}
+    // },
+
+    'compare_size': {
+      files: [
+        'app/styles/**',
+        'dist/styles/**'
+      ]
+    },
+
+    // The following *-min tasks produce minified files in the dist folder
+    imagemin: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '<%= config.app %>/images',
+          src: '{,*/}*.{png,jpg,jpeg,gif}',
+          dest: '<%= config.dist %>/images'
+        }]
+      }
+    },
+
+    svgmin: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '<%= config.app %>/images',
+          src: '{,*/}*.svg',
+          dest: '<%= config.dist %>/images'
+        }]
+      }
+    },
+
+    htmlmin: {
+      dist: {
+        options: {
+          collapseWhitespace: true,
+          conservativeCollapse: true,
+          collapseBooleanAttributes: true,
+          removeCommentsFromCDATA: true,
+          removeOptionalTags: true,
+          removeEmptyAttributes: true,
+          removeAttributeQuotes: true,
+          removeRedundantAttributes: true,
+          useShortDoctype: true
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= config.dist %>',
+          src: ['*.html', 'views/{,*/}*.html'],
+          dest: '<%= config.dist %>'
+        }]
       }
     },
 
@@ -428,10 +566,19 @@ module.exports = function (grunt) {
       }
     },
 
+    jscs: {
+      options: {
+        config: ".jscs.json"
+      },
+      node: {
+        files: { src: ['*.js'] }
+      }
+    }
+
   });
 
 
-  grunt.registerTask('serve', 'start the server and preview your app, --allow-remote for remote access', function (target) {
+  grunt.registerTask('serve', 'start the server and preview your app, --allow-remote for remote access', function(target) {
     if (grunt.option('allow-remote')) {
       grunt.config.set('connect.options.hostname', '0.0.0.0');
     }
@@ -455,12 +602,12 @@ module.exports = function (grunt) {
     ]);
   });
 
-  grunt.registerTask('server', function (target) {
+  grunt.registerTask('server', function(target) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run([target ? ('serve:' + target) : 'serve']);
   });
 
-  grunt.registerTask('test', function (target) {
+  grunt.registerTask('test', function(target) {
     if (target !== 'watch') {
       grunt.task.run([
         'clean:server',
@@ -478,10 +625,27 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'bower:install',
-    'less',
-    'copy:styles',
+    //'wiredep:app', //remove boostrap after the test
+    'wiredep',
+    //'ngconstant:prod',
+    //'useminPrepare',
+    'concurrent:dist',
     'postcss',
-    'copy:dist'
+    //'uncss',
+    //'ngtemplates',
+    //'concat',
+    'copy:dist',
+    //'cdnify',
+    //'cssmin',
+    //'replace:debugMode',
+    //'replace:versionTag',
+    //'ngAnnotate',
+    //'uglify',
+    //'filerev',
+    'usemin'
+    //'critical',
+    //'htmlmin',
+    //'usebanner'
   ]);
 
   grunt.registerTask('publish', function(releaseType) {
@@ -498,13 +662,14 @@ module.exports = function (grunt) {
       'copy:bower_repo',
       'gitadd',
       'gitcommit',
-      'gittag'
-      //'gitpush'
+      'gittag',
+      'gitpush'
     ]);
   });
 
   grunt.registerTask('default', [
     'newer:jshint',
+    'newer:jscs',
     //'test',
     'build'
   ]);
