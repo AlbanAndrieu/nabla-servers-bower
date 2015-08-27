@@ -20,6 +20,7 @@ bower_components/
 /scripts/bower/bower-*
 *.log
 /docs/
+.sass-cache/
 
 .node_cache/
 .node_tmp/
