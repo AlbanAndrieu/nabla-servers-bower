@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>bower-pom</artifactId>
     <packaging>pom</packaging>
-    <name>bower-pom</name>
+    <name>Nabla Bower Components</name>
     <description>Bower components POM</description>
     <url>https://github.com/AlbanAndrieu/nabla-servers-bower</url>
 
