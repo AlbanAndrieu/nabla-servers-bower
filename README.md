@@ -15,6 +15,8 @@ This project is based on [AngularJS](https://github.com/angular/angular.js)
 
 Aim is to deploy bower component inside [private-bower](https://www.npmjs.com/package/private-bower)
 
+It contains a bower component that allow to easily override bootstrap
+
 ## Installation
 
 Install NPM modules.
@@ -80,30 +82,21 @@ grunt build
 
 ```
 curl -X POST http://home.nabla.mobi:5678/removePackage -d '{"name":"sample-component"}' -H "Content-Type: application/json" --header "Auth-Key:TODO"
-curl -X POST http://home.nabla.mobi:5678/removePackage -d '{"name":"nabla-configuration"}' -H "Content-Type: application/json" --header "Auth-Key:TODO"
-curl -X POST http://home.nabla.mobi:5678/removePackage -d '{"name":"nabla-auth"}' -H "Content-Type: application/json" --header "Auth-Key:TODO"
-curl -X POST http://home.nabla.mobi:5678/removePackage -d '{"name":"nabla-header"}' -H "Content-Type: application/json" --header "Auth-Key:TODO"
-curl -X POST http://home.nabla.mobi:5678/removePackage -d '{"name":"nabla-notification"}' -H "Content-Type: application/json" --header "Auth-Key:TODO"
+curl -X POST http://home.nabla.mobi:5678/removePackage -d '{"name":"nabla-styles"}' -H "Content-Type: application/json" --header "Auth-Key:TODO"
 ```
 
 ## Register to private-bower with SSH (deprecated)
 
 ```
 #bower register sample-component ssh://git@github.com:AlbanAndrieu/nabla-bower-sample-component.git
-#bower register nabla-configuration ssh://git@github.com/AlbanAndrieu/nabla-bower-configuration.git
-#bower register nabla-auth ssh://git@github.com/AlbanAndrieu/nabla-bower-auth.git
-#bower register nabla-header ssh://git@github.com/AlbanAndrieu/nabla-bower-header.git
-#bower register nabla-notification ssh://git@github.com/AlbanAndrieu/nabla-bower-notification.git
+#bower register nabla-styles ssh://git@github.com/AlbanAndrieu/nabla-bower-nabla-styles.git
 
 ```
 ## Register to private-bower with HTTPS
 
 ```
 bower register sample-component https://github.com/AlbanAndrieu/nabla-bower-sample-component.git
-bower register nabla-configuration https://github.com/AlbanAndrieu/nabla-bower-configuration.git
-bower register nabla-auth https://github.com/AlbanAndrieu/nabla-bower-auth.git
-bower register nabla-header https://github.com/AlbanAndrieu/nabla-bower-header.git
-bower register nabla-notification https://github.com/AlbanAndrieu/nabla-bower-notification.git
+bower register nabla-styles https://github.com/AlbanAndrieu/nabla-bower-nabla-styles.git
 ```
 
 ## Deploy to git

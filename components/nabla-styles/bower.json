@@ -4,7 +4,7 @@
   "version": "1.0.1-build.0",
   "author": "Nabla Core Team <dev@home.nabla.mobi>",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "main": [
     "app/styles/less/nabla-bootstrap.less",
     "app/styles/less/nabla-theme.less",
