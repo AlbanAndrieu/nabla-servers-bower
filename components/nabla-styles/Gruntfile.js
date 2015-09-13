@@ -96,7 +96,7 @@ module.exports = function(grunt) {
       },
       js: {
         files: ['<%= config.app %>/scripts/{,*/}*.js'],
-        tasks: ['jshint'],
+        tasks: ['newer:jshint'],
         options: {
           livereload: true
         }
@@ -219,7 +219,7 @@ module.exports = function(grunt) {
       options: {
         processors: [
           //require('pixrem')(), // add fallbacks for rem units
-          require('autoprefixer-core')({browsers: 'last 2 versions'}) // add vendor prefixes
+          require('autoprefixer')({browsers: 'last 2 versions'}) // add vendor prefixes
         ]
       },
       dist: {

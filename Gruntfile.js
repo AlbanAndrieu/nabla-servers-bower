@@ -258,7 +258,7 @@ module.exports = function(grunt) {
         reporter: require('jshint-stylish')
       },
       node: {
-        files: { src: ['*.js', 'lib/**/*.js'] }
+        files: { src: ['*.js', 'lib/grunt/**/*.js', 'lib/versions/**/*.js'] }
       },
       sampleComponent: {
         files: { src: 'src/sample-component/**/*.js' }
@@ -505,7 +505,7 @@ module.exports = function(grunt) {
   grunt.registerTask('check', function(target) {
     grunt.task.run([
     'newer:jshint',
-    'jscs',
+    'newer:jscs',
     'checkDependencies',
     'versioncheck'
     ]);

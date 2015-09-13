@@ -25,11 +25,9 @@
     "url": "https://github.com/AlbanAndrieu/nabla-servers-bower/issues"
   },
   "engines": {
-    "node": ">=0.10.0",
-    "npm": ">=2.5"
-  },
-  "dependencies": {
-    "google-cdn": "1.0.0"
+    "node": ">=0.10.34",
+    "npm": ">=2.9.1",
+    "node-gyp" : ">=2.0.1"
   },
   "devDependencies": {
     "bower": "1.5.2",
@@ -47,9 +45,9 @@
     "grunt-contrib-cssmin": "0.13.0",
     "grunt-contrib-htmlmin": "^0.4.0",
     "grunt-contrib-imagemin": "0.9.4",
-    "grunt-contrib-jshint": "^0.11.2",
-    "grunt-contrib-less": "1.0.1",
+    "grunt-contrib-jshint": "0.11.3",
     "grunt-contrib-uglify": "0.9.2",
+    "grunt-contrib-less": "1.0.1",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-filerev": "^2.1.2",
     "grunt-google-cdn": "^0.4.3",
@@ -81,6 +79,7 @@
     "karma-chrome-launcher": "0.2.0",
     "karma-coverage": "0.5.1",
     "karma-firefox-launcher": "0.1.6",
+    "karma-ie-launcher": "^0.2.0",
     "karma-jasmine": "0.3.6",
     "karma-junit-reporter": "0.3.4",
     "karma-ng-html2js-preprocessor": "0.1.2",
@@ -100,10 +99,12 @@
     "sorted-object": "^1.0.0",
     "stringmap": "^0.2.2",
     "time-grunt": "^1.0.0",
-    "xml2js": "0.4.10"
+    "xml2js": "0.4.12"
   },
   "scripts": {
-    "preinstall": "node/node node/npm/bin/npm-cli.js link components/*",
-    "test": "grunt test"
+    "install": "./node/node node_modules/protractor/bin/webdriver-manager update",
+    "pretest": "./node_modules/phantomjs/bin/phantomjs yslow.js --info grade --format tap --threshold '{\"yexpires\": 60}' t.co",
+    "test": "grunt test",
+    "webpagetest": "./node_modules/webpagetest/bin/webpagetest test t.co --key $WPT_API_KEY --first --location Dulles:Chrome --poll --timeout 60 --specs tco-specs.json --reporter spec"
   }
 }
