@@ -1,0 +1,12 @@
+
+//@import "nabla-variables";
+
+// Custom theme
+@import "nabla-theme";
+
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+$fa-font-path: "../bower_components/font-awesome/fonts";
+// bower:scss
+@import "font-awesome/scss/font-awesome.scss";
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+// endbower

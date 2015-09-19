@@ -18,7 +18,7 @@ angular
     'ngTouch',
     'angular-nicescroll'
   ])
-  .config(function ($routeProvider, $locationProvider) {
+  .config(function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode({
       enabled: true,
       requireBase: false

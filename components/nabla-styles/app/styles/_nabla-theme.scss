@@ -8,12 +8,12 @@
 // Load core variables and mixins
 // --------------------------------------------------
 
-@import "nabla-variables";
-
 // bower:scss
-@import "../../../bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
-@import "../../../bower_components/components-font-awesome/scss/font-awesome.scss";
+@import "font-awesome/scss/font-awesome.scss";
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
+
+@import "nabla-variables";
 
 //
 // Buttons
@@ -794,6 +794,7 @@ code {
 }
 
 // -------------------- Input icon (extend bootstrap) -------------------- //
+
 .form-control-feedback {
   color: $brand-primary;
 }
@@ -976,11 +977,6 @@ code {
   margin-bottom: 30px
 }
 
-
-
-
-
-
 // -------------------- Action-menu -------------------- //
 .action-menu-hover {
   .action-menu {
@@ -996,12 +992,6 @@ code {
       opacity: 1;
   }
 }
-
-
-
-
-
-
 
 // -------------------- Tiles   -------------------- //
 // ***** nabla custom class *******
@@ -1141,11 +1131,6 @@ figure > div {
 }
 
 
-
-
-
-
-
 // -------------------- Switch [nabla custom class]  -------------------- //
 
 .form-group {
@@ -1158,8 +1143,6 @@ figure > div {
   //border: 1px solid red;
 }
 
-
-/*
 .switch {
   white-space: nowrap;
   label {
@@ -1197,15 +1180,24 @@ figure > div {
   }
 }
 
+// Switch radius
+@mixin switch-radius($switch-radius) {
+  span {
+    border-radius: $switch-radius;
+    &:before {
+      border-radius: $switch-radius;
+    }
+  }
+}
 
 // Switch sizes (include size,radius, line option)
-.switch-size(@switch-width;) {
-  .switch-radius(@switch-width);
+@mixin switch-size($switch-width) {
+  @include switch-radius($switch-width);
   span {
-    padding-right: (@switch-width * 1.5);
+    padding-right: ($switch-width * 1.5);
     &:before {
-      width: @switch-width;
-      height: @switch-width;
+      width: $switch-width;
+      height: $switch-width;
     }
   }
   &.switch-line {
@@ -1213,66 +1205,53 @@ figure > div {
       height: 2px;
       transition: all ease-in 0.2s;
       &:before {
-        margin-top: -(@switch-width/2) + 1px;
+        margin-top: -($switch-width/2) + 1px;
       }
     }
   }
   &.switch-square {
     span {
       &:before {
-        width: @switch-width;
-        height: @switch-width * 0.7;
+        width: $switch-width;
+        height: $switch-width * 0.7;
       }
     }
   }
   & :checked + span {
-    padding-left: (@switch-width * 1.5);
+    padding-left: ($switch-width * 1.5);
   }
 }
 
-
 .switch {
-  .switch-size($input-height-base/2;);
+  @include switch-size($input-height-base/2);
 }
 
 .switch-sm {
-  .switch-size($input-height-small/2.3;);
+  @include switch-size($input-height-small/2.3);
 }
 
 .switch-lg {
-  .switch-size($input-height-large/2;);
+  @include switch-size($input-height-large/2);
 }
 
+.switch-square {
+  @include switch-radius(0);
+}
 
-
-
-
-// Switch radius
-.switch-radius (@switch-radius) {
-  span {
-    border-radius: @switch-radius;
-    &:before {
-      border-radius: @switch-radius;
+// Switch colors
+@mixin switch-color($switch-color) {
+  & :checked + span {
+    box-shadow: inset 0 0 1px rgba(0,0,0,.5), inset 0 0 80px $switch-color;
+  }
+  &.switch-line {
+    & :checked + :before {
+      background-color: $switch-color;
     }
   }
 }
 
-
-.switch-square {
-  .switch-radius(0);
-}
-
-
-
-// Switch colors
-.switch-color(@switch-color) {
-  & :checked + span {
-    box-shadow: inset 0 0 1px rgba(0,0,0,.5), inset 0 0 80px @switch-color;
-  }
-}
-
 .switch {
-  .switch-color($gray);
+  @include switch-color($gray);
   &.switch-line {
     & :checked + :before {
       background-color: $gray;
@@ -1282,7 +1261,7 @@ figure > div {
 }
 
 .switch-default {
-  .switch-color($gray);
+  @include switch-color($gray);
   &.switch-line {
     & :checked + :before {
       background-color: $gray;
@@ -1291,53 +1270,26 @@ figure > div {
 }
 
 .switch-primary {
-  .switch-color(@btn-primary-bg);
-  &.switch-line {
-    & :checked + :before {
-      background-color: @btn-primary-bg;
-    }
-  }
+  @include switch-color($btn-primary-bg);
 }
 
 .switch-success {
-  .switch-color(@btn-success-bg);
-  &.switch-line {
-    & :checked + :before {
-      background-color: @btn-success-bg;
-    }
-  }
+  @include switch-color($btn-success-bg);
 }
 
 .switch-info {
-  .switch-color(@btn-info-bg);
-  &.switch-line {
-    & :checked + :before {
-      background-color: @btn-info-bg;
-    }
-  }
+  @include switch-color($btn-info-bg);
 }
 
 .switch-warning {
-  .switch-color(@btn-warning-bg);
-  &.switch-line {
-    & :checked + :before {
-      background-color: @btn-warning-bg;
-    }
-  }
+  @include switch-color($btn-warning-bg);
 }
 
 .switch-danger {
-  .switch-color(@btn-danger-bg);
-  &.switch-line {
-    & :checked + :before {
-      background-color: @btn-danger-bg;
-    }
-  }
+  @include switch-color($btn-danger-bg);
 }
-*/
 
 // -------------------- Checkbox [nabla custom class]  -------------------- //
-/*
 .checkbox-nice {
   position: relative;
   display: block;
@@ -1403,25 +1355,25 @@ figure > div {
 }
 
 // checkbox-nice sizes (include size)
-.checkbox-nice-size(@checkbox-nice-size;) {
+@mixin checkbox-nice-size($checkbox-nice-size) {
   span {
     &:before {
-      width: @checkbox-nice-size;
-      height: @checkbox-nice-size;
+      width: $checkbox-nice-size;
+      height: $checkbox-nice-size;
     }
     &:after {
-      font-size: @checkbox-nice-size * 0.7 ;
+      font-size: $checkbox-nice-size * 0.7 ;
     }
   }
   & :checked + span {
     &:before {
-      border-width: @checkbox-nice-size/2;
+      border-width: $checkbox-nice-size/2;
     }
   }
   &.checkbox-nice-round {
     span {
       &:before {
-        border-radius: @checkbox-nice-size;
+        border-radius: $checkbox-nice-size;
       }
     }
   }
@@ -1429,59 +1381,55 @@ figure > div {
 
 
 .checkbox-nice {
-  .checkbox-nice-size($input-height-base/2;);
+  @include checkbox-nice-size($input-height-base/2);
 }
 
 .checkbox-nice-sm {
-  .checkbox-nice-size($input-height-small/2.3;);
+  @include checkbox-nice-size($input-height-small/2.3);
 }
 
 .checkbox-nice-lg {
-  .checkbox-nice-size($input-height-large/2;);
+  @include checkbox-nice-size($input-height-large/2);
 }
 
-
-
 // Checkbox colors
-.checkbox-nice-color(@checkbox-nice-color) {
+@mixin checkbox-nice-color($checkbox-nice-color) {
   & :checked + span {
     &:before {
-      border-color: @checkbox-nice-color;
+      border-color: $checkbox-nice-color;
     }
   }
 }
 
 .checkbox-nice {
-  .checkbox-nice-color($gray);
+  @include checkbox-nice-color($gray);
 }
 
 .checkbox-nice-default {
-  .checkbox-nice-color($gray);
+  @include checkbox-nice-color($gray);
 }
 
 .checkbox-nice-primary {
-  .checkbox-nice-color(@btn-primary-bg);
+  @include checkbox-nice-color($btn-primary-bg);
 }
 
 .checkbox-nice-success {
-  .checkbox-nice-color(@btn-success-bg);
+  @include checkbox-nice-color($btn-success-bg);
 }
 
 .checkbox-nice-info {
-  .checkbox-nice-color(@btn-info-bg);
+  @include checkbox-nice-color($btn-info-bg);
 }
 
 .checkbox-nice-warning {
-  .checkbox-nice-color(@btn-warning-bg);
+  @include checkbox-nice-color($btn-warning-bg);
 }
 
 .checkbox-nice-danger {
-  .checkbox-nice-color(@btn-danger-bg);
+  @include checkbox-nice-color($btn-danger-bg);
 }
-*/
 
 // -------------------- Radio [nabla custom class]  -------------------- //
-/*
 .radio-nice {
   position: relative;
   display: block;
@@ -1530,79 +1478,71 @@ figure > div {
   }
 }
 
-
-
-
 // radio-nice sizes (include size)
-.radio-nice-size(@radio-nice-size;) {
+@mixin radio-nice-size($radio-nice-size) {
   span {
     border: 1px solid $gray-lighter;
     &:before {
-      width: @radio-nice-size;
-      height: @radio-nice-size;
-      border-radius: @radio-nice-size;
+      width: $radio-nice-size;
+      height: $radio-nice-size;
+      border-radius: $radio-nice-size;
     }
     &:after {
-      font-size: @radio-nice-size * 0.7 ;
+      font-size: $radio-nice-size * 0.7 ;
     }
   }
   & :checked + span {
     &:before {
-      border-width: @radio-nice-size/3.5;
+      border-width: $radio-nice-size/3.5;
       border-color: white;
     }
   }
 }
 
-
 .radio-nice {
-  .radio-nice-size($input-height-base/2;);
+  @include radio-nice-size($input-height-base/2);
 }
 
 .radio-nice-sm {
-  .radio-nice-size($input-height-small/2.3;);
+  @include radio-nice-size($input-height-small/2.3);
 }
 
 .radio-nice-lg {
-  .radio-nice-size($input-height-large/2;);
+  @include radio-nice-size($input-height-large/2);
 }
-
-
-
 // radio colors
-.radio-nice-color(@radio-nice-color) {
+@mixin radio-nice-color($radio-nice-color) {
   & :checked + span {
     &:before {
-      background-color: @radio-nice-color;
+      background-color: $radio-nice-color;
     }
   }
 }
 
 .radio-nice {
-  .radio-nice-color($gray);
+  @include radio-nice-color($gray-base);
 }
 
 .radio-nice-default {
-  .radio-nice-color($gray);
+  @include radio-nice-color($gray-base);
 }
 
 .radio-nice-primary {
-  .radio-nice-color(@btn-primary-bg);
+  @include radio-nice-color($btn-primary-bg);
 }
 
 .radio-nice-success {
-  .radio-nice-color(@btn-success-bg);
+  @include radio-nice-color($btn-success-bg);
 }
 
 .radio-nice-info {
-  .radio-nice-color(@btn-info-bg);
+  @include radio-nice-color($btn-info-bg);
 }
 
 .radio-nice-warning {
-  .radio-nice-color(@btn-warning-bg);
+  @include radio-nice-color($btn-warning-bg);
 }
 
 .radio-nice-danger {
-  .radio-nice-color(@btn-danger-bg);
+  @include radio-nice-color($btn-danger-bg);
 }
-*/

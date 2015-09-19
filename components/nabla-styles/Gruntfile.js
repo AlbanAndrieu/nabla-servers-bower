@@ -9,6 +9,37 @@
 // 'test/spec/**/*.js'
 
 module.exports = function(grunt) {
+  var localConfig;
+  try {
+    localConfig = require('./server/config/local.env');
+  } catch (e) {
+    localConfig = {};
+  }
+
+  var zone;
+  var xdomainUrl;
+
+  try {
+    xdomainUrl = require('./urlConfig.js').getUrl();
+    zone = require('./urlConfig.js').getProxy();
+  } catch (e) {
+    if (e instanceof Error && e.code === 'MODULE_NOT_FOUND') {
+      console.log('No urlConfig module found, going with defaults');
+      xdomainUrl = 'slave="http://home.nabla.mobi:8080/login"';
+      zone = 'home.nabla.mobi';
+    }
+  }
+
+  var ZAP_PORT = process.env.ZAP_PORT || 8090;
+  //console.log('ZAP_PORT : ' + ZAP_PORT);
+  var ZAP_HOST = process.env.ZAP_HOST || 'localhost';
+  //console.log('ZAP_HOST : ' + ZAP_HOST);
+  var SERVER_HOST = process.env.SERVER_HOST || 'localhost';
+  //console.log('SERVER_HOST : ' + SERVER_HOST);
+  var SERVER_PORT = process.env.JETTY_PORT || 9090;
+  //console.log('SERVER_PORT : ' + SERVER_PORT);
+  var SERVER_URL = 'http://' + SERVER_HOST + ':' + SERVER_PORT;
+  var SERVER_CONTEXT = '/';
 
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
@@ -25,26 +56,35 @@ module.exports = function(grunt) {
 	//'zap_report': 'grunt-zaproxy',
 	//'zap_stop': 'grunt-zaproxy',
 	//'zap_results': 'grunt-zaproxy',
+	'validate-package': 'grunt-nsp-package',
+	resemble: 'grunt-resemble-cli',
+    instrument: 'grunt-protractor-coverage',
+	usebanner: 'grunt-banner',
+	replace: 'grunt-text-replace',
+    express: 'grunt-express-server',
     useminPrepare: 'grunt-usemin',
 	gitclone: 'grunt-git',
 	gitadd: 'grunt-git',
 	gitcommit: 'grunt-git',
 	gittag: 'grunt-git',
 	gitpush: 'grunt-git',
-    //ngtemplates: 'grunt-angular-templates',
-    //cdnify: 'grunt-google-cdn',
+    ngtemplates: 'grunt-angular-templates',
+    cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner'
     //buildcontrol: 'grunt-build-control'
   });
+
+  var async = require('async'),
+      request = require('request');
 
   var TAG_PREFIX = '';
   if (typeof process.env.MVN_RELEASE_VERSION === 'undefined') {
     TAG_PREFIX = 'v';
   }
 
-  // Configurable paths
-  var config = {
-    app: 'app',
+  // Configurable paths for the application
+  var appConfig = {
+    app: require('./bower.json').appPath || 'app',
     dist: 'dist'
   };
 
@@ -52,35 +92,15 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     // Project settings
-    config: config,
-    pkg: grunt.file.readJSON('package.json'),
+    config: appConfig,
 
-    // Empties folders to start fresh
-    clean: {
-      dist: {
-        files: [{
-          dot: true,
-          src: [
-            '.tmp',
-            '<%= config.dist %>/*',
-            '!<%= config.dist %>/.git*',
-            'bower_repo'
-          ]
-        }]
-      },
-      bower_repo: {
-        files: [{
-          dot: true,
-          src: [
-            'bower_repo/*', '!bower_repo/.git'
-          ]
-        }]
-      },
-      server: '.tmp'
-    },
+    // Project meta
+    pkg: require('./package.json'),
 
     // Install bower dependencies
     bower: {
+      bower: require('./bower.json'),
+      verbose: true,
       install: {
         options: {
           copy: false
@@ -96,33 +116,34 @@ module.exports = function(grunt) {
       },
       js: {
         files: ['<%= config.app %>/scripts/{,*/}*.js'],
-        tasks: ['newer:jshint'],
+        tasks: ['newer:jshint:all'],
         options: {
-          livereload: true
+          livereload: '<%= connect.options.livereload %>'
         }
       },
-      jstest: {
+      jsTest: {
         files: ['test/spec/{,*/}*.js'],
-        tasks: ['test:watch']
-      },
-      gruntfile: {
-        files: ['Gruntfile.js']
-      },
-      styles: {
-        files: ['<%= config.app %>/styles/{,*/}*.css'],
-        tasks: ['newer:copy:styles', 'postcss'],
-        options: {
-          livereload: true
-        }
+        tasks: ['newer:jshint:test', 'test:watch', 'karma']
       },
       less: {
         files: ['<%= config.app %>/styles/less/{,*/}*.less'],
         tasks: ['less']
       },
       compass: {
-        files: ['<%= config.app %>/styles/sass/{,*/}*.{scss,sass}'],
+        files: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
         tasks: ['compass:server', 'postcss']
       },
+      gruntfile: {
+        files: ['Gruntfile.js']
+      },
+      //styles: {
+      //  files: ['<%= config.app %>/styles/{,*/}*.css'],
+      //  tasks: ['newer:copy:styles', 'postcss'],
+      //  options: {
+      //    livereload: true
+      //  }
+      //},
+
       livereload: {
         options: {
           livereload: '<%= connect.options.livereload %>'
@@ -138,43 +159,111 @@ module.exports = function(grunt) {
     // The actual grunt server settings
     connect: {
       options: {
-        port: 9000,
-        open: true,
-        livereload: 35729,
-        // Change this to '0.0.0.0' to access the server from outside
-        hostname: 'localhost'
+        port: 8001,
+        // Change this to '0.0.0.0' to access the server from outside.
+        //hostname: '*',
+        hostname: 'localhost',
+        livereload: 35730,
+        analytics: {
+          account: 'UA-56011797-1',
+          domainName: 'nabla.mobi'
+        },
+        discussions: {
+          shortName: 'nabla',
+          url: 'http://home.nabla.mobi',
+          dev: false
+        },
+        middleware: function(connect, options) {
+          var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
+          return [
+
+            function(req, res, next) {
+              res.setHeader('Access-Control-Allow-Origin', '*');
+              res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+              res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+              res.setHeader('X-Content-Type-Options', 'nosniff');
+              res.setHeader('X-Frame-Options', 'DENY');
+              res.setHeader('X-XSS-Protection', '1;mode=block');
+              res.setHeader('Expires', '0');
+              res.setHeader('Pragma', 'no-cache');
+              res.setHeader('Cache-Control', 'no-cache,no-store,must-revalidate');
+              return next();
+            },
+            connect.static(options.base[0]),
+            connect.directory(options.base[0]),
+            proxy
+          ];
+        }
       },
       livereload: {
         options: {
-          middleware: function(connect) {
+          open: true,
+          middleware: function(connect, options) {
+            if (!Array.isArray(options.base)) {
+                options.base = [options.base];
+            }
+
+            // Setup the proxy
+            var middlewares = [require('grunt-connect-proxy/lib/utils').proxyRequest];
+
+            // Serve static files.
+            options.base.forEach(function(base) {
+                middlewares.push(connect.static(base));
+            });
+
+            // Make directory browse-able.
+            var directory = options.directory || options.base[options.base.length - 1];
+            middlewares.push(connect.directory(directory));
             return [
+              middlewares,
               connect.static('.tmp'),
-              connect().use('/bower_components', connect.static('./bower_components')),
-              connect.static(config.app)
+              connect().use(
+                '/bower_components',
+                connect.static('./bower_components')
+              ),
+              connect().use(
+                '/app/styles',
+                connect.static('./app/styles')
+              ),
+              connect.static(appConfig.app)
             ];
           }
         }
       },
       test: {
         options: {
-          open: false,
-          port: 9001,
+          port: 9002,
           middleware: function(connect) {
             return [
               connect.static('.tmp'),
               connect.static('test'),
-              connect().use('/bower_components', connect.static('./bower_components')),
-              connect.static(config.app)
+              connect().use(
+                '/bower_components',
+                connect.static('./bower_components')
+              ),
+              connect.static(appConfig.app)
             ];
           }
         }
       },
       dist: {
         options: {
-          base: '<%= config.dist %>',
-          livereload: false
+          //port: 9003,
+          open: true,
+          base: '<%= config.dist %>'
         }
       }
+      //proxies: [{
+      //  context: '/login/',
+      //  host: zone,
+      //  port: 8080,
+      //  changeOrigin: true
+      //}, {
+      //  context: '/apidocs/',
+      //  host: zone,
+      //  port: 8080,
+      //  changeOrigin: true
+      //}]
     },
 
     // Make sure code styles are up to par and there are no obvious mistakes
@@ -189,6 +278,20 @@ module.exports = function(grunt) {
         '!<%= config.app %>/scripts/vendor/*',
         'test/spec/{,*/}*.js'
       ]
+    },
+
+    jscs: {
+      options: {
+        config: '.jscs.json'
+      },
+      all: {
+        src: [
+          'Gruntfile.js',
+        '<%= config.app %>/scripts/{,*/}*.js',
+        '!<%= config.app %>/scripts/vendor/*',
+        'test/spec/{,*/}*.js'
+        ]
+      }
     },
 
     less: {
@@ -212,6 +315,30 @@ module.exports = function(grunt) {
           urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html']
         }
       }
+    },
+
+    // Empties folders to start fresh
+    clean: {
+      dist: {
+        files: [{
+          dot: true,
+          src: [
+            '.tmp',
+            '<%= config.dist %>/*',
+            '!<%= config.dist %>/.git*',
+            'bower_repo'
+          ]
+        }]
+      },
+      bower_repo: {
+        files: [{
+          dot: true,
+          src: [
+            'bower_repo/*', '!bower_repo/.git'
+          ]
+        }]
+      },
+      server: '.tmp'
     },
 
     // Add vendor prefixed styles
@@ -240,21 +367,21 @@ module.exports = function(grunt) {
         exclude: ['bower_components/bootstrap/dist/css/bootstrap.css']
       },
       sass: {
-        src: ['<%= config.app %>/styles/sass/{,*/}*.{scss,sass}']
-        //ignorePath: /(\.\.\/){1,2}bower_components\//
+        src: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
+        ignorePath: /(\.\.\/){1,2}bower_components\//
       }
     },
 
     // Compiles Sass to CSS and generates necessary files if requested
     compass: {
       options: {
-        sassDir: '<%= config.app %>/styles/sass',
+        sassDir: '<%= config.app %>/styles',
         cssDir: '.tmp/styles',
         generatedImagesDir: '.tmp/images/generated',
         imagesDir: '<%= config.app %>/images',
         javascriptsDir: '<%= config.app %>/scripts',
         fontsDir: '<%= config.app %>/styles/fonts',
-        importPath: './bower_components',
+        importPath: '<%= config.app %>/../bower_components',
         httpImagesPath: '/images',
         httpGeneratedImagesPath: '/images/generated',
         httpFontsPath: '/styles/fonts',
@@ -383,6 +510,18 @@ module.exports = function(grunt) {
     //   dist: {}
     // },
 
+    usebanner: {
+      dist: {
+        options: {
+          position: 'top',
+          banner: '<%= banner %>'
+        },
+        files: {
+          src: ['<%= config.dist %>/styles/*.css', '<%= config.dist %>/scripts/*.js']
+        }
+      }
+    },
+
     'compare_size': {
       files: [
         'app/styles/**',
@@ -435,22 +574,37 @@ module.exports = function(grunt) {
       }
     },
 
+    // Replace Google CDN references
+    cdnify: {
+      dist: {
+        html: ['<%= config.dist %>/*.html']
+      }
+    },
+
     // Copies remaining files to places other tasks can use
     copy: {
       dist: {
-        files: [{
+        files: [
+        {
           expand: true,
           dot: true,
-          cwd: '<%= config.app %>/styles/',
+          cwd: '<%= config.app %>',
           dest: '<%= config.dist %>',
           src: [
-            'fonts/{,*/}*.*'
+            '*.{ico,png,txt}',
+            //'.htaccess',
+            '*.html',
+            'views/{,*/}*.html',
+            'images/{,*/}*.{webp}',
+            'styles/fonts/{,*/}*.*',
+            'fonts/{,*/}*.*',
+            'resources/{,*/}*.*'
           ]
-        }, {
-          expand: true,
-          cwd: '.tmp/styles/',
-          src: 'css/*',
-          dest: '<%= config.dist %>'
+        //}, {
+        //  expand: true,
+        //  cwd: '.tmp/styles/',
+        //  src: 'css/*',
+        //  dest: '<%= config.dist %>'
         }, {
           expand: true,
           cwd: '.',
@@ -471,7 +625,7 @@ module.exports = function(grunt) {
       },
       styles: {
         expand: true,
-        dot: true,
+        //dot: true,
         cwd: '<%= config.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
@@ -507,6 +661,352 @@ module.exports = function(grunt) {
         'imagemin',
         'svgmin'
       ]
+    },
+
+    ngdocs: {
+      options: {
+        scripts: ['angular.js', '../src.js'],
+        html5Mode: false
+      },
+      all: ['app/**/*.js']
+    },
+
+    // Test settings
+    karma: {
+      unit: {
+        configFile: 'test/karma.conf.js',
+        //browsers: ['PhantomJS', 'Chrome', 'Firefox'],
+        singleRun: true
+      }
+//      sampleComponent: {
+//        configFile: 'karma-sample-component.conf.js'
+//      }
+//      nablaAuth: {
+//        configFile: 'karma-nabla-auth.conf.js'
+//      },
+//      nablaNotifications: {
+//        configFile: 'karma-nabla-notifications.conf.js',
+//        //browsers: ['PhantomJS', 'Chrome'],
+//        //singleRun: false,
+//        //logLevel: 'DEBUG',
+//        autoWatch: true
+//      },
+//      nablaHeader: {
+//        configFile: 'karma-nabla-header.conf.js',
+//        //browsers: ['PhantomJS', 'Chrome'],
+//        //singleRun: false,
+//        //logLevel: 'DEBUG',
+//        autoWatch: true
+//      }
+    },
+
+    replace: {
+      // Sets DEBUG_MODE to FALSE in dist
+      debugMode: {
+        src: ['<%= config.dist %>/scripts/scripts.js'],
+        overwrite: true,
+        replacements: [
+          {
+            from: /\/\*DEBUG_MODE\*\/.{1,}\/\*DEBUG_MODE\*\//gi,
+            to: '/*DEBUG_MODE*/false/*DEBUG_MODE*/'
+          }
+        ]
+      },
+      // Sets VERSION_TAG for cache busting
+      versionTag: {
+        src: ['<%= config.dist %>/scripts/scripts.js'],
+        overwrite: true,
+        replacements: [
+          {
+            from: /\/\*VERSION_TAG_START\*\/.{1,}\/\*VERSION_TAG_END\*\//gi,
+            to: '/*VERSION_TAG_START*/' + new Date().getTime() + '/*VERSION_TAG_END*/'
+          }
+        ]
+      }
+    },
+
+    protractor: {
+      options: {
+        //keepAlive: true,
+        configFile: 'test/protractor.conf.js',
+        args: {
+          //seleniumServerJar: 'node_modules/protractor/selenium/selenium-server-standalone-2.39.0.jar',
+          //chromeDriver: 'node_modules/protractor/selenium/chromedriver.exe'
+        }
+      },
+      run: {}
+    },
+
+    //env: {
+    //  test: {
+    //    NODE_ENV: 'test'
+    //  },
+    //  prod: {
+    //    NODE_ENV: 'production'
+    //  },
+    //  all: localConfig
+    //},
+
+    'yslow_test': {
+      options: {
+        info: 'grade',
+        format: 'tap',
+        //format: 'junit',
+        //ruleset: 'yblog',
+        cdns: 'nabla.mobi,home.nabla.mobi,albandri,localhost,127.0.0.1',
+        threshold: '\'{"overall": "B", "ycdn": "F", "yexpires": "F", "ynumreq": "E", "yminify": "B", "ycompress": "B", "ydns": "D", "yno404": "F", "yexpressions": "B", "ymindom": "F"}\'',
+        urls: [SERVER_URL + SERVER_CONTEXT,
+               SERVER_URL + '#/about'],
+        //headers: '\'{"Cookie": "'JSESSIONID=0003EB22CC71A700D676B1E0B6558325;user=%7B%22loginName%22%3A%22nabla%22%2C%22userName"}\'',
+        //reports: ['target/surefire-reports/yslow-main.xml',
+        //          'target/surefire-reports/yslow-about.xml']
+        reports: ['target/yslow-main.tap',
+                  'target/yslow-about.tap']
+      },
+      'your_target': {
+        files: []
+      }
+    },
+
+    phantomas: {
+      grunt: {
+        options: {
+          assertions: {
+            assetsWithQueryString: 3,     // receive warning, when there are more than 3 assets with a query string
+            bodyHTMLSize: 10500, // receive warning, when the bodyHTMLsize is bigger than 10500
+            jsErrors: 0,     // receive warning, when more than 0 JS errors appear
+            gzipRequests: {      // receive warning, when less compressed assets are loaded then 10 ( might be useful for checking server configurations )
+              type: '<',
+              value: 10
+            }
+          },
+          indexPath: './build/phantomas/',
+          options: {
+            timeout: 30,
+            //cookie: ''JSESSIONID=0003EB22CC71A700D676B1E0B6558325;user=%7B%22loginName%22%3A%22nabla%22%2C%22userName',
+            verbose: true,
+            debug: true
+          },
+          url: SERVER_URL + SERVER_CONTEXT,
+          buildUi: true
+        }
+      }
+    },
+
+    'phantomcss-gitdiff': {
+      options: {},
+        desktop: {
+            options: {
+                baseUrl: SERVER_URL + SERVER_CONTEXT,
+                cleanupComparisonImages: false,
+                //viewportSize: [1024, 768], //desktop
+                viewportSize: [320, 400], //mobile
+                gitDiff: true
+            },
+            files: [{
+              cwd: 'dist/',
+              src: '*.html'
+            }]
+        }
+    },
+
+    resemble: {
+      options: {
+        screenshotRoot: 'screenshots/',
+        tolerance: 10,
+        //url: 'http://0.0.0.0:8000/dist',
+        url: SERVER_URL + SERVER_CONTEXT,
+        //debug: true,
+        gm: false
+
+      },
+      desktop: {
+        options: {
+          width: 1100
+        },
+        files: [
+         {
+           cwd: 'dist/',
+           //expand: true,
+           //src: ['**/*.html'],
+           src: ['*.html'],
+           dest: 'desktop'
+         }
+        ]
+      },
+      //desktop: {
+      //  options: {
+      //    width: 1100,
+      //  },
+      //  src: ['dist/about', 'dist/contact', 'dist/customers', 'dist/customers/customer-stories'],
+      //  dest: 'desktop',
+      //},
+      //tablet: {
+      //  options: {
+      //    width: 800,
+      //  },
+      //  src: ['dist/**/*.html'],
+      //  dest: 'tablet',
+      //},
+      mobile: {
+        options: {
+          width: 450
+        },
+        files: [
+         {
+           cwd: 'dist/',
+           //expand: true,
+           //src: ['**/*.html'],
+           src: ['*.html'],
+           dest: 'mobile'
+         }
+        ]
+      }
+    },
+
+    sitespeedio: {
+      default: {
+        options: {
+          url: 'http://home.nabla.mobi:9090/',
+          deepth: 1,
+          resultBaseDir: './build/sitespeedio/'
+        }
+      }
+    },
+
+    pagespeed: {
+      options: {
+        nokey: true,
+        //url: 'http://home.nabla.mobi/'
+        url: 'http://home.nabla.mobi:9090/'
+      },
+      //prod: {
+      //  options: {
+      //    url: "https://developers.google.com/speed/docs/insights/v1/getting_started",
+      //    locale: "en_GB",
+      //    strategy: "desktop",
+      //    threshold: 80
+      //  }
+      //},
+      paths: {
+        options: {
+          paths: ['/#/about', '/#/'],
+          locale: 'en_GB',
+          strategy: 'desktop',
+          threshold: 80
+        }
+      }
+    },
+
+    'pagespeed_junit': {
+      options: {
+        urls: ['http://home.nabla.mobi:9090/'],
+        //key: '<API_KEY>',
+        reports: ['target/surefire-reports/TEST-pagespeed.xml'],
+        threshold: 10,
+        ruleThreshold: 2
+      }
+    },
+
+    wpt: {
+      options: {
+        locations: ['Tokyo'],
+        key: process.env.WPT_API_KEY
+      },
+      sideroad: {
+        options: {
+          url: [
+            'http://home.nabla.mobi:9090/'
+            //'http://home.nabla.mobi:8380/jenkins/'
+          ]
+        },
+        dest: './build/sideroad/'
+      }
+    },
+
+    perfbudget: {
+      default: {
+        options: {
+          url: 'http://home.nabla.mobi:9090/',
+          timeout: 300,
+          key: process.env.WPT_API_KEY,
+          budget: {
+            render: '2000',
+            SpeedIndex: '3000'
+          }
+        }
+      }
+    },
+
+    'gh-pages': {
+      options: {
+        base: 'dist',
+        dotfiles: true
+      },
+      src: ['**/*']
+    },
+
+    'zap_start': {
+      options: {
+        host: ZAP_HOST,
+        port: ZAP_PORT,
+        daemon: true
+      }
+    },
+    'zap_spider': {
+      options: {
+        url: SERVER_URL,
+        host: ZAP_HOST,
+        port: ZAP_PORT
+      }
+    },
+    'zap_scan': {
+      options: {
+        url: SERVER_URL,
+        host: ZAP_HOST,
+        port: ZAP_PORT
+      }
+    },
+    'zap_alert': {
+      options: {
+        host: ZAP_HOST,
+        port: ZAP_PORT,
+        ignore: ['Content-Type header missing',
+                 'Private IP disclosure',
+                 'X-Content-Type-Options header missing',
+                 'X-Frame-Options header not set']
+      }
+    },
+    'zap_report': {
+      options: {
+        dir: 'build/reports/zaproxy',
+        host: ZAP_HOST,
+        port: ZAP_PORT,
+        html: true
+      }
+    },
+    'zap_stop': {
+      options: {
+        host: ZAP_HOST,
+        port: ZAP_PORT
+      }
+    },
+    'zap_results': {
+      options: {
+        risks: ['High']
+        //risks: ['High', 'Medium', 'Low', 'Informational']
+      }
+    },
+
+    versioncheck: {
+      options: {
+        skip: ['semver', 'npm', 'lodash'],
+        hideUpToDate: false
+      }
+    },
+
+    checkDependencies: {
+        this: {}
     },
 
     bump: {
@@ -564,15 +1064,6 @@ module.exports = function(grunt) {
           tags: true
         }
       }
-    },
-
-    jscs: {
-      options: {
-        config: ".jscs.json"
-      },
-      node: {
-        files: { src: ['*.js'] }
-      }
     }
 
   });
@@ -588,11 +1079,11 @@ module.exports = function(grunt) {
 
     grunt.task.run([
       'clean:server',
-      'bower:install',
+      //'bower:install',
       //'less',
       'wiredep',
       'concurrent:server',
-      'copy:styles',
+      //'copy:styles',
       //'uncss',
       'postcss',
       //'configureProxies:server',
@@ -602,50 +1093,161 @@ module.exports = function(grunt) {
     ]);
   });
 
-  grunt.registerTask('server', function(target) {
+  grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function(target) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run([target ? ('serve:' + target) : 'serve']);
   });
 
-  grunt.registerTask('test', function(target) {
+  /**
+   * Run acceptance tests to teach ZAProxy how to use the app.
+   **/
+  grunt.registerTask('acceptance-test', function() {
+    var done = this.async();
+
+    // make sure requests are proxied through ZAP
+    var r = request.defaults({'proxy': SERVER_URL});
+
+    async.series([
+      function(callback) {
+        r.get(SERVER_URL + '/' + SERVER_CONTEXT + '/index.html', callback);
+      }
+      // Add more requests to navigate through parts of the application
+    ], function(err) {
+      if (err) {
+        grunt.fail.warn('Acceptance test failed: ' + JSON.stringify(err, null, 2));
+        grunt.fail.warn('Is zaproxy still running?');
+        grunt.task.run(['zap_stop']);
+        return;
+      }
+      grunt.log.ok();
+      done();
+    });
+
+    grunt.task.run(['protractor:run']);
+  });
+
+  /**
+   * ZAProxy alias task.
+   **/
+  grunt.registerTask('zap', [
+    //'zap_start',
+    'acceptance-test',
+    'zap_spider',
+    'zap_scan',
+    'zap_alert',
+    'zap_report',
+    //'penthouse',
+    'yslow_test',
+    'pagespeed',
+    'pagespeed_junit',
+    'sitespeedio',
+    'phantomas',
+    //'wpt',
+    'perfbudget',
+    'resemble',
+    //'zap_stop'
+    'zap_results'
+  ]);
+
+  grunt.registerTask('prepare', [
+    //'clean:bower',
+    'bower'
+  ]);
+
+  grunt.registerTask('integration-test', [
+    'zap'
+  ]);
+
+  grunt.registerTask('test', [
+    'unit-test'
+  ]);
+
+  grunt.registerTask('unit-test', function(target) {
     if (target !== 'watch') {
       grunt.task.run([
+        'check',
         'clean:server',
-        'copy:styles',
+        'wiredep:test',
+        //'ngconstant:dev',
+        'concurrent:test',
         'postcss'
       ]);
     }
 
     grunt.task.run([
       'connect:test',
-      'mocha'
+      //'mocha',
+      'karma'
     ]);
   });
 
+  grunt.registerTask('check', function(target) {
+    grunt.task.run([
+    'newer:jshint',
+    'newer:jscs',
+    'checkDependencies',
+    'versioncheck',
+    'validate-package'
+    ]);
+
+    if (target === 'release') {
+      grunt.task.run([
+        //'validate-package',
+        'installed_check'
+      ]);
+    }
+  });
+
+  grunt.registerTask('package', [
+    'build'
+  ]);
+
+  grunt.registerTask('site', [
+    'gh-pages'
+  ]);
+
   grunt.registerTask('build', [
     'clean:dist',
-    'bower:install',
+    //'bower:install',
     //'wiredep:app', //remove boostrap after the test
     'wiredep',
     //'ngconstant:prod',
-    //'useminPrepare',
+    'useminPrepare',
     'concurrent:dist',
     'postcss',
     //'uncss',
     //'ngtemplates',
-    //'concat',
+    'concat',
     'copy:dist',
-    //'cdnify',
-    //'cssmin',
+    'cdnify',
+    'cssmin',
     //'replace:debugMode',
     //'replace:versionTag',
     //'ngAnnotate',
-    //'uglify',
-    //'filerev',
-    'usemin'
+    'uglify',
+    'filerev',
+    'usemin',
     //'critical',
-    //'htmlmin',
-    //'usebanner'
+    'htmlmin',
+    'usebanner'
+  ]);
+
+  grunt.registerTask('docs', [
+    'clean:docs',
+    'ngdocs'
+  ]);
+
+  grunt.registerTask('test-docs', [
+    'docs',
+    'connect'
+  ]);
+
+  grunt.registerTask('default', [
+    'bower',
+    'unit-test',
+    'package',
+    'compare_size',
+    'docs'
   ]);
 
   grunt.registerTask('publish', function(releaseType) {

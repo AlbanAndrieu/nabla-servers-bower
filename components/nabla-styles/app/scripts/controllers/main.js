@@ -8,6 +8,6 @@
  * Controller of the tempApp
  */
 angular.module('nablaStyleApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl', function($scope) {
 
   });
