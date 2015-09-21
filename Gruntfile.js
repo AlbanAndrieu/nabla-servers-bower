@@ -13,17 +13,17 @@ module.exports = function(grunt) {
 
   // Load grunt tasks automatically, when needed
   require('jit-grunt')(grunt, {
-	bower: 'grunt-bower-task',
-	versioncheck: 'grunt-version-check',
-	//configureProxies: 'grunt-connect-proxy',
-	//'zap_start': 'grunt-zaproxy',
-	//'zap_spider': 'grunt-zaproxy',
-	//'zap_scan': 'grunt-zaproxy',
-	//'zap_alert': 'grunt-zaproxy',
-	//'zap_report': 'grunt-zaproxy',
-	//'zap_stop': 'grunt-zaproxy',
-	//'zap_results': 'grunt-zaproxy',
-	'validate-package': 'grunt-nsp-package',
+    bower: 'grunt-bower-task',
+    versioncheck: 'grunt-version-check',
+    //configureProxies: 'grunt-connect-proxy',
+    //'zap_start': 'grunt-zaproxy',
+    //'zap_spider': 'grunt-zaproxy',
+    //'zap_scan': 'grunt-zaproxy',
+    //'zap_alert': 'grunt-zaproxy',
+    //'zap_report': 'grunt-zaproxy',
+    //'zap_stop': 'grunt-zaproxy',
+    //'zap_results': 'grunt-zaproxy',
+    'validate-package': 'grunt-nsp-package',
     useminPrepare: 'grunt-usemin',
     //ngtemplates: 'grunt-angular-templates',
     //cdnify: 'grunt-google-cdn',
@@ -519,49 +519,50 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('minify', [
-	'clean',
-	'prepare',
-	'build',
-	'uglify'
-  ]);
+  //grunt.registerTask('minify', [
+  //  'clean',
+  //  'prepare',
+  //  'build',
+  //  'uglify'
+  //]);
+  //
+  //grunt.registerTask('css', [
+  //  'less'
+  //]);
 
-  grunt.registerTask('css', [
-    'less'
-  ]);
+  //grunt.registerTask('prepare', [
+  //  //'clean:bower',
+  //  'bower'
+  //]);
+  //
+  //grunt.registerTask('build', [
+  //  'clean',
+  //  'prepare',
+  //  'merge-conflict',
+  //  'check',
+  //  'concat',
+  //  'buildall'
+  //]);
 
-  grunt.registerTask('build', [
-    'clean',
-    'prepare',
-    'merge-conflict',
-     'check',
-     'concat',
-     'buildall'
-  ]);
+  //grunt.registerTask('unit-test', [
+  //  'check',
+  //  'karma:sampleComponent'
+  //]);
+  //
+  //grunt.registerTask('package', [
+  //  'build',
+  //  'uglify',
+  //  //'html2js',
+  //  'collect-errors',
+  //  'copy',
+  //  //'css',
+  //  'unit-test',
+  //  'write',
+  //  //'compress',
+  //  'ngdocs'
+  //]);
 
-//grunt.registerTask('unittest', ['karma:sampleComponent', 'karma:nablaAuth', 'karma:nablaConfiguration', 'karma:nablaHeader', 'karma:nablaNotifications']);
-  grunt.registerTask('unit-test', [
-    'check',
-    'karma:sampleComponent'
-  ]);
-
-  grunt.registerTask('package', [
-    'build',
-    'uglify',
-    //'html2js',
-    'collect-errors',
-    'copy',
-    //'css',
-    'unit-test',
-    'write',
-    //'compress',
-    'ngdocs'
-  ]);
-  //grunt.registerTask('ci-checks', ['merge-conflict', 'jshint', 'jscs']);
-
-  grunt.registerTask('docs-test', ['package', 'connect']);
-
-  //grunt.registerTask('default', ['package']);
+  //grunt.registerTask('docs-test', ['package', 'connect']);
 
   grunt.registerTask('spawn-publish', function(project) {
     var cb = this.async();
