@@ -1206,6 +1206,13 @@ module.exports = function(grunt) {
     'gh-pages'
   ]);
 
+  grunt.registerTask('default', [
+    'newer:jshint',
+    'newer:jscs',
+    'build',
+    'test'
+  ]);
+
   grunt.registerTask('build', [
     'clean:dist',
     //'bower:install',
@@ -1242,13 +1249,13 @@ module.exports = function(grunt) {
     'connect'
   ]);
 
-  grunt.registerTask('default', [
-    'bower',
-    'unit-test',
-    'package',
-    'compare_size',
-    'docs'
-  ]);
+  //grunt.registerTask('default', [
+  //  'bower',
+  //  'unit-test',
+  //  'package',
+  //  'compare_size',
+  //  'docs'
+  //]);
 
   grunt.registerTask('publish', function(releaseType) {
     grunt.task.run([
@@ -1269,10 +1276,4 @@ module.exports = function(grunt) {
     ]);
   });
 
-  grunt.registerTask('default', [
-    'newer:jshint',
-    'newer:jscs',
-    //'test',
-    'build'
-  ]);
 };
