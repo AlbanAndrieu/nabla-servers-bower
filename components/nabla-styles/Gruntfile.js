@@ -1206,6 +1206,14 @@ module.exports = function(grunt) {
     'gh-pages'
   ]);
 
+  //grunt.registerTask('default', [
+  //  'bower',
+  //  'unit-test',
+  //  'package',
+  //  'compare_size',
+  //  'docs'
+  //]);
+
   grunt.registerTask('default', [
     'newer:jshint',
     'newer:jscs',
@@ -1215,7 +1223,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    //'bower:install',
+    'bower:install',
     //'wiredep:app', //remove boostrap after the test
     'wiredep',
     //'ngconstant:prod',
@@ -1248,14 +1256,6 @@ module.exports = function(grunt) {
     'docs',
     'connect'
   ]);
-
-  //grunt.registerTask('default', [
-  //  'bower',
-  //  'unit-test',
-  //  'package',
-  //  'compare_size',
-  //  'docs'
-  //]);
 
   grunt.registerTask('publish', function(releaseType) {
     grunt.task.run([
