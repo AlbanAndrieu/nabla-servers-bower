@@ -1214,7 +1214,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    //'bower:install',
+    'bower:install',
     //'wiredep:app', //remove boostrap after the test
     'wiredep',
     //'ngconstant:prod',
