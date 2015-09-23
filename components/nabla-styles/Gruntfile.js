@@ -100,12 +100,12 @@ module.exports = function(grunt) {
     // Install bower dependencies
     bower: {
       bower: require('./bower.json'),
-      verbose: true,
-      install: {
-        options: {
-          copy: false
-        }
-      }
+      verbose: true
+      //install: {
+      //  options: {
+      //    copy: false
+      //  }
+      //}
     },
 
     // Watches files for changes and runs tasks based on the changed files
@@ -365,6 +365,23 @@ module.exports = function(grunt) {
         ignorePath: /^\/|\.\.\//,
         src: ['<%= config.app %>/index.html'],
         exclude: ['bower_components/bootstrap/dist/css/bootstrap.css']
+      },
+      test: {
+        devDependencies: true,
+        src: '<%= karma.unit.configFile %>',
+        exclude: [/angular-i18n/, /swagger-ui/, /angular-scenario/],
+        ignorePath: /\.\.\//, // remove ../../ from paths of injected javascripts
+        fileTypes:{
+          js: {
+            block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
+              detect: {
+                js: /'(.*\.js)'/gi
+              },
+              replace: {
+                js: '\'{{filePath}}\','
+              }
+            }
+          }
       },
       sass: {
         src: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
@@ -1165,7 +1182,7 @@ module.exports = function(grunt) {
   grunt.registerTask('unit-test', function(target) {
     if (target !== 'watch') {
       grunt.task.run([
-        'check',
+        //'check',
         'clean:server',
         'wiredep:test',
         //'ngconstant:dev',
@@ -1185,7 +1202,7 @@ module.exports = function(grunt) {
     grunt.task.run([
     'newer:jshint',
     'newer:jscs',
-    'checkDependencies',
+    //'checkDependencies',
     'versioncheck'
     ]);
 
@@ -1214,7 +1231,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'bower:install',
+    'bower',
     //'wiredep:app', //remove boostrap after the test
     'wiredep',
     //'ngconstant:prod',
