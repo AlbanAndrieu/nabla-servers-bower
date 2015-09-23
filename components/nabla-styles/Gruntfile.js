@@ -1186,8 +1186,7 @@ module.exports = function(grunt) {
     'newer:jshint',
     'newer:jscs',
     'checkDependencies',
-    'versioncheck',
-    'validate-package'
+    'versioncheck'
     ]);
 
     if (target === 'release') {
