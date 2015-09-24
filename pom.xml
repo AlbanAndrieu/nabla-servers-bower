@@ -191,14 +191,13 @@
                             <target>
                                 <echo message="Copying LCOV file -> lcof.info for Sonar purpose to target directory" />
                                 <copy todir="${basedir}/target" flatten="true">
-                                    <fileset dir="${basedir}/target">
+                                    <fileset dir="${basedir}/components/nabla-styles/target">
                                         <include name="karma-coverage/PhantomJS*/lcov.info" />
                                     </fileset>
                                 </copy>
 
-                                <!--
                                 <path id="sourceDirectory.path">
-                                  <pathelement location="${basedir}/app/scripts"/>
+                                  <pathelement location="${basedir}/components/nabla-styles"/>
                                 </path>
 
                                 <pathconvert targetos="unix" property="relativeSourceDirectory" refid="sourceDirectory.path">
@@ -216,7 +215,6 @@
                                         <include name="lcov.info" />
                                     </fileset>
                                 </replaceregexp>
-                                -->
 
                             </target>
                         </configuration>
