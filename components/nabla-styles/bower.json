@@ -6,6 +6,7 @@
   "license": "MIT",
   "private": false,
   "main": [
+    "app/images/*",
     "app/styles/nabla-bootstrap.scss",
     "app/styles/_nabla-theme.scss",
     "app/styles/_nabla-variables.scss",

@@ -652,8 +652,9 @@ module.exports = function(grunt) {
           expand: true,
           //cwd: '<%= config.app %>',
           src: [
-            '<%= config.app %>/styles/sass/*.scss',
-            '<%= config.app %>/styles/less/*.less',
+            '<%= config.app %>/styles/*.scss',
+            //'<%= config.app %>/styles/less/*.less',
+            '<%= config.app %>/styles/view/*.html',
             '<%= config.app %>/images/*.svg',
             '*.json'
           ],
