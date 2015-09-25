@@ -366,6 +366,23 @@ module.exports = function(grunt) {
         src: ['<%= config.app %>/index.html'],
         exclude: ['bower_components/bootstrap/dist/css/bootstrap.css']
       },
+      test: {
+        devDependencies: true,
+        src: '<%= karma.unit.configFile %>',
+        exclude: [/angular-i18n/, /swagger-ui/, /angular-scenario/],
+        ignorePath:  /\.\.\//, // remove ../../ from paths of injected javascripts
+        fileTypes:{
+          js: {
+            block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
+              detect: {
+                js: /'(.*\.js)'/gi
+              },
+              replace: {
+                js: '\'{{filePath}}\','
+              }
+            }
+          }
+      },
       sass: {
         src: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
         ignorePath: /(\.\.\/){1,2}bower_components\//
