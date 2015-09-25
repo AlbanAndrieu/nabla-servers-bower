@@ -233,12 +233,14 @@
                  </property>
             </activation>
             <properties>
-                <sonar.language>js</sonar.language>
+                <!--<sonar.language>js</sonar.language>-->
                 <!--<sonar.exclusions>${basedir}/src/main/webapp/lib/**</sonar.exclusions>-->
                 <sonar.sources>src/sample-component,components/nabla-styles/app</sonar.sources>
                 <sonar.tests>src/test,test,components/nabla-styles/test</sonar.tests>
+                <!--
                 <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-                <sonar.javascript.lcov.reportPath>${basedir}/target/lcov.info</sonar.javascript.lcov.reportPath>
+                -->
+                <sonar.javascript.lcov.reportPath>${basedir}/target/lcov*.info</sonar.javascript.lcov.reportPath>
             </properties>
          </profile>
     </profiles>

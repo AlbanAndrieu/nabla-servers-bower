@@ -99,7 +99,7 @@ module.exports = function(grunt) {
 
     // Install bower dependencies
     bower: {
-      bower: require('./bower.json'),
+      //bower: require('./bower.json'),
       verbose: true,
       install: {
         options: {
@@ -1185,14 +1185,13 @@ module.exports = function(grunt) {
     grunt.task.run([
     'newer:jshint',
     'newer:jscs',
-    'checkDependencies',
-    'versioncheck',
-    'validate-package'
+    //'checkDependencies',
+    'versioncheck'
     ]);
 
     if (target === 'release') {
       grunt.task.run([
-        //'validate-package',
+        'validate-package',
         'installed_check'
       ]);
     }
@@ -1223,7 +1222,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    //'bower:install',
+    'bower:install',
     //'wiredep:app', //remove boostrap after the test
     'wiredep',
     //'ngconstant:prod',
