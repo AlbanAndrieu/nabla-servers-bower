@@ -192,7 +192,7 @@
                                 <echo message="Copying LCOV file -> lcof.info for Sonar purpose to target directory" />
                                 <copy todir="${basedir}/target" flatten="true">
                                     <fileset dir="${basedir}/components/nabla-styles/target">
-                                        <include name="karma-coverage/PhantomJS*/lcov.info" />
+                                        <include name="karma-coverage/lcov-karma.info" />
                                     </fileset>
                                 </copy>
 
@@ -212,7 +212,7 @@
                                     <regexp pattern="SF:\./todo/(.*)" />
                                     <substitution expression="SF:${relativeSourceDirectory}/\1" />
                                     <fileset dir="target">
-                                        <include name="lcov.info" />
+                                        <include name="lcov-karma.info" />
                                     </fileset>
                                 </replaceregexp>
 
