@@ -264,9 +264,9 @@
                 <sonar.sources>src/sample-component,components/nabla-styles/app</sonar.sources>
                 <sonar.tests>src/test,test,components/nabla-styles/test</sonar.tests>
                 <!--
-                <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+                <sonar.javascript.lcov.reportPath>${basedir}/target/lcov-karma.info</sonar.javascript.lcov.reportPath>
+				<sonar.javascript.lcov.itReportPath>${basedir}/target/lcov.info</sonar.javascript.lcov.itReportPath>
                 -->
-                <sonar.javascript.lcov.reportPath>${basedir}/target/lcov*.info</sonar.javascript.lcov.reportPath>
             </properties>
          </profile>
     </profiles>
