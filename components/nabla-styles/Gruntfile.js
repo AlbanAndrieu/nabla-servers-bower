@@ -652,9 +652,10 @@ module.exports = function(grunt) {
           expand: true,
           //cwd: '<%= config.app %>',
           src: [
-            '<%= config.app %>/styles/sass/*.scss',
-            '<%= config.app %>/styles/less/*.less',
+            '<%= config.app %>/styles/*.scss',
+            //'<%= config.app %>/styles/less/*.less',
             '<%= config.app %>/images/*.svg',
+            '<%= config.app %>/views/*.html',
             '*.json'
           ],
           dest: 'bower_repo'
