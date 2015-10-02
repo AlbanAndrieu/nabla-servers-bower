@@ -183,19 +183,44 @@
                 <executions>
                     <execution>
                         <id>lcovFileForSonar</id>
-                        <phase>test</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
                         <configuration>
                             <target>
-                                <echo message="Copying LCOV file -> lcof.info for Sonar purpose to target directory" />
-                                <copy todir="${basedir}/target" flatten="true">
-                                    <fileset dir="${basedir}/components/nabla-styles/target">
-                                        <include name="karma-coverage/lcov-karma.info" />
+								<echo message="Copying LCOV file lcov-karma.info for Sonar purpose to target directory for nabla-styles" />
+								<!--
+                                <copy todir="${basedir}/target" flatten="true" overwrite="true" failonerror="true">
+                                    <fileset dir="${basedir}/target/nabla-styles-karma-coverage/">
+                                        <include name="lcov-karma.info" />
                                     </fileset>
                                 </copy>
+                                -->
 
+                               <concat destfile="${basedir}/target/lcov-karma.info" force="no">
+								   <filelist dir="${basedir}/target/root-karma-coverage/"
+										files="lcov-karma.info,lcov-karma.txt"/>
+								   <filelist dir="${basedir}/target/nabla-styles-karma-coverage/"
+										files="lcov-karma.info,lcov-karma.txt"/>
+
+									<!--
+									<fileset dir="${basedir}/target/ri-tools-karma-coverage/"
+										includes="sections/*.xml"
+										excludes="lcov-karma.xml,lcov.xml"/>
+									-->
+							   </concat>
+
+							   <!--
+                               <concat destfile="${basedir}/target/lcov.info" force="no">
+								   <filelist dir="${basedir}/target/root-protractor-coverage/"
+										files="lcov.info,lcov.txt"/>
+								   <filelist dir="${basedir}/target/nabla-styles-protractor-coverage/"
+										files="lcov.info,lcov.txt"/>
+								</concat>
+								-->
+
+								<!--
                                 <path id="sourceDirectory.path">
                                   <pathelement location="${basedir}/components/nabla-styles"/>
                                 </path>
@@ -215,6 +240,7 @@
                                         <include name="lcov-karma.info" />
                                     </fileset>
                                 </replaceregexp>
+                                -->
 
                             </target>
                         </configuration>

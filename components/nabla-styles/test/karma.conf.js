@@ -53,7 +53,7 @@ module.exports = function(config) {
 
     coverageReporter: {
       //type: 'lcov',
-      dir: './target/karma-coverage',
+      dir: '../../target/nabla-styles-karma-coverage',
       //file: 'lcov-karma.info'
       reporters: [
         // reporters not supporting the `file` property
@@ -72,8 +72,8 @@ module.exports = function(config) {
 
     junitReporter: {
       //outputFile: './target/surefire-reports/TEST-default-KarmaTest.xml',
-      outputDir: './target/surefire-reports/',
-      suite: 'KarmaTest'
+      outputDir: '../../target/surefire-reports/nabla-styles/',
+      suite: 'nabla-styles-KarmaTest'
     },
 
     // web server port

@@ -275,7 +275,7 @@ module.exports = function(grunt) {
     },
 
     jscs: {
-//      src: ['src/**/*.js', 'test/**/*.js'],
+      src: ['src/**/*.js', 'test/**/*.js'],
       options: {
         config: ".jscs.json"
       },
@@ -544,11 +544,11 @@ module.exports = function(grunt) {
   //  'buildall'
   //]);
 
-  //grunt.registerTask('unit-test', [
-  //  'check',
-  //  'karma:sampleComponent'
-  //]);
-  //
+  grunt.registerTask('test', [
+    'check',
+    'karma:sampleComponent'
+  ]);
+
   //grunt.registerTask('package', [
   //  'build',
   //  'uglify',
