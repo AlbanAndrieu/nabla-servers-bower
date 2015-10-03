@@ -125,10 +125,10 @@ module.exports = function(grunt) {
         files: ['test/spec/{,*/}*.js'],
         tasks: ['newer:jshint:test', 'test:watch', 'karma']
       },
-      less: {
-        files: ['<%= config.app %>/styles/less/{,*/}*.less'],
-        tasks: ['less']
-      },
+      //less: {
+      //  files: ['<%= config.app %>/styles/less/{,*/}*.less'],
+      //  tasks: ['less']
+      //},
       compass: {
         files: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
         tasks: ['compass:server', 'postcss']
@@ -539,6 +539,69 @@ module.exports = function(grunt) {
       }
     },
 
+    uncss: {
+      dist: {
+        options: {
+          compress: !true,
+          // Take our Autoprefixed stylesheet main.css &
+          // any other stylesheet dependencies we have..
+          stylesheets: [
+            //'../bower_components/nabla-notification/styles/css/nabla-notification.css',
+            //'../bower_components/nabla-header/styles/css/nabla-header.css',
+            //'../bower_components/bootstrap/dist/css/bootstrap.css',
+            '../bower_components/github-fork-ribbon-css/gh-fork-ribbon.ie.css',
+            '../.tmp/styles/main.css'
+          ],
+          // Ignore css selectors for async content with complete selector or regexp
+          // Only needed if using Bootstrap
+          ignore: ['.ng-move', '.ng-enter', '.ng-leave',
+                   '#added_at_runtime', '.created_by_jQuery',
+                   /nabla-header.*/,
+                   /github-fork-ribbon.*/,
+                   /app-loading.*/,
+                   /ec-.*/,
+                   /dropdown-menu/,/\.collapsing/,/\.collapse/]
+        },
+        files: {
+          '.tmp/styles/main.css': ['<%= config.app %>/{,*/}*.html'
+          //'./bower_components/nabla-notification/{,*/}*.html',
+          //'./bower_components/nabla-header/{,*/}*.html'
+          ]
+        }
+      }
+    },
+
+    critical: {
+      test: {
+        options: {
+            //base: '<%= config.dist %>/',
+            base: './',
+            css: [
+                '.tmp/styles/main.css',
+                '.tmp/styles/blog.css',
+                '.tmp/styles/carousel.css'
+                //'test/fixture/styles/bootstrap.css'
+            ],
+            width: 320,
+            height: 70
+        },
+        src: '<%= config.dist %>/index.html',
+        //dest: 'styles/critical.css'
+        //dest: 'index.html'
+        dest: '<%= config.dist %>/index.html'
+      }
+    },
+
+    penthouse: {
+      server: {
+        //outfile: '<%= config.dist %>/styles/critical.css',
+        css: '<%= config.dist %>/styles/main.*.css',
+        //url: SERVER_URL + SERVER_CONTEXT,
+        url: 'http://localhost:9090/#/',
+        width: 1280,
+        height: 800
+      }
+    },
     'compare_size': {
       files: [
         'app/styles/**',
@@ -642,7 +705,6 @@ module.exports = function(grunt) {
       },
       styles: {
         expand: true,
-        //dot: true,
         cwd: '<%= config.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
@@ -666,11 +728,11 @@ module.exports = function(grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-        //'copy:styles'
+        //'copy:styles',
         'compass:server'
       ],
       test: [
-        //'copy:styles'
+        //'copy:styles',
         'compass'
       ],
       dist: [
@@ -696,26 +758,6 @@ module.exports = function(grunt) {
         //browsers: ['PhantomJS', 'Chrome', 'Firefox'],
         singleRun: true
       }
-//      sampleComponent: {
-//        configFile: 'karma-sample-component.conf.js'
-//      }
-//      nablaAuth: {
-//        configFile: 'karma-nabla-auth.conf.js'
-//      },
-//      nablaNotifications: {
-//        configFile: 'karma-nabla-notifications.conf.js',
-//        //browsers: ['PhantomJS', 'Chrome'],
-//        //singleRun: false,
-//        //logLevel: 'DEBUG',
-//        autoWatch: true
-//      },
-//      nablaHeader: {
-//        configFile: 'karma-nabla-header.conf.js',
-//        //browsers: ['PhantomJS', 'Chrome'],
-//        //singleRun: false,
-//        //logLevel: 'DEBUG',
-//        autoWatch: true
-//      }
     },
 
     replace: {
@@ -774,7 +816,7 @@ module.exports = function(grunt) {
         cdns: 'nabla.mobi,home.nabla.mobi,albandri,localhost,127.0.0.1',
         threshold: '\'{"overall": "B", "ycdn": "F", "yexpires": "F", "ynumreq": "E", "yminify": "B", "ycompress": "B", "ydns": "D", "yno404": "F", "yexpressions": "B", "ymindom": "F"}\'',
         urls: [SERVER_URL + SERVER_CONTEXT,
-               SERVER_URL + '#/about'],
+               SERVER_URL + SERVER_CONTEXT + '#/about'],
         //headers: '\'{"Cookie": "'JSESSIONID=0003EB22CC71A700D676B1E0B6558325;user=%7B%22loginName%22%3A%22nabla%22%2C%22userName"}\'',
         //reports: ['target/surefire-reports/yslow-main.xml',
         //          'target/surefire-reports/yslow-about.xml']
@@ -928,7 +970,7 @@ module.exports = function(grunt) {
 
     wpt: {
       options: {
-        locations: ['Tokyo'],
+        locations: ['Paris_wpt'],
         key: process.env.WPT_API_KEY
       },
       sideroad: {
@@ -1095,6 +1137,10 @@ module.exports = function(grunt) {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
     }
 
+    if (target === 'test') {
+      return grunt.task.run(['build', 'connect:test:keepalive']);
+    }
+
     grunt.task.run([
       'clean:server',
       //'bower:install',
@@ -1259,7 +1305,7 @@ module.exports = function(grunt) {
     'uglify',
     'filerev',
     'usemin',
-    //'critical',
+    'critical',
     'htmlmin',
     'usebanner'
   ]);
