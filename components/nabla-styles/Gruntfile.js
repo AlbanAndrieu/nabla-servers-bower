@@ -692,15 +692,20 @@ module.exports = function(grunt) {
           dest: '<%= config.dist %>'
         }, {
           expand: true,
-          cwd: 'bower_components/font-awesome/fonts/',
-          src: '**/*',
-          dest: '<%= config.dist %>/fonts'
-        }, {
-          expand: true,
-          dot: true,
-          cwd: 'bower_components/bootstrap/dist',
-          src: 'fonts/*',
+          cwd: '.',
+          src: 'bower_components/font-awesome/fonts/*',
           dest: '<%= config.dist %>'
+        //}, {
+        //  expand: true,
+        //  cwd: 'bower_components/font-awesome/fonts/',
+        //  src: '**/*',
+        //  dest: '<%= config.dist %>/fonts'
+        //}, {
+        //  expand: true,
+        //  dot: true,
+        //  cwd: 'bower_components/bootstrap/dist',
+        //  src: 'fonts/*',
+        //  dest: '<%= config.dist %>'
         }]
       },
       styles: {
