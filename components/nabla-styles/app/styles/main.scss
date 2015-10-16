@@ -1,5 +1,8 @@
+$icon-font-path: "/bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+$fa-font-path: "/bower_components/font-awesome/fonts";
 
-//Issue if bootstrap is before font-awesome
+//Issue if bootstrap is before font-awesome below
+//Check order in bower.json
 
 // bower:scss
 @import "font-awesome/scss/font-awesome.scss";
