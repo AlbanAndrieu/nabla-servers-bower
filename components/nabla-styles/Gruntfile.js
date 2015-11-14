@@ -385,6 +385,7 @@ module.exports = function(grunt) {
       },
       sass: {
         src: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
+        //exclude: ['bootstrap-sass-official'],
         ignorePath: /(\.\.\/){1,2}bower_components\//
         //exclude: ['font-awesome']
       }
@@ -734,15 +735,15 @@ module.exports = function(grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-        //'copy:styles',
+        'copy:styles',
         'compass:server'
       ],
       test: [
-        //'copy:styles',
+        'copy:styles',
         'compass'
       ],
       dist: [
-        //'copy:styles',
+        'copy:styles',
         'compass:dist',
         'imagemin',
         'svgmin'
