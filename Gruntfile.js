@@ -510,13 +510,13 @@ module.exports = function(grunt) {
     'versioncheck'
     ]);
 
-    if (typeof process.env.MVN_RELEASE_VERSION !== 'undefined') {
-    //if (target === 'release') {
-      grunt.task.run([
-        //'validate-package',
-        'installed_check'
-      ]);
-    }
+    //if (typeof process.env.MVN_RELEASE_VERSION !== 'undefined') {
+    ////if (target === 'release') {
+    //  grunt.task.run([
+    //    //'validate-package',
+    //    'installed_check'
+    //  ]);
+    //}
   });
 
   //grunt.registerTask('minify', [
