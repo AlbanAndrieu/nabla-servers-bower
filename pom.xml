@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>com.nabla.project.servers.sample</groupId>
@@ -10,6 +9,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>bower-pom</artifactId>
+  <version>1.0.0</version>
     <packaging>pom</packaging>
     <name>Nabla Bower Components</name>
     <description>Bower components POM</description>
@@ -19,7 +19,8 @@
             <connection>scm:git:git://github.com/AlbanAndrieu/nabla-servers-bower.git</connection>
             <developerConnection>scm:git:git@github.com:AlbanAndrieu/nabla-servers-bower.git</developerConnection>
             <url>https://github.com/AlbanAndrieu/nabla-servers-bower</url>
-    </scm>
+      <tag>1.0.0</tag>
+  </scm>
 
     <ciManagement>
         <system>Jenkins</system>
@@ -203,34 +204,29 @@
                                 -->
 
                                <concat destfile="${basedir}/target/lcov-karma.info" force="no">
-								   <filelist dir="${basedir}/target/root-karma-coverage/"
-										files="lcov-karma.info,lcov-karma.txt"/>
-								   <filelist dir="${basedir}/target/nabla-styles-karma-coverage/"
-										files="lcov-karma.info,lcov-karma.txt"/>
+								   <filelist dir="${basedir}/target/root-karma-coverage/" files="lcov-karma.info,lcov-karma.txt" />
+								   <filelist dir="${basedir}/target/nabla-styles-karma-coverage/" files="lcov-karma.info,lcov-karma.txt" />
 
 									<!--
-									<fileset dir="${basedir}/target/ri-tools-karma-coverage/"
-										includes="sections/*.xml"
-										excludes="lcov-karma.xml,lcov.xml"/>
+									<fileset dir="${basedir}/target/ri-tools-karma-coverage/" includes="sections/*.xml"
+										excludes="lcov-karma.xml,lcov.xml" />
 									-->
 							   </concat>
 
 							   <!--
                                <concat destfile="${basedir}/target/lcov.info" force="no">
-								   <filelist dir="${basedir}/target/root-protractor-coverage/"
-										files="lcov.info,lcov.txt"/>
-								   <filelist dir="${basedir}/target/nabla-styles-protractor-coverage/"
-										files="lcov.info,lcov.txt"/>
+								   <filelist dir="${basedir}/target/root-protractor-coverage/" files="lcov.info,lcov.txt" />
+								   <filelist dir="${basedir}/target/nabla-styles-protractor-coverage/" files="lcov.info,lcov.txt" />
 								</concat>
 								-->
 
 								<!--
                                 <path id="sourceDirectory.path">
-                                  <pathelement location="${basedir}/components/nabla-styles"/>
+                                  <pathelement location="${basedir}/components/nabla-styles" />
                                 </path>
 
                                 <pathconvert targetos="unix" property="relativeSourceDirectory" refid="sourceDirectory.path">
-                                  <map from="${basedir}/" to=""/>
+                                  <map from="${basedir}/" to="" />
                                 </pathconvert>
 
                                 <echo message="Base dir: ${basedir} " />
