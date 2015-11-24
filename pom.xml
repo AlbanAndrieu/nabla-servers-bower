@@ -9,7 +9,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>bower-pom</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Nabla Bower Components</name>
     <description>Bower components POM</description>
@@ -19,7 +19,7 @@
             <connection>scm:git:git://github.com/AlbanAndrieu/nabla-servers-bower.git</connection>
             <developerConnection>scm:git:git@github.com:AlbanAndrieu/nabla-servers-bower.git</developerConnection>
             <url>https://github.com/AlbanAndrieu/nabla-servers-bower</url>
-      <tag>1.0.0</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <ciManagement>
@@ -208,8 +208,7 @@
 								   <filelist dir="${basedir}/target/nabla-styles-karma-coverage/" files="lcov-karma.info,lcov-karma.txt" />
 
 									<!--
-									<fileset dir="${basedir}/target/ri-tools-karma-coverage/" includes="sections/*.xml"
-										excludes="lcov-karma.xml,lcov.xml" />
+									<fileset dir="${basedir}/target/ri-tools-karma-coverage/" includes="sections/*.xml" excludes="lcov-karma.xml,lcov.xml" />
 									-->
 							   </concat>
 
