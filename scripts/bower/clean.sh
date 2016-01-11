@@ -26,12 +26,15 @@ function clean-tag {
     cd $TMP_DIR/$repo/bower_repo
 
 	#remove the older tag created by jenkins
+	git fetch --tags
 	echo "-- Remove older bower-$repo tag"
-	#git tag -l 'v*' | sort
-	git tag -l '*build*' | sort | head -1 | xargs git tag -d
+    git tag -l '*build*' > tags
+    awk -F"-" '{print $2}' tags | awk -F"." '{print $2}' | sort -n -u | awk 'NF' | head -1 | xargs -I {} echo '-build.'{} > tag-todelete
+    grep -f tag-todelete tags
+    grep -f tag-todelete tags | xargs git tag -d
 	#git fetch --prune --tags
 	git fetch
-	git tag -l '*build*' | sort | head -1 | xargs -n 1 git push --delete origin
+	grep -f tag-todelete tags | xargs -n 1 git push --delete origin
 
     #echo "-- Pushing bower-$repo"
     #git push origin master
