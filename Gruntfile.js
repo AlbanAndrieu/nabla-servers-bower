@@ -41,6 +41,9 @@ module.exports = function(grunt) {
   //grunt.loadNpmTasks('grunt-check-dependencies');
   //grunt.loadNpmTasks('grunt-nsp-package');
 
+  var serveStatic = require('serve-static');
+  var serveIndex = require('serve-index');
+
   var parseVersionFromPomXml = function() {
       var fs = require('fs');
       var parseString = require('xml2js').parseString;
@@ -391,16 +394,16 @@ module.exports = function(grunt) {
 //          open: true,
 //          middleware: function (connect) {
 //            return [
-//              connect.static('.tmp'),
+//              serveStatic('.tmp'),
 //              connect().use(
 //                '/bower_components',
-//                connect.static('./bower_components')
+//                serveStatic('./bower_components')
 //              ),
 //              connect().use(
 //                '/app/styles',
-//                connect.static('./app/styles')
+//                serveStatic('./app/styles')
 //              ),
-//              connect.static(appConfig.app)
+//              serveStatic(appConfig.app)
 //            ];
 //          }
 //        }
@@ -410,13 +413,13 @@ module.exports = function(grunt) {
 //          port: 9001,
 //          middleware: function (connect) {
 //            return [
-//              connect.static('.tmp'),
-//              connect.static('test'),
+//              serveStatic('.tmp'),
+//              serveStatic('test'),
 //              connect().use(
 //                '/bower_components',
-//                connect.static('./bower_components')
+//                serveStatic('./bower_components')
 //              ),
-//              connect.static(appConfig.app)
+//              serveStatic(appConfig.app)
 //            ];
 //          }
 //        }

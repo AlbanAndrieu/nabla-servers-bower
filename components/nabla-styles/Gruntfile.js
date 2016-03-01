@@ -74,8 +74,10 @@ module.exports = function(grunt) {
     //buildcontrol: 'grunt-build-control'
   });
 
-  var async = require('async'),
-      request = require('request');
+  //var async = require('async'),
+  //    request = require('request');
+  var serveStatic = require('serve-static');
+  var serveIndex = require('serve-index');
 
   var TAG_PREFIX = '';
   if (typeof process.env.MVN_RELEASE_VERSION === 'undefined') {
@@ -189,8 +191,8 @@ module.exports = function(grunt) {
               res.setHeader('Cache-Control', 'no-cache,no-store,must-revalidate');
               return next();
             },
-            connect.static(options.base[0]),
-            connect.directory(options.base[0]),
+            serveStatic(options.base[0]),
+            serveIndex(options.base[0]),
             proxy
           ];
         }
@@ -208,24 +210,24 @@ module.exports = function(grunt) {
 
             // Serve static files.
             options.base.forEach(function(base) {
-                middlewares.push(connect.static(base));
+                middlewares.push(serveStatic(base));
             });
 
             // Make directory browse-able.
             var directory = options.directory || options.base[options.base.length - 1];
-            middlewares.push(connect.directory(directory));
+            middlewares.push(serveIndex(directory));
             return [
               middlewares,
-              connect.static('.tmp'),
+              serveStatic('.tmp'),
               connect().use(
                 '/bower_components',
-                connect.static('./bower_components')
+                serveStatic('./bower_components')
               ),
               connect().use(
                 '/app/styles',
-                connect.static('./app/styles')
+                serveStatic('./app/styles')
               ),
-              connect.static(appConfig.app)
+              serveStatic(appConfig.app)
             ];
           }
         }
@@ -235,13 +237,13 @@ module.exports = function(grunt) {
           port: 9002,
           middleware: function(connect) {
             return [
-              connect.static('.tmp'),
-              connect.static('test'),
+              serveStatic('.tmp'),
+              serveStatic('test'),
               connect().use(
                 '/bower_components',
-                connect.static('./bower_components')
+                serveStatic('./bower_components')
               ),
-              connect.static(appConfig.app)
+              serveStatic(appConfig.app)
             ];
           }
         }
@@ -1189,26 +1191,37 @@ module.exports = function(grunt) {
    * Run acceptance tests to teach ZAProxy how to use the app.
    **/
   grunt.registerTask('acceptance-test', function() {
-    var done = this.async();
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-    // make sure requests are proxied through ZAP
-    var r = request.defaults({'proxy': SERVER_URL});
-
-    async.series([
-      function(callback) {
-        r.get(SERVER_URL + '/' + SERVER_CONTEXT + '/index.html', callback);
-      }
-      // Add more requests to navigate through parts of the application
-    ], function(err) {
-      if (err) {
-        grunt.fail.warn('Acceptance test failed: ' + JSON.stringify(err, null, 2));
-        grunt.fail.warn('Is zaproxy still running?');
-        grunt.task.run(['zap_stop']);
-        return;
-      }
-      grunt.log.ok();
-      done();
-    });
+    //var done = this.async();
+    //
+    //// make sure requests are proxied through ZAP
+    //var r = request.defaults({
+    //      //'proxy': 'https://' + SERVER_HOST + ':' + ZAP_PORT,
+    //      'baseUrl': SERVER_SECURE_URL
+    //  });
+    //
+    //async.series([
+    //  function(callback) {
+    //    //r.get('index.html', callback);
+    //    r.get({'url': 'index.html',
+    //      followAllRedirects: true
+    //      //agentOptions: {
+    //      //  secureProtocol: 'SSLv3_method'
+    //      //}
+    //      }, callback);
+    //  }
+    //  // Add more requests to navigate through parts of the application
+    //], function(err) {
+    //  if (err) {
+    //    grunt.fail.warn('Acceptance test failed: ' + JSON.stringify(err, null, 2) + ' ' + err);
+    //    grunt.fail.warn('Is zaproxy still running?');
+    //    grunt.task.run(['zap_stop']);
+    //    return;
+    //  }
+    //  grunt.log.ok();
+    //  done();
+    //});
 
     grunt.task.run(['protractor:run']);
   });
