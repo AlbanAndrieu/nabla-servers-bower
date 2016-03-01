@@ -69,7 +69,7 @@
     "grunt-critical": "0.2.0",
     "grunt-filerev": "^2.1.2",
     "grunt-gh-pages": "1.0.0",
-    "grunt-git": "0.3.0",
+    "grunt-git": "0.3.7",
     "grunt-google-cdn": "^0.4.3",
     "grunt-installed-check": "^0.1.0",
     "grunt-istanbul": "0.6.1",
