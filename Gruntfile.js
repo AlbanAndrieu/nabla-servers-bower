@@ -23,23 +23,13 @@ module.exports = function(grunt) {
     //'zap_report': 'grunt-zaproxy',
     //'zap_stop': 'grunt-zaproxy',
     //'zap_results': 'grunt-zaproxy',
-    'validate-package': 'grunt-nsp-package',
+    //'validate-package': 'grunt-nsp-package',
     useminPrepare: 'grunt-usemin',
     //ngtemplates: 'grunt-angular-templates',
     //cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner'
     //buildcontrol: 'grunt-build-control'
   });
-
-  //grunt.loadTasks('lib/grunt');
-  //grunt.loadNpmTasks('grunt-ngdocs');
-  //grunt.loadNpmTasks('grunt-contrib-connect');
-  //grunt.loadNpmTasks('grunt-contrib-clean');
-  //grunt.loadNpmTasks('grunt-release');
-  //grunt.loadNpmTasks('grunt-version-check');
-  //grunt.loadNpmTasks('grunt-installed-check');
-  //grunt.loadNpmTasks('grunt-check-dependencies');
-  //grunt.loadNpmTasks('grunt-nsp-package');
 
   var serveStatic = require('serve-static');
   var serveIndex = require('serve-index');
@@ -119,7 +109,7 @@ module.exports = function(grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
-    globalConfig: globalConfig,
+    config: globalConfig,
 
     bower: {
       bower: require('./bower.json')
@@ -197,20 +187,20 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'src/',
-          src: ['<%= globalConfig.componentName %>.js'],
+          src: ['<%= config.componentName %>.js'],
           dest: 'build/'
         }]
       }
     },
 
-    "merge-conflict": {
-      files: [
-        'src/**/*',
-        'test/**/*',
-        'docs/**/*',
-        'css/**/*'
-      ]
-    },
+    //"merge-conflict": {
+    //  files: [
+    //    'src/**/*',
+    //    'test/**/*',
+    //    'docs/**/*',
+    //    'css/**/*'
+    //  ]
+    //},
 
     //compress: {
     //  build: {
@@ -306,18 +296,6 @@ module.exports = function(grunt) {
       sampleComponent: {
         dest: 'build/sample-component/sample-component.js',
         src:['src/sample-component/sample-component.js']
-      //},
-      //nablaAuth: {
-      //  dest: 'build/nabla-auth/nabla-auth.js',
-      //  src:['src/nabla-auth/nabla-auth.js']
-      //},
-      //nablaHeader: {
-      //  dest: 'build/nabla-header/nabla-header.js',
-      //  src:['src/nabla-header/nabla-header.js']
-      //},
-      //nablaNotification: {
-      //  dest: 'build/nabla-notifications/nabla-notification.js',
-      //  src:['src/nabla-notifications/nabla-notification.js']
       }
     },
 
@@ -326,21 +304,6 @@ module.exports = function(grunt) {
         files: {
           'build/sample-component/sample-component.min.js': ['build/sample-component/sample-component.js']
         }
-      //},
-      //nablaAuth: {
-      //  files: {
-      //    'build/nabla-auth/nabla-auth.min.js': ['build/nabla-auth/nabla-auth.js']
-      //  }
-      //},
-      //nablaHeader: {
-      //  files: {
-      //    'build/nabla-header/nabla-header.min.js': ['build/nabla-header/nabla-header.js']
-      //  }
-      //},
-      //nablaNotification: {
-      //  files: {
-      //    'build/nabla-notifications/nabla-notification.min.js': ['build/nabla-notifications/nabla-notification.js']
-      //  }
       }
     },
 
@@ -351,11 +314,6 @@ module.exports = function(grunt) {
           'build/nabla-header/styles/css/nabla-header.css': ['src/nabla-header/less/nabla-header.less']
         }
       }
-//      nablaNotification: {
-//        files: {
-//          'build/nabla-header/styles/css/nabla-notifications.css': ['src/nabla-notifications/less/nabla-notifications.less']
-//        }
-//      }
     },
 
     ngdocs: {
@@ -437,26 +395,6 @@ module.exports = function(grunt) {
       sampleComponent: {
         configFile: 'karma-sample-component.conf.js'
       }
-//      nablaAuth: {
-//        configFile: 'karma-nabla-auth.conf.js'
-//      },
-//      nablaConfiguration: {
-//        configFile: 'karma-nabla-configuration.conf.js'
-//      },
-//      nablaHeader: {
-//        configFile: 'karma-nabla-header.conf.js',
-//        //browsers: ['PhantomJS', 'Chrome'],
-//        //singleRun: false,
-//        //logLevel: 'DEBUG',
-//        autoWatch: true
-//      },
-//      nablaNotifications: {
-//        configFile: 'karma-nabla-notifications.conf.js',
-//        //browsers: ['PhantomJS', 'Chrome'],
-//        //singleRun: false,
-//        //logLevel: 'DEBUG',
-//        autoWatch: true
-//      }
     },
 
     versioncheck: {

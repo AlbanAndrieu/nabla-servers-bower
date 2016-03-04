@@ -58,6 +58,7 @@
                                                     <include>.node_cache/</include>
                                                     <include>.node_tmp/</include>
                                                     <include>.tmp/</include>
+                                                    <include>.sass-cache/</include>
                                                     <include>node_modules/</include>
                                                     <include>node/</include>
                                                     <include>bower_components/</include>
@@ -65,6 +66,8 @@
 													<include>components/**/.bower/</include>
 													<include>components/**/bower_components/</include>
 													<include>components/**/bower_repo/</include>
+													<include>components/**/.tmp/</include>
+                                                    <include>components/**/.sass-cache/</include>
                                                     <!--<include>lib/</include>-->
                                                     <!--<include>build/</include>-->
                                                     <include>docs/</include>

@@ -56,7 +56,7 @@ module.exports = function(grunt) {
 	//'zap_report': 'grunt-zaproxy',
 	//'zap_stop': 'grunt-zaproxy',
 	//'zap_results': 'grunt-zaproxy',
-	'validate-package': 'grunt-nsp-package',
+	//'validate-package': 'grunt-nsp-package',
 	resemble: 'grunt-resemble-cli',
     instrument: 'grunt-protractor-coverage',
 	usebanner: 'grunt-banner',
@@ -1291,7 +1291,7 @@ module.exports = function(grunt) {
 
     if (target === 'release') {
       grunt.task.run([
-        'validate-package',
+        //'validate-package',
         'installed_check'
       ]);
     }
