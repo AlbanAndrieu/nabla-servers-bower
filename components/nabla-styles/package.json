@@ -91,7 +91,6 @@
     "grunt-penthouse": "0.3.0",
     "grunt-perfbudget": "0.1.8",
     "grunt-phantomas": "0.13.0",
-    "grunt-phantomcss-gitdiff": "0.0.7",
     "grunt-postcss": "0.7.2",
     "grunt-protractor-coverage": "0.2.15",
     "grunt-protractor-runner": "3.0.0",

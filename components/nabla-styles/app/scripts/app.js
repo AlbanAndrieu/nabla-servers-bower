@@ -15,8 +15,7 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch',
-    'angular-nicescroll'
+    'ngTouch'
   ])
   .config(function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode({
