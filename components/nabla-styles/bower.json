@@ -8,7 +8,7 @@
     "node_modules",
     "bower_components",
     "test"
-  ]
+  ],
   "private": false,
   "main": [
     "app/styles/nabla-bootstrap.scss",
