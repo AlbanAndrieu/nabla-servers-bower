@@ -5,7 +5,6 @@
   "author": "Nabla Core Team <dev@home.nabla.mobi>",
   "license": "MIT",
   "ignore": [
-    "**/.*",
     "node_modules",
     "bower_components",
     "test"
