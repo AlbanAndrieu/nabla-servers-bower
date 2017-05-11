@@ -36,7 +36,8 @@
 		<!--<npm.version>2.14.12</npm.version>-->
 		<npm.version>4.2.0</npm.version>		
         <!--<node.version>4.3.1</node.version>-->
-        <node.version>7.8.0</node.version>        
+        <node.version>7.8.0</node.version>     
+        <yarn.version>0.16.1</yarn.version>  
     </properties>
 
    <build>
@@ -92,6 +93,7 @@
                 <configuration>
                     <nodeVersion>v${node.version}</nodeVersion>
                     <npmVersion>${npm.version}</npmVersion>
+                    <yarnVersion>v${yarn.version}</yarnVersion>
                 </configuration>
 
                 <executions>
