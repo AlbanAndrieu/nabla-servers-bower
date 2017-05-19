@@ -98,6 +98,13 @@ module.exports = function(grunt) {
 
     // Project meta
     pkg: require('./package.json'),
+    banner: '/**\n' +
+            ' * <%= pkg.name %>\n' +
+            ' * @version v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
+            ' * @link <%= pkg.homepage %>\n' +
+            ' * @author <%= pkg.author.name %> <%= pkg.author.email %>\n' +
+            ' * @license <%= pkg.licenses.type %>, <%= pkg.licenses.url %>\n' +
+            ' */\n',
 
     // Install bower dependencies
     bower: {
