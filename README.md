@@ -7,6 +7,7 @@
 [![Code Climate](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower/badges/gpa.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower) [![Test Coverage](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower/badges/coverage.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower/coverage)
 [![Dependency Status](https://img.shields.io/david/AlbanAndrieu/nabla-servers-bower.svg?style=flat-square)](https://david-dm.org/AlbanAndrieu/nabla-servers-bower) [![devDependency Status](https://img.shields.io/david/dev/AlbanAndrieu/nabla-servers-bower.svg?style=flat-square)](https://david-dm.org/AlbanAndrieu/nabla-servers-bower#info=devDependencies)
 [![Known Vulnerabilities](https://snyk.io/test/github/albanandrieu/nabla-servers-bower/badge.svg)](https://snyk.io/test/github/albanandrieu/nabla-servers-bower)
+[![NSP Status](https://nodesecurity.io/orgs/nabla/projects/7d689bf7-12fd-4576-8d59-9a62700aae21/badge)](https://nodesecurity.io/orgs/nabla/projects/7d689bf7-12fd-4576-8d59-9a62700aae21)
 
 A bower project.
 =============
