@@ -97,6 +97,7 @@
                 </configuration>
 
                 <executions>
+					<!--
                     <execution>
                         <id>install node and npm</id>
                         <goals>
@@ -104,6 +105,7 @@
                         </goals>
                         <phase>validate</phase>
                     </execution>
+                    -->
 
                     <execution>
                         <id>npm install</id>
