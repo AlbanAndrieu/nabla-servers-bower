@@ -33,10 +33,11 @@
     </issueManagement>
 
     <properties>
+		<maven.frontend.plugin.version>1.5</maven.frontend.plugin.version>
 		<!--<npm.version>2.14.12</npm.version>-->
-		<npm.version>4.2.0</npm.version>		
-        <!--<node.version>4.3.1</node.version>-->
-        <node.version>7.8.0</node.version>     
+		<!--<node.version>4.3.1</node.version>-->
+		<npm.version>5.3.0</npm.version>
+        <node.version>8.1.4</node.version>   
         <yarn.version>0.16.1</yarn.version>  
     </properties>
 
@@ -94,6 +95,7 @@
                     <nodeVersion>v${node.version}</nodeVersion>
                     <npmVersion>${npm.version}</npmVersion>
                     <yarnVersion>v${yarn.version}</yarnVersion>
+                    <!--<installDirectory>target</installDirectory>-->
                 </configuration>
 
                 <executions>
