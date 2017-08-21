@@ -1,172 +1,172 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <parent>
-        <groupId>com.nabla.project.servers.sample</groupId>
-        <artifactId>sample</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
-        <relativePath/>
-    </parent>
+	<modelVersion>4.0.0</modelVersion>
 
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>bower-pom</artifactId>
-    <packaging>pom</packaging>
-    <name>Nabla Bower Components</name>
-    <description>Bower components POM</description>
-    <url>https://github.com/AlbanAndrieu/nabla-servers-bower</url>
+	<parent>
+		<artifactId>sample</artifactId>
+		<groupId>com.nabla.project.servers.sample</groupId>
+		<version>1.0.1-SNAPSHOT</version>
+		<relativePath></relativePath>
+	</parent>
+	<artifactId>bower-pom</artifactId>
+	<packaging>pom</packaging>
+	<name>Nabla Bower Components</name>
+	<description>Bower components POM</description>
+	<url>https://github.com/AlbanAndrieu/nabla-servers-bower</url>
 
-    <scm>
-            <connection>scm:git:git://github.com/AlbanAndrieu/nabla-servers-bower.git</connection>
-            <developerConnection>scm:git:git@github.com:AlbanAndrieu/nabla-servers-bower.git</developerConnection>
-            <url>https://github.com/AlbanAndrieu/nabla-servers-bower</url>
-			<tag>HEAD</tag>
-    </scm>
+	<scm>
+		<connection>scm:git:git://github.com/AlbanAndrieu/nabla-servers-bower.git</connection>
+		<developerConnection>scm:git:git@github.com:AlbanAndrieu/nabla-servers-bower.git</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/AlbanAndrieu/nabla-servers-bower</url>
+	</scm>
 
-    <ciManagement>
-        <system>Jenkins</system>
-        <url>${JOB_URL}</url>
-    </ciManagement>
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/AlbanAndrieu/nabla-servers-bower/issues</url>
+	</issueManagement>
 
-    <issueManagement>
-        <url>https://github.com/AlbanAndrieu/nabla-servers-bower/issues</url>
-        <system>GitHub Issues</system>
-    </issueManagement>
+	<ciManagement>
+		<system>Jenkins</system>
+		<url>${JOB_URL}</url>
+	</ciManagement>
 
-    <properties>
+	<properties>
 		<maven.frontend.plugin.version>1.5</maven.frontend.plugin.version>
+		<node.version>8.1.4</node.version>
 		<!--<npm.version>2.14.12</npm.version>-->
 		<!--<node.version>4.3.1</node.version>-->
 		<npm.version>5.3.0</npm.version>
-        <node.version>8.1.4</node.version>   
-        <yarn.version>0.16.1</yarn.version>  
-    </properties>
+		<yarn.version>0.16.1</yarn.version>
+	</properties>
 
-   <build>
-        <!--
+	<build>
+		<!--
         <sourceDirectory>src</sourceDirectory>
         <testSourceDirectory>test</testSourceDirectory>
         -->
 
-        <plugins>
-            <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-clean-plugin</artifactId>
-                    <version>${maven.clean.plugin.version}</version>
-                    <configuration>
-                            <filesets>
-                                    <fileset>
-                                            <directory>${project.basedir}</directory>
-                                            <includes>
-                                                    <include>.bower/</include>
-                                                    <include>.node_cache/</include>
-                                                    <include>.node_tmp/</include>
-                                                    <include>.tmp/</include>
-                                                    <include>.sass-cache/</include>
-                                                    <include>node_modules/</include>
-                                                    <include>node/</include>
-                                                    <include>bower_components/</include>
-													<include>components/**/node_modules/</include>
-													<include>components/**/.bower/</include>
-													<include>components/**/bower_components/</include>
-													<include>components/**/bower_repo/</include>
-													<include>components/**/.tmp/</include>
-                                                    <include>components/**/.sass-cache/</include>
-                                                    <!--<include>lib/</include>-->
-                                                    <!--<include>build/</include>-->
-                                                    <include>docs/</include>
-                                                    <include>dist/</include>
-                                            </includes>
-                                            <excludes>
-                                                    <!-- Allow mvn clean install > install.log -->
-                                                    <exclude>**/build.log</exclude>
-                                                    <exclude>**/install.log</exclude>
-                                            </excludes>
-                                            <followSymlinks>false</followSymlinks>
-                                    </fileset>
-                            </filesets>
-                    </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.github.eirslett</groupId>
-                <artifactId>frontend-maven-plugin</artifactId>
-                <version>${maven.frontend.plugin.version}</version>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>${maven.clean.plugin.version}</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>${project.basedir}</directory>
+							<includes>
+								<include>.bower/</include>
+								<include>.node_cache/</include>
+								<include>.node_tmp/</include>
+								<include>.tmp/</include>
+								<include>.sass-cache/</include>
+								<include>node_modules/</include>
+								<include>node/</include>
+								<include>bower_components/</include>
+								<include>components/**/node_modules/</include>
+								<include>components/**/.bower/</include>
+								<include>components/**/bower_components/</include>
+								<include>components/**/bower_repo/</include>
+								<include>components/**/.tmp/</include>
+								<include>components/**/.sass-cache/</include>
+								<!--<include>lib/</include>-->
+								<!--<include>build/</include>-->
+								<include>docs/</include>
+								<include>dist/</include>
+							</includes>
+							<excludes>
+								<!-- Allow mvn clean install > install.log -->
+								<exclude>**/build.log</exclude>
+								<exclude>**/install.log</exclude>
+							</excludes>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>${maven.frontend.plugin.version}</version>
 
-                <configuration>
-                    <nodeVersion>v${node.version}</nodeVersion>
-                    <npmVersion>${npm.version}</npmVersion>
-                    <yarnVersion>v${yarn.version}</yarnVersion>
-                    <!--<installDirectory>target</installDirectory>-->
-                </configuration>
+				<executions>
+					<execution>
+						<id>install node and npm</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+					</execution>
 
-                <executions>
-                    <execution>
-                        <id>install node and npm</id>
-                        <goals>
-                            <goal>install-node-and-npm</goal>
-                        </goals>
-                        <phase>validate</phase>
-                    </execution>
+					<execution>
+						<id>npm install</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>install --no-optional</arguments>
+						</configuration>
+					</execution>
 
-                    <execution>
-                        <id>npm install</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <phase>initialize</phase>
-                        <configuration>
-                            <arguments>install --no-optional</arguments>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>grunt check</id>
-                        <goals>
-                            <goal>grunt</goal>
-                        </goals>
-                        <phase>compile</phase>
-                        <configuration>
-                            <arguments>check</arguments>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>grunt default</id>
+					<execution>
+						<id>grunt check</id>
+						<phase>compile</phase>
 						<goals>
 							<goal>grunt</goal>
-                        </goals>
-                        <phase>compile</phase>
-                        <configuration>
+						</goals>
+						<configuration>
+							<arguments>check</arguments>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>grunt default</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>grunt</goal>
+						</goals>
+						<configuration>
 							<arguments>default</arguments>
-                        </configuration>
-                    </execution>
+						</configuration>
+					</execution>
 
-                    <!--release:prepare
+					<!--release:prepare
                     release:update-versions-->
-                    <execution>
-                        <id>grunt bump</id>
-                        <goals>
+					<execution>
+						<id>grunt bump</id>
+						<!--<phase>prepare-package</phase>-->
+						<phase>install</phase>
+						<goals>
 							<goal>grunt</goal>
-                        </goals>
-                        <!--<phase>prepare-package</phase>-->
-                        <phase>install</phase>
-                        <configuration>
+						</goals>
+						<configuration>
 							<arguments>bump</arguments>
-                        </configuration>
-                    </execution>
+						</configuration>
+					</execution>
 
-                    <execution>
-                        <id>grunt publish</id>
-                        <goals>
+					<execution>
+						<id>grunt publish</id>
+						<phase>deploy</phase>
+						<goals>
 							<goal>grunt</goal>
-                        </goals>
-                        <phase>deploy</phase>
-                        <configuration>
+						</goals>
+						<configuration>
 							<arguments>publish</arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!--
+						</configuration>
+					</execution>
+				</executions>
+
+				<configuration>
+					<nodeVersion>v${node.version}</nodeVersion>
+					<npmVersion>${npm.version}</npmVersion>
+					<yarnVersion>v${yarn.version}</yarnVersion>
+					<!--<installDirectory>target</installDirectory>-->
+				</configuration>
+			</plugin>
+			<!--
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -185,19 +185,19 @@
                 </executions>
             </plugin>
             -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>lcovFileForSonar</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-								<echo message="Copying LCOV file lcov-karma.info for Sonar purpose to target directory for nabla-styles" />
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>lcovFileForSonar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<echo message="Copying LCOV file lcov-karma.info for Sonar purpose to target directory for nabla-styles"></echo>
 								<!--
                                 <copy todir="${basedir}/target" flatten="true" overwrite="true" failonerror="true">
                                     <fileset dir="${basedir}/target/nabla-styles-karma-coverage/">
@@ -206,16 +206,16 @@
                                 </copy>
                                 -->
 
-                               <concat destfile="${basedir}/target/lcov-karma.info" force="no">
-								   <filelist dir="${basedir}/target/root-karma-coverage/" files="lcov-karma.info,lcov-karma.txt" />
-								   <filelist dir="${basedir}/target/nabla-styles-karma-coverage/" files="lcov-karma.info,lcov-karma.txt" />
+								<concat destfile="${basedir}/target/lcov-karma.info" force="no">
+									<filelist dir="${basedir}/target/root-karma-coverage/" files="lcov-karma.info,lcov-karma.txt"></filelist>
+									<filelist dir="${basedir}/target/nabla-styles-karma-coverage/" files="lcov-karma.info,lcov-karma.txt"></filelist>
 
 									<!--
 									<fileset dir="${basedir}/target/ri-tools-karma-coverage/" includes="sections/*.xml" excludes="lcov-karma.xml,lcov.xml" />
 									-->
-							   </concat>
+								</concat>
 
-							   <!--
+								<!--
                                <concat destfile="${basedir}/target/lcov.info" force="no">
 								   <filelist dir="${basedir}/target/root-protractor-coverage/" files="lcov.info,lcov.txt" />
 								   <filelist dir="${basedir}/target/nabla-styles-protractor-coverage/" files="lcov.info,lcov.txt" />
@@ -244,32 +244,32 @@
                                 </replaceregexp>
                                 -->
 
-                            </target>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
-    <profiles>
-        <profile>
-            <id>sonar</id>
-            <activation>
-                <property>
-                     <name>!profile.activation</name>
-                 </property>
-            </activation>
-            <properties>
-                <!--<sonar.language>js</sonar.language>-->
-                <!--<sonar.exclusions>${basedir}/src/main/webapp/lib/**</sonar.exclusions>-->
-                <sonar.sources>src/sample-component,components/nabla-styles/app</sonar.sources>
-                <sonar.tests>src/test,test,components/nabla-styles/test</sonar.tests>
-                <!--
+	<profiles>
+		<profile>
+			<id>sonar</id>
+			<activation>
+				<property>
+					<name>!profile.activation</name>
+				</property>
+			</activation>
+			<properties>
+				<!--<sonar.language>js</sonar.language>-->
+				<!--<sonar.exclusions>${basedir}/src/main/webapp/lib/**</sonar.exclusions>-->
+				<sonar.sources>src/sample-component,components/nabla-styles/app</sonar.sources>
+				<sonar.tests>src/test,test,components/nabla-styles/test</sonar.tests>
+				<!--
                 <sonar.javascript.lcov.reportPath>${basedir}/target/lcov-karma.info</sonar.javascript.lcov.reportPath>
 				<sonar.javascript.lcov.itReportPath>${basedir}/target/lcov.info</sonar.javascript.lcov.itReportPath>
                 -->
-            </properties>
-         </profile>
-    </profiles>
+			</properties>
+		</profile>
+	</profiles>
 </project>
