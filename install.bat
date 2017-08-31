@@ -12,7 +12,7 @@ REM call npm install -g karma-ng-scenario
 REM call npm install -g karma-ng-html2js-preprocessor
 REM call npm install -g karma-coverage
 REM call npm install -g karma-jasmine
-REM call npm install -g phantomjs 
+REM call npm install -g phantomjs
 REM call npm install -g karma-phantomjs-launcher
 REM call npm install -g selenium-webdriver
 
