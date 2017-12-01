@@ -20,6 +20,16 @@ Aim is to deploy bower component inside [private-bower](https://www.npmjs.com/pa
 
 It contains a bower component that allow to easily override bootstrap
 
+## Quality tools
+
+See [pre-commit](http://pre-commit.com/)
+Run `pre-commit install`
+Run `pre-commit autoupdate`
+
+Run `pre-commit run --all-files`
+
+Commit `git commit -am 'TEST' --no-verify`
+
 ## Installation
 
 Install NPM modules.

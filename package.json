@@ -1,9 +1,9 @@
 {
   "name": "bower-pom",
   "description": "Bower components",
-  "branchVersion": "^1.0.2",
-  "branchPattern": "1.0.2",
-  "version": "1.0.2",
+  "branchVersion": "^1.0.1",
+  "branchPattern": "1.0.1",
+  "version": "1.0.1",
   "keywords": [
     "nabla",
     "bower"
@@ -69,7 +69,7 @@
     "grunt-contrib-less": "1.0.1",
     "grunt-contrib-uglify": "2.0.0",
     "grunt-contrib-watch": "1.0.0",
-    "grunt-critical": "0.2.1",
+    "grunt-critical": "0.3.0",
     "grunt-filerev": "2.3.1",
     "grunt-gh-pages": "1.1.0",
     "grunt-git": "0.3.7",
