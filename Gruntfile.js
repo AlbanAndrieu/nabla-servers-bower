@@ -444,21 +444,13 @@ module.exports = function(grunt) {
   //grunt.registerTask('test:e2e', 'Alias for test:protractor', ['test:protractor']);
   //grunt.registerTask('test:promises-aplus',['build:promises-aplus-adapter','shell:promises-aplus-tests']);
 
-  grunt.registerTask('check', function(target) {
+  grunt.registerTask('check', function() {
     grunt.task.run([
     'newer:jshint',
     'newer:jscs',
     'checkDependencies',
     'versioncheck'
     ]);
-
-    //if (typeof process.env.MVN_RELEASE_VERSION !== 'undefined') {
-    ////if (target === 'release') {
-    //  grunt.task.run([
-    //    //'validate-package',
-    //    'installed_check'
-    //  ]);
-    //}
   });
 
   //grunt.registerTask('minify', [

@@ -74,7 +74,6 @@
     "grunt-gh-pages": "1.1.0",
     "grunt-git": "0.3.7",
     "grunt-google-cdn": "0.4.3",
-    "grunt-installed-check": "0.1.0",
     "grunt-istanbul": "0.8.0",
     "grunt-jscs": "3.0.1",
     "grunt-karma": "2.0.0",
