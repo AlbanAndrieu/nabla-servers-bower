@@ -37,21 +37,12 @@
   "engine-strict": true,
   "devDependencies": {
     "apache-server-configs": "2.14.0",
-<<<<<<< HEAD
-    "async": "2.3.0",
-    "autoprefixer": "6.7.7",
-    "bower": "1.8.0",
-    "codeclimate-test-reporter": "0.3.3",
-    "cssnano": "3.10.0",
-    "grunt": "1.0.1",
-=======
     "async": "2.5.0",
     "autoprefixer": "7.1.4",
     "bower": "1.8.2",
     "codeclimate-test-reporter": "0.5.0",
     "cssnano": "3.10.0",
-    "grunt": "^1.0.1",
->>>>>>> 67a05df2327b5d57898641501d118d11c18410a4
+    "grunt": "1.0.1",
     "grunt-angular-templates": "1.1.0",
     "grunt-autoprefixer": "3.0.4",
     "grunt-banner": "0.6.0",
@@ -97,15 +88,9 @@
     "grunt-penthouse": "0.4.0",
     "grunt-perfbudget": "0.2.0",
     "grunt-phantomas": "0.14.0",
-<<<<<<< HEAD
-    "grunt-postcss": "0.8.0",
-    "grunt-protractor-coverage": "0.2.18",
-    "grunt-protractor-runner": "5.0.0",
-=======
     "grunt-postcss": "0.9.0",
     "grunt-protractor-coverage": "0.2.18",
-    "grunt-protractor-runner": "3.2.0",
->>>>>>> 67a05df2327b5d57898641501d118d11c18410a4
+    "grunt-protractor-runner": "5.0.0",
     "grunt-release": "0.14.0",
     "grunt-replace": "1.0.1",
     "grunt-shell": "1.1.1",
@@ -140,13 +125,8 @@
     "nue": "0.7.1",
     "phantomjs-prebuilt": "2.1.16",
     "pixrem": "3.0.2",
-<<<<<<< HEAD
     "protractor": "5.1.2",
-    "q": "1.4.1",
-=======
-    "protractor": "3.1.1",
     "q": "1.5.0",
->>>>>>> 67a05df2327b5d57898641501d118d11c18410a4
     "q-io": "^1.10.9",
     "qq": "^0.3.5",
     "qs": "6.5.1",
@@ -164,13 +144,8 @@
     "vinyl-fs": "2.4.4",
     "webpagetest": "0.3.5",
     "wiredep": "4.0.0",
-<<<<<<< HEAD
-    "xml2js": "0.4.17",
-    "yo": "1.8.5"
-=======
     "xml2js": "0.4.19",
     "yo": "2.0.0"
->>>>>>> 67a05df2327b5d57898641501d118d11c18410a4
   },
   "scripts": {
     "install": "node node_modules/protractor/bin/webdriver-manager update",
