@@ -1288,20 +1288,13 @@ module.exports = function(grunt) {
     ]);
   });
 
-  grunt.registerTask('check', function(target) {
+  grunt.registerTask('check', function() {
     grunt.task.run([
     'newer:jshint',
     'newer:jscs',
     //'checkDependencies',
     'versioncheck'
     ]);
-
-    if (target === 'release') {
-      grunt.task.run([
-        //'validate-package',
-        'installed_check'
-      ]);
-    }
   });
 
   grunt.registerTask('package', [

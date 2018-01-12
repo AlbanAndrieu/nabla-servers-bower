@@ -7,7 +7,7 @@
 		<artifactId>sample</artifactId>
 		<groupId>com.nabla.project.servers.sample</groupId>
 		<version>1.0.1-SNAPSHOT</version>
-		<relativePath />
+		<relativePath></relativePath>
 	</parent>
 	<artifactId>bower-pom</artifactId>
 	<version>1.0.2-SNAPSHOT</version>
@@ -200,7 +200,7 @@
 						</goals>
 						<configuration>
 							<target>
-								<echo message="Copying LCOV file lcov-karma.info for Sonar purpose to target directory for nabla-styles" />
+								<echo message="Copying LCOV file lcov-karma.info for Sonar purpose to target directory for nabla-styles"></echo>
 								<!--
                                 <copy todir="${basedir}/target" flatten="true" overwrite="true" failonerror="true">
                                     <fileset dir="${basedir}/target/nabla-styles-karma-coverage/">
@@ -210,8 +210,8 @@
                                 -->
 
 								<concat destfile="${basedir}/target/lcov-karma.info" force="no">
-									<filelist dir="${basedir}/target/root-karma-coverage/" files="lcov-karma.info,lcov-karma.txt" />
-									<filelist dir="${basedir}/target/nabla-styles-karma-coverage/" files="lcov-karma.info,lcov-karma.txt" />
+									<filelist dir="${basedir}/target/root-karma-coverage/" files="lcov-karma.info,lcov-karma.txt"></filelist>
+									<filelist dir="${basedir}/target/nabla-styles-karma-coverage/" files="lcov-karma.info,lcov-karma.txt"></filelist>
 
 									<!--
 									<fileset dir="${basedir}/target/ri-tools-karma-coverage/" includes="sections/*.xml" excludes="lcov-karma.xml,lcov.xml" />
