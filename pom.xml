@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-
+	<!-- @version $Revision: $ $Date: $ $Author: $ $State: $ -->
+	<!-- @formatter:off -->
 	<parent>
 		<artifactId>sample</artifactId>
 		<groupId>com.nabla.project.servers.sample</groupId>
 		<version>1.0.1-SNAPSHOT</version>
-		<relativePath></relativePath>
 	</parent>
 	<artifactId>bower-pom</artifactId>
 	<version>1.0.2-SNAPSHOT</version>
@@ -34,14 +34,14 @@
 	</ciManagement>
 
 	<properties>
-		<maven.frontend.plugin.version>1.5</maven.frontend.plugin.version>
-		<node.version>8.5.0</node.version>
+		<maven.frontend.plugin.version>1.6</maven.frontend.plugin.version>
+		<node.version>9.3.0</node.version>
 		<!--<npm.version>5.3.0</npm.version>-->
 		<!--<node.version>8.1.4</node.version>-->
 		<!--<npm.version>2.14.12</npm.version>-->
 		<!--<node.version>4.3.1</node.version>-->
-		<npm.version>5.4.2</npm.version>
-		<yarn.version>0.16.1</yarn.version>
+		<npm.version>5.6.0</npm.version>
+		<yarn.version>1.3.2</yarn.version>
 	</properties>
 
 	<build>
@@ -60,6 +60,7 @@
 						<fileset>
 							<directory>${project.basedir}</directory>
 							<includes>
+								<!--
 								<include>.bower/</include>
 								<include>.node_cache/</include>
 								<include>.node_tmp/</include>
@@ -68,6 +69,7 @@
 								<include>node_modules/</include>
 								<include>node/</include>
 								<include>bower_components/</include>
+								-->
 								<include>components/**/node_modules/</include>
 								<include>components/**/.bower/</include>
 								<include>components/**/bower_components/</include>
@@ -75,9 +77,9 @@
 								<include>components/**/.tmp/</include>
 								<include>components/**/.sass-cache/</include>
 								<!--<include>lib/</include>-->
-								<!--<include>build/</include>-->
 								<include>docs/</include>
 								<include>dist/</include>
+								<!--<include>build/</include>-->
 							</includes>
 							<excludes>
 								<!-- Allow mvn clean install > install.log -->
@@ -93,27 +95,44 @@
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
 				<version>${maven.frontend.plugin.version}</version>
-
 				<executions>
+					<!--install \-\-no-optional -->
 					<execution>
 						<id>install node and npm</id>
-						<phase>validate</phase>
+						<phase>generate-sources</phase>
 						<goals>
 							<goal>install-node-and-npm</goal>
 						</goals>
 					</execution>
-
 					<execution>
 						<id>npm install</id>
-						<phase>initialize</phase>
+						<phase>process-sources</phase>
 						<goals>
 							<goal>npm</goal>
 						</goals>
 						<configuration>
-							<arguments>install --no-optional</arguments>
+							<arguments>install</arguments>
 						</configuration>
 					</execution>
-
+					<!--
+					<execution>
+						<id>install node and yarn</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>install-node-and-yarn</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>yarn install</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<configuration>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
+					-->
 					<execution>
 						<id>grunt check</id>
 						<phase>compile</phase>
@@ -124,7 +143,6 @@
 							<arguments>check</arguments>
 						</configuration>
 					</execution>
-
 					<execution>
 						<id>grunt default</id>
 						<phase>compile</phase>
@@ -149,7 +167,6 @@
 							<arguments>bump</arguments>
 						</configuration>
 					</execution>
-
 					<execution>
 						<id>grunt publish</id>
 						<phase>deploy</phase>
@@ -161,10 +178,9 @@
 						</configuration>
 					</execution>
 				</executions>
-
 				<configuration>
 					<nodeVersion>v${node.version}</nodeVersion>
-					<npmVersion>${npm.version}</npmVersion>
+					<!--<npmVersion>${npm.version}</npmVersion>-->
 					<yarnVersion>v${yarn.version}</yarnVersion>
 					<!--<installDirectory>target</installDirectory>-->
 				</configuration>
