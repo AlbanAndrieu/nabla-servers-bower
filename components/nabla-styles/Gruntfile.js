@@ -108,13 +108,16 @@ module.exports = function(grunt) {
 
     // Install bower dependencies
     bower: {
-      //bower: require('./bower.json'),
+      bower: require('./bower.json'),
       verbose: true,
       install: {
-        options: {
-          copy: false
-        }
+         //just run 'grunt bower:install' and you'll see files from your Bower packages in lib directory
       }
+      //install: {
+      //  options: {
+      //    copy: false
+      //  }
+      //}
     },
 
     // Watches files for changes and runs tasks based on the changed files
@@ -379,7 +382,7 @@ module.exports = function(grunt) {
         devDependencies: true,
         src: '<%= karma.unit.configFile %>',
         exclude: [/angular-i18n/, /swagger-ui/, /angular-scenario/],
-        ignorePath:  /\.\.\//, // remove ../../ from paths of injected javascripts
+        ignorePath: /\.\.\//, // remove ../../ from paths of injected javascripts
         fileTypes:{
           js: {
             block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
@@ -1304,14 +1307,6 @@ module.exports = function(grunt) {
   grunt.registerTask('site', [
     'gh-pages'
   ]);
-
-  //grunt.registerTask('default', [
-  //  'bower',
-  //  'unit-test',
-  //  'package',
-  //  'compare_size',
-  //  'docs'
-  //]);
 
   grunt.registerTask('default', [
     'newer:jshint',

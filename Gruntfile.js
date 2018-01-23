@@ -13,7 +13,7 @@ module.exports = function(grunt) {
 
   // Load grunt tasks automatically, when needed
   require('jit-grunt')(grunt, {
-    bower: 'grunt-bower-task',
+    //bower: 'grunt-bower-task',
     versioncheck: 'grunt-version-check',
     //configureProxies: 'grunt-connect-proxy',
     //'zap_start': 'grunt-zaproxy',
@@ -101,20 +101,26 @@ module.exports = function(grunt) {
   //global beforeEach
   util.init();
 
-  var globalConfig = {
-    componentName: 'myBower'
+  // Configurable paths for the application
+  var appConfig = {
+    app: require('./bower.json').appPath || 'app',
+    dist: 'dist'
   };
 
   grunt.initConfig({
     NABLA_VERSION: NABLA_VERSION,
 
-    pkg: grunt.file.readJSON('package.json'),
+    //pkg: grunt.file.readJSON('package.json'),
 
-    config: globalConfig,
+    config: appConfig,
 
-    bower: {
-      bower: require('./bower.json')
-    },
+    // Project meta
+    pkg: require('./package.json'),
+    
+    //bower: {
+    //  bower: require('./bower.json'),
+    //  verbose: true
+    //},
 
     concurrent: {
       publish: {

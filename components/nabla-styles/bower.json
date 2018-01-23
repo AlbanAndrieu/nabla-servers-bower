@@ -1,18 +1,21 @@
 {
   "name": "nabla-styles",
   "description": "Boostrap nabla styles overrided",
-  "version": "1.0.1-build.0",
+  "version": "1.0.1",
   "author": "Nabla Core Team <dev@home.nabla.mobi>",
   "license": "MIT",
-  "ignore": [
-    "node_modules",
-    "bower_components",
-    "test"
-  ],
   "private": false,
   "main": [
     "app/styles/nabla-bootstrap.scss",
     "app/views/styles.html"
+  ],
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt",
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
   ],
   "keywords": [
     "nabla",
@@ -21,10 +24,10 @@
     "sass"
   ],
   "dependencies": {
-    "angular": "1.4.8",
-    "font-awesome": "4.4.0",
     "jquery": "2.1.4",
-    "bootstrap-sass-official": "3.3.6",
+    "font-awesome": "4.7.0",
+    "bootstrap-sass-official": "3.3.7",
+    "angular": "1.4.8",
     "angular-animate": "1.4.8",
     "angular-cookies": "1.4.8",
     "angular-resource": "1.4.8",
@@ -36,6 +39,8 @@
     "angular-mocks": "1.4.8"
   },
   "resolutions": {
-    "angular": "1.4.8"
+    "angular": "1.4.8",
+    "font-awesome": ">=4.1.0",
+    "bootstrap-sass-official": "3.3.7"
   }
 }
