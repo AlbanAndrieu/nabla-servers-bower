@@ -1,7 +1,10 @@
 #!/bin/bash
+#set -xv
 
 # always stop on errors
 set -e
+
+rm -Rf .node_cache/ .node_tmp/  .tmp/ .bower/ node node_modules/ package-lock.json yarn.lock
 
 #source $(dirname $0)/scripts/utils.inc
 cd $(dirname $0);
