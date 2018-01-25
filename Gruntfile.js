@@ -116,7 +116,7 @@ module.exports = function(grunt) {
 
     // Project meta
     pkg: require('./package.json'),
-    
+
     //bower: {
     //  bower: require('./bower.json'),
     //  verbose: true
