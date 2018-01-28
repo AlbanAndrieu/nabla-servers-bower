@@ -139,7 +139,7 @@
     "serve-static": "1.13.1",
     "socket.io-client": "1.4.6",
     "shelljs": "0.5.3",
-    "slimerjs": "0.10.3",
+    "slimerjs": "0.9.2",
     "sorted-object": "^1.0.0",
     "stringmap": "^0.2.2",
     "time-grunt": "1.4.0",
