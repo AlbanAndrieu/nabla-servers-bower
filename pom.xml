@@ -61,15 +61,15 @@
 							<directory>${project.basedir}</directory>
 							<includes>
 								<!--
-								<include>.bower/</include>
-								<include>.node_cache/</include>
-								<include>.node_tmp/</include>
-								<include>.tmp/</include>
-								<include>.sass-cache/</include>
-								<include>node_modules/</include>
-								<include>node/</include>
-								<include>bower_components/</include>
-								-->
+                                <include>.bower/</include>
+                                <include>.node_cache/</include>
+                                <include>.node_tmp/</include>
+                                <include>.tmp/</include>
+                                <include>.sass-cache/</include>
+                                <include>node_modules/</include>
+                                <include>node/</include>
+                                <include>bower_components/</include>
+                                -->
 								<include>components/**/node_modules/</include>
 								<include>components/**/.bower/</include>
 								<include>components/**/bower_components/</include>
@@ -92,99 +92,198 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-				<version>${maven.frontend.plugin.version}</version>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
 				<executions>
-					<!--install \-\-no-optional -->
 					<execution>
-						<id>install node and npm</id>
+						<id>exec-npm-install</id>
 						<phase>generate-sources</phase>
 						<goals>
-							<goal>install-node-and-npm</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>npm install</id>
-						<phase>process-sources</phase>
-						<goals>
-							<goal>npm</goal>
+							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<arguments>install</arguments>
+							<executable>npm</executable>
+							<arguments>
+								<argument>install</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>exec-bower-install</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>bower</executable>
+							<arguments>
+								<argument>install</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>exec-grunt-check</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>grunt</executable>
+							<arguments>
+								<argument>check</argument>
+							</arguments>
 						</configuration>
 					</execution>
 					<!--
+                    <execution>
+                        <id>exec-grunt-default</id>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <executable>grunt</executable>
+                            <arguments>
+                                <argument>default</argument>
+                            </arguments>
+                        </configuration>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                    -->
 					<execution>
-						<id>install node and yarn</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>install-node-and-yarn</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>yarn install</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>yarn</goal>
-						</goals>
-						<configuration>
-							<arguments>install</arguments>
-						</configuration>
-					</execution>
-					-->
-					<execution>
-						<id>grunt check</id>
+						<id>exec-grunt-default</id>
 						<phase>compile</phase>
 						<goals>
-							<goal>grunt</goal>
+							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<arguments>check</arguments>
+							<executable>grunt</executable>
+							<arguments>
+								<argument>default</argument>
+							</arguments>
 						</configuration>
 					</execution>
 					<execution>
-						<id>grunt default</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>grunt</goal>
-						</goals>
-						<configuration>
-							<arguments>default</arguments>
-						</configuration>
-					</execution>
-
-					<!--release:prepare
-                    release:update-versions-->
-					<execution>
-						<id>grunt bump</id>
-						<!--<phase>prepare-package</phase>-->
+						<id>exec-grunt-bump</id>
 						<phase>install</phase>
 						<goals>
-							<goal>grunt</goal>
+							<goal>exec</goal>
 						</goals>
 						<configuration>
+							<executable>grunt</executable>
 							<arguments>bump</arguments>
 						</configuration>
 					</execution>
 					<execution>
-						<id>grunt publish</id>
+						<id>exec-grunt-publish</id>
 						<phase>deploy</phase>
 						<goals>
-							<goal>grunt</goal>
+							<goal>exec</goal>
 						</goals>
 						<configuration>
+							<executable>grunt</executable>
 							<arguments>publish</arguments>
 						</configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<nodeVersion>v${node.version}</nodeVersion>
-					<!--<npmVersion>${npm.version}</npmVersion>-->
-					<yarnVersion>v${yarn.version}</yarnVersion>
-					<!--<installDirectory>target</installDirectory>-->
-				</configuration>
 			</plugin>
+			<!--
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>${maven.frontend.plugin.version}</version>
+                <executions>
+                    -->
+			<!--install \-\-no-optional
+                    <execution>
+                        <id>install node and npm</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>npm install</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    -->
+			<!--
+                    <execution>
+                        <id>install node and yarn</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>install-node-and-yarn</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>yarn install</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    -->
+			<!--
+                    <execution>
+                        <id>grunt check</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>grunt</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>check</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>grunt default</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>grunt</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>default</arguments>
+                        </configuration>
+                    </execution>
+                    -->
+			<!--release:prepare
+                    release:update-versions-->
+			<!--
+                    <execution>
+                        <id>grunt bump</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>grunt</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>bump</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>grunt publish</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>grunt</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>publish</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <nodeVersion>v${node.version}</nodeVersion>
+                    <yarnVersion>v${yarn.version}</yarnVersion>
+                </configuration>
+            </plugin>
+            -->
 			<!--
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -230,16 +329,16 @@
 									<filelist dir="${basedir}/target/nabla-styles-karma-coverage/" files="lcov-karma.info,lcov-karma.txt"></filelist>
 
 									<!--
-									<fileset dir="${basedir}/target/ri-tools-karma-coverage/" includes="sections/*.xml" excludes="lcov-karma.xml,lcov.xml" />
-									-->
+                                    <fileset dir="${basedir}/target/ri-tools-karma-coverage/" includes="sections/*.xml" excludes="lcov-karma.xml,lcov.xml" />
+                                    -->
 								</concat>
 
 								<!--
                                <concat destfile="${basedir}/target/lcov.info" force="no">
-								   <filelist dir="${basedir}/target/root-protractor-coverage/" files="lcov.info,lcov.txt" />
-								   <filelist dir="${basedir}/target/nabla-styles-protractor-coverage/" files="lcov.info,lcov.txt" />
-								</concat>
-								-->
+                                   <filelist dir="${basedir}/target/root-protractor-coverage/" files="lcov.info,lcov.txt" />
+                                   <filelist dir="${basedir}/target/nabla-styles-protractor-coverage/" files="lcov.info,lcov.txt" />
+                                </concat>
+                                -->
 
 								<!--
                                 <path id="sourceDirectory.path">
@@ -286,7 +385,7 @@
 				<sonar.tests>src/test,test,components/nabla-styles/test</sonar.tests>
 				<!--
                 <sonar.javascript.lcov.reportPath>${basedir}/target/lcov-karma.info</sonar.javascript.lcov.reportPath>
-				<sonar.javascript.lcov.itReportPath>${basedir}/target/lcov.info</sonar.javascript.lcov.itReportPath>
+                <sonar.javascript.lcov.itReportPath>${basedir}/target/lcov.info</sonar.javascript.lcov.itReportPath>
                 -->
 			</properties>
 		</profile>
