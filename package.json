@@ -88,7 +88,6 @@
     "grunt-nsp": "2.3.1",
     "grunt-pagespeed": "2.0.1",
     "grunt-pagespeed-junit": "0.3.1",
-    "grunt-penthouse": "0.4.0",
     "grunt-perfbudget": "0.2.0",
     "grunt-phantomas": "0.14.0",
     "grunt-postcss": "0.9.0",
@@ -151,7 +150,7 @@
     "yo": "2.0.0"
   },
   "scripts": {
-    "install": "./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.35",
+    "install": "./node_modules/protractor/bin/webdriver-manager update",
     "update-webdriver": "./node_modules/protractor/bin/webdriver-manager update",
     "postinstall": "node node_modules/phantomjs-prebuilt/install.js",
     "pretest": "./node_modules/phantomjs/bin/phantomjs yslow.js --info grade --format tap --threshold '{\"yexpires\": 60}' t.co",
