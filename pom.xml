@@ -10,7 +10,7 @@
 		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>bower-pom</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.2</version>
 	<packaging>pom</packaging>
 	<name>Nabla Bower Components</name>
 	<description>Bower components POM</description>
@@ -19,7 +19,7 @@
 	<scm>
 		<connection>scm:git:git://github.com/AlbanAndrieu/nabla-servers-bower.git</connection>
 		<developerConnection>scm:git:git@github.com:AlbanAndrieu/nabla-servers-bower.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>v1.0.2</tag>
 		<url>https://github.com/AlbanAndrieu/nabla-servers-bower</url>
 	</scm>
 
