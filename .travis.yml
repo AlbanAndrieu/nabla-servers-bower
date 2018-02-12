@@ -24,13 +24,13 @@ branches:
 
 cache:
   pip: true
-  yarn: true  
+  yarn: true
   directories:
     - $HOME/.sonar/cache
     - $HOME/.cache
     - $HOME/.m2
-    - node_modules   
-      
+    - node_modules
+
 env:
   matrix:
   - EMBER_VERSION=default
@@ -53,3 +53,5 @@ install:
 - sudo apt-get install -y ruby-compass
 - travis_retry npm install
 - bower install
+- grunt check
+- grunt default
