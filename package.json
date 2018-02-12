@@ -1,9 +1,9 @@
 {
   "name": "bower-pom",
   "description": "Bower components",
-  "branchVersion": "^1.0.1",
-  "branchPattern": "1.0.1",
-  "version": "1.0.1",
+  "branchVersion": "^1.0.2",
+  "branchPattern": "1.0.2",
+  "version": "1.0.2",
   "keywords": [
     "nabla",
     "bower"
