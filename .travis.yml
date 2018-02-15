@@ -15,7 +15,7 @@ addons:
     packages:
     - gcc-5
     - g++-5
-    - ruby-compass
+#    - ruby-compass
 language: node_js
 node_js:
 # - "iojs"
@@ -51,6 +51,8 @@ before_install:
 - npm config set spin false
 before_script:
 - npm install -g bower karma grunt-cli jshint
+- 'gem install sass --version "=3.2.12"'
+- 'gem install compass --version "=0.12.2"'
 install:
 - npm install
 - travis_retry bower install
