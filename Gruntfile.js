@@ -66,9 +66,10 @@ module.exports = function(grunt) {
 
       }
       parseString(pomXml, function(err, result) {
-          version = result.project.parent[0].version;
+          //version = result.project.parent[0].version;
+          version = result.project.version[0];
           //console.dir(result.project.parent[0]);
-          //version = result.project.version[0];
+
       });
       return version;
   };
