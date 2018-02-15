@@ -15,6 +15,7 @@ addons:
     packages:
     - gcc-5
     - g++-5
+    - ruby-compass
 language: node_js
 node_js:
 # - "iojs"
@@ -51,8 +52,7 @@ before_install:
 before_script:
 - npm install -g bower karma grunt-cli jshint
 install:
-- sudo apt-get install -y ruby-compass
-- travis_retry npm install
-- bower install
+- npm install
+- travis_retry bower install
 - grunt check
 - grunt default
