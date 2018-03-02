@@ -440,7 +440,7 @@ module.exports = function(grunt) {
             '<%= config.app %>/**/*.json',
             '<%= config.app %>/styles/**/*.css',
             '<%= config.app %>/scripts/**/*.js',
-            '<%= config.app %>/images/**/*.{png,jpg,jpeg,gif,webp,svg}',
+            '<%= config.app %>/images/**/*.{ico,png,jpg,jpeg,gif,webp,svg}',            
             '.tmp/**/*.{css,js}'
           ]
         }
