@@ -9,6 +9,11 @@
     -   id: check-case-conflict
     -   id: check-docstring-first
     -   id: check-executables-have-shebangs
+        exclude: >
+                  (?x)^(
+                      clean.bat|
+                      build.bat
+                  )$
     -   id: check-json
     -   id: check-xml
     -   id: check-yaml
@@ -37,3 +42,11 @@
     -   id: ansible-lint
         files: \.(yaml|yml)$
         exclude: '.travis.yml'
+-   repo: git://github.com/doublify/pre-commit-hindent
+    sha: c1b9c390e1379aa5b40f63557aa7478a3ee95389
+    hooks:
+    -   id: hindent
+-   repo: git://github.com/detailyang/pre-commit-shell
+    sha: 1.0.2
+    hooks:
+    - id: shell-lint
