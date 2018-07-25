@@ -23,6 +23,8 @@ It contains a bower component that allow to easily override bootstrap
 
 ## Quality tools
 
+### pre-commit
+
 See [pre-commit](http://pre-commit.com/)
 Run `pre-commit install`
 Run `pre-commit autoupdate`
@@ -30,6 +32,14 @@ Run `pre-commit autoupdate`
 Run `pre-commit run --all-files`
 
 Commit `git commit -am 'TEST' --no-verify`
+
+### takari maven wrapper
+
+See [takari-maven-wrapper] (https://github.com/takari/maven-wrapper)
+
+```
+mvn -N io.takari:maven:wrapper
+```
 
 ## NODE/NPM Installation
 
