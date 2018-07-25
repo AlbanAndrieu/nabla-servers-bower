@@ -1,8 +1,9 @@
 # nabla-servers-bower
+![nabla-servers-bower](http://home.nabla.mobi:7075/images/mroizo.1f00120c.png)
 
 [![Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/AlbanAndrieu/nabla-servers-bower)
 [![Jenkins Build Status](http://home.nabla.mobi:8381/job/nabla-servers-bower-nightly/badge/icon)](http://home.nabla.mobi:8381/job/nabla-servers-bower-nightly)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.nabla.project.servers.sample%3Abower-pom&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.nabla.project.servers.sample%3Abower-pom)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.nabla.project.servers.sample%3Abower-pom%3Amaster&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.nabla.project.servers.sample%3Abower-pom)
 
 [![Code Climate](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower/badges/gpa.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower) [![Test Coverage](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower/badges/coverage.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower/coverage)
 [![Dependency Status](https://img.shields.io/david/AlbanAndrieu/nabla-servers-bower.svg?style=flat-square)](https://david-dm.org/AlbanAndrieu/nabla-servers-bower) [![devDependency Status](https://img.shields.io/david/dev/AlbanAndrieu/nabla-servers-bower.svg?style=flat-square)](https://david-dm.org/AlbanAndrieu/nabla-servers-bower#info=devDependencies)
