@@ -123,14 +123,12 @@
     "karma-junit-reporter": "1.2.0",
     "karma-ng-html2js-preprocessor": "1.0.0",
     "karma-ng-scenario": "1.0.0",
-    "karma-phantomjs-launcher": "1.0.4",
     "karma-script-launcher": "1.0.0",
     "karma-tapfile-reporter": "0.0.1",
     "load-grunt-tasks": "3.5.2",
     "lodash": "4.0.0",
     "nue": "0.7.1",
     "phantomas": "1.19.0",
-    "phantomjs-prebuilt": "2.1.16",
     "pixrem": "4.0.1",
     "protractor": "5.2.2",
     "q": "1.5.0",
@@ -142,8 +140,8 @@
     "semver": "5.0.1",
     "serve-index": "1.9.1",
     "serve-static": "1.13.1",
-    "socket.io-client": "1.4.6",
     "shelljs": "0.5.3",
+    "socket.io-client": "1.4.6",
     "sorted-object": "^1.0.0",
     "stringmap": "^0.2.2",
     "time-grunt": "1.4.0",
@@ -156,8 +154,6 @@
   "scripts": {
     "install": "./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.35",
     "update-webdriver": "./node_modules/protractor/bin/webdriver-manager update",
-    "postinstall": "node node_modules/phantomjs-prebuilt/install.js",
-    "pretest": "./node_modules/phantomjs/bin/phantomjs yslow.js --info grade --format tap --threshold '{\"yexpires\": 60}' t.co",
     "test": "grunt test",
     "webpagetest": "./node_modules/webpagetest/bin/webpagetest test t.co --key $WPT_API_KEY --first --location Dulles:Chrome --poll --timeout 60 --specs tco-specs.json --reporter spec"
   }

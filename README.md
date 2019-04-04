@@ -1,14 +1,14 @@
 # nabla-servers-bower
 ![nabla-servers-bower](http://home.nabla.mobi:7075/images/mroizo.1f00120c.png)
 
-[![Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/AlbanAndrieu/nabla-servers-bower)
+[![Grunt](https://gruntjs.com/cdn/builtwith.png)](http://gruntjs.com/) 
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/AlbanAndrieu/nabla-servers-bower)
 [![Jenkins Build Status](http://home.nabla.mobi:8381/job/nabla-servers-bower-nightly/badge/icon)](http://home.nabla.mobi:8381/job/nabla-servers-bower-nightly)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.nabla.project.servers.sample%3Abower-pom%3Amaster&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.nabla.project.servers.sample%3Abower-pom)
 
 [![Code Climate](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower/badges/gpa.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower) [![Test Coverage](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower/badges/coverage.svg)](https://codeclimate.com/github/AlbanAndrieu/nabla-servers-bower/coverage)
 [![Dependency Status](https://img.shields.io/david/AlbanAndrieu/nabla-servers-bower.svg?style=flat-square)](https://david-dm.org/AlbanAndrieu/nabla-servers-bower) [![devDependency Status](https://img.shields.io/david/dev/AlbanAndrieu/nabla-servers-bower.svg?style=flat-square)](https://david-dm.org/AlbanAndrieu/nabla-servers-bower#info=devDependencies)
 [![Known Vulnerabilities](https://snyk.io/test/github/albanandrieu/nabla-servers-bower/badge.svg)](https://snyk.io/test/github/albanandrieu/nabla-servers-bower)
-[![NSP Status](https://nodesecurity.io/orgs/nabla/projects/7d689bf7-12fd-4576-8d59-9a62700aae21/badge)](https://nodesecurity.io/orgs/nabla/projects/7d689bf7-12fd-4576-8d59-9a62700aae21)
 
 A bower project.
 =============
@@ -124,6 +124,9 @@ curl -X POST http://home.nabla.mobi:5678/removePackage -d '{"name":"nabla-styles
 ## Register to private-bower with SSH (deprecated)
 
 ```
+#bower register font-awesome https://github.com/components/font-awesome.git
+#bower register bootstrap-sass-official https://github.com/twbs/bootstrap-sass.git
+
 #bower register sample-component ssh://git@github.com:AlbanAndrieu/nabla-bower-sample-component.git
 #bower register nabla-styles ssh://git@github.com/AlbanAndrieu/nabla-bower-nabla-styles.git
 
