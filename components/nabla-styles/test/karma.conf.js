@@ -96,7 +96,7 @@ module.exports = function(config) {
     // - Safari (only Mac; has to be installed with `npm install karma-safari-launcher`)
     // - PhantomJS (is dead : https://semaphoreci.com/blog/2018/03/27/phantomjs-is-dead-use-chrome-headless-in-continuous-integration.html)
     // - IE (only Windows; has to be installed with `npm install karma-ie-launcher`)
-    browsers: ['Chrome'],
+    browsers: ['ChromeHeadless'],
 
     // If browser does not capture in given timeout [ms], kill it
     captureTimeout: 60000,
