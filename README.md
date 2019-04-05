@@ -1,7 +1,7 @@
 # nabla-servers-bower
 ![nabla-servers-bower](http://home.nabla.mobi:7075/images/mroizo.1f00120c.png)
 
-[![Grunt](https://gruntjs.com/cdn/builtwith.png)](http://gruntjs.com/) 
+[![Grunt](https://gruntjs.com/cdn/builtwith.png)](http://gruntjs.com/)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/AlbanAndrieu/nabla-servers-bower)
 [![Jenkins Build Status](http://home.nabla.mobi:8381/job/nabla-servers-bower-nightly/badge/icon)](http://home.nabla.mobi:8381/job/nabla-servers-bower-nightly)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.nabla.project.servers.sample%3Abower-pom%3Amaster&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.nabla.project.servers.sample%3Abower-pom)
