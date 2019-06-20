@@ -1,3 +1,4 @@
+---
 # Copyright Alban Andrieu 2013-2017
 # Distributed under the GPL-3.0
 # (See accompanying file LICENSE.md)
@@ -20,12 +21,15 @@ language: node_js
 node_js:
 # - "iojs"
   - "8"
+  - "11"
+
 branches:
   only:
   - master
 
 cache:
   pip: true
+  npm: true
   yarn: true
   directories:
     - $HOME/.sonar/cache
