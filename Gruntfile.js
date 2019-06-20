@@ -405,9 +405,15 @@ module.exports = function(grunt) {
     },
 
     versioncheck: {
-      options: {
-        skip: ["semver", "npm", "lodash"],
-        hideUpToDate: false
+      target: {
+        options: {
+          skip: ["semver",
+                  "npm", "lodash", "jquery", "jquery-ui", "bootstrap", "angular", "angular-animate", "angular-cookies",
+                  "angular-dynamic-locale", "angular-i18n", "angular-mocks", "angular-resource", "angular-route", "angular-sanitize",
+                  "angular-touch", "angular-translate", "angular-translate-handler-log",
+                  "angular-translate-loader-static-files", "angular-translate-storage-local"],
+          hideUpToDate: true
+        }
       }
     },
 
