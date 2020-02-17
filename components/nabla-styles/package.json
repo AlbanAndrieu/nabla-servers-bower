@@ -126,7 +126,7 @@
     "karma-script-launcher": "1.0.0",
     "karma-tapfile-reporter": "0.0.1",
     "load-grunt-tasks": "3.5.2",
-    "lodash": "4.0.0",
+    "lodash": "4.17.15",
     "nue": "0.7.1",
     "phantomas": "1.19.0",
     "pixrem": "4.0.1",
