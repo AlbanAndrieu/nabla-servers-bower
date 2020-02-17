@@ -4,11 +4,12 @@
 # (See accompanying file LICENSE.md)
 
 sudo: required
-dist: trusty
+dist: travis_lts
 
 script:
 - sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-5 /usr/bin/gcc
 - gcc --version
+
 addons:
   apt:
     sources:
@@ -17,15 +18,26 @@ addons:
     - gcc-5
     - g++-5
 #    - ruby-compass
+
 language: node_js
 node_js:
-# - "iojs"
   - "8"
   - "11"
+
+services:
+  - docker
 
 branches:
   only:
   - master
+
+notifications:
+  webhooks:
+    urls:
+    - https://webhooks.gitter.im/e/47b10b81867bd0063cf5
+    on_success: change
+    on_failure: always
+    on_start: false
 
 cache:
   pip: true
@@ -42,25 +54,27 @@ env:
   - EMBER_VERSION=default
   global:
     secure: dFb9uIYQbUOIQIReGk49jcI1t6dNhyGXWpC6+xWYPSXMBpsE+GEHD4SjhUUfEfmb9oqvldW27D6h+gGqnGFnB6MKC/Ecijj9v2KsEFfDplm62piSh2gSd+02ZSIJQSTb2AsuesG7rIwjgtqtV/gN5+1FuJtQKgqIsW4MiAwNwPg=
+
 matrix:
   fast_finish: true
   allow_failures:
   - env: EMBER_VERSION=release
   - env: EMBER_VERSION=beta
   - env: EMBER_VERSION=canary
+
 before_install:
-#- 'gem install sass --version "=3.2.12"'
-#- 'gem install compass --version "=0.12.2"'
-- 'gem install sass'
-- 'gem install compass'
-- export CHROME_BIN=chromium-browser
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
-- npm config set spin false
-- npm install -g bower karma grunt-cli jshint
-#before_script:
+  #- 'gem install sass --version "=3.2.12"'
+  #- 'gem install compass --version "=0.12.2"'
+  - 'gem install sass'
+  - 'gem install compass'
+  - export CHROME_BIN=chromium-browser
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - npm config set spin false
+  - npm install -g bower karma grunt-cli jshint
+
 install:
-- npm install
-- travis_retry bower install
-- grunt check
-- grunt default
+  - npm install
+  - travis_retry bower install
+  - grunt check
+  - grunt default
