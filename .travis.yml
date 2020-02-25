@@ -5,7 +5,7 @@
 
 sudo: required
 dist: travis_lts
-#dist: trusty
+#dist: bionic
 
 script:
 - sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-5 /usr/bin/gcc
@@ -21,12 +21,24 @@ addons:
 #    - ruby-compass
 
 language: node_js
+
 node_js:
   - "8"
   - "11"
 
 services:
   - docker
+
+cache:
+  pip: true
+  npm: true
+  yarn: true
+  directories:
+    - $HOME/.sonar/cache
+    - $HOME/.cache
+    - $HOME/.m2
+    - node_modules
+    - travis_phantomjs
 
 branches:
   only:
@@ -39,16 +51,6 @@ notifications:
     on_success: change
     on_failure: always
     on_start: false
-
-cache:
-  pip: true
-  npm: true
-  yarn: true
-  directories:
-    - $HOME/.sonar/cache
-    - $HOME/.cache
-    - $HOME/.m2
-    - node_modules
 
 env:
   matrix:
@@ -71,7 +73,7 @@ before_install:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
   - sudo apt-get install -qq xvfb  
-  - sh -e /etc/init.d/xvfb start
+  - sh -e /usr/bin/Xvfb start
   - npm config set spin false
   - npm install -g bower karma grunt-cli jshint
 
