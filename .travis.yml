@@ -73,7 +73,8 @@ before_install:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
   - sudo apt-get install -qq xvfb  
-  - sh -e /usr/bin/Xvfb start
+#  - sh -e /etc/init.d/xvfb start
+  - /usr/bin/Xvfb
   - npm config set spin false
   - npm install -g bower karma grunt-cli jshint
 
