@@ -14,7 +14,7 @@ ID_HASH = '138fd403232d2ddd5efb44317e38bf03'
 # start templated
 CONFIG = '.pre-commit-config.yaml'
 HOOK_TYPE = 'pre-commit'
-INSTALL_PYTHON = '/usr/bin/python3.6'
+INSTALL_PYTHON = '/usr/bin/python3.8'
 SKIP_ON_MISSING_CONFIG = False
 # end templated
 

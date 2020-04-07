@@ -2,7 +2,6 @@
 
 module.exports = function(config) {
   config.set({
-
     // base path, that will be used to resolve files and exclude
     basePath: '',
 
@@ -47,7 +46,7 @@ module.exports = function(config) {
       reporters: [
         // reporters not supporting the `file` property
         { type: 'html', subdir: 'report-html' },
-        { type: 'lcov', subdir: 'report-lcov'},
+        { type: 'lcov', subdir: 'report-lcov' },
         // reporters supporting the `file` property, use `subdir` to directly
         // output them in the `dir` directory
         { type: 'cobertura', subdir: '.', file: 'cobertura.txt' },
@@ -56,7 +55,6 @@ module.exports = function(config) {
         //{ type: 'text', subdir: '.', file: 'text.txt' },
         //{ type: 'text-summary', subdir: '.', file: 'text-summary.txt' },
       ]
-
     },
 
     junitReporter: {

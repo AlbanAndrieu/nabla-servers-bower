@@ -10,6 +10,6 @@ npm run update-webdriver
 #sudo npm install -g npm-license
 npm-license || true
 
-docker-compose -f docker-compose.yml -p TEST ps
+#docker-compose -f docker-compose.yml -p TEST ps
 
 exit 0

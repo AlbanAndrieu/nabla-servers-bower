@@ -1,14 +1,11 @@
 {
   "name": "nabla-styles",
   "description": "Boostrap nabla styles overrided",
-  "version": "1.0.2",
+  "version": "1.0.3-build.0",
   "author": "Nabla Core Team <dev@home.nabla.mobi>",
   "license": "MIT",
   "private": false,
-  "main": [
-    "app/styles/nabla-bootstrap.scss",
-    "app/views/styles.html"
-  ],
+  "main": ["app/styles/nabla-bootstrap.scss", "app/views/styles.html"],
   "ignore": [
     ".jshintrc",
     "**/*.txt",
@@ -17,12 +14,7 @@
     "bower_components",
     "test"
   ],
-  "keywords": [
-    "nabla",
-    "bootstrap",
-    "less",
-    "sass"
-  ],
+  "keywords": ["nabla", "bootstrap", "less", "sass"],
   "dependencies": {
     "jquery": "2.1.4",
     "font-awesome": "4.7.0",

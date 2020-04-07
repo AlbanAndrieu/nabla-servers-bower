@@ -10,8 +10,8 @@
   ],
   "author": {
     "name": "Alban Andrieu",
-    "email": "alban.andrieu@nabla.mobi",
-    "url": "http://home.nabla.mobi"
+    "email": "alban.andrieu@free.fr",
+    "url": "http://albandrieu.com"
   },
   "license": "MIT",
   "licenses": [
@@ -20,7 +20,7 @@
       "url": "http://www.opensource.org/licenses/MIT"
     }
   ],
-  "homepage": "http://home.nabla.mobi",
+  "homepage": "http://albandrieu.com",
   "repository": {
     "type": "git",
     "url": "AlbanAndrieu/nabla-servers-bower"
@@ -29,8 +29,18 @@
     "url": "https://github.com/AlbanAndrieu/nabla-servers-bower/issues"
   },
   "pre-commit": [
-    "precommit"
+    "lintme"
   ],
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{json,css,scss,less,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "engines": {
     "node": ">=7.8.0",
     "npm": ">=4.2.0",
@@ -39,7 +49,8 @@
   },
   "engine-strict": true,
   "dependencies": {
-    "cli": "^1.0.1"
+    "cli": "^1.0.1",
+    "prettier": "^2.0.4"
   },
   "devDependencies": {
     "apache-server-configs": "^3.1.0",
@@ -49,6 +60,9 @@
     "codeclimate-test-reporter": "^0.5.1",
     "connect-pushstate": "1.1.0",
     "cssnano": "^4.1.10",
+    "eslint": "^4.15.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
     "grunt": "1.0.4",
     "grunt-angular-templates": "1.1.0",
     "grunt-autoprefixer": "3.0.4",
@@ -62,8 +76,8 @@
     "grunt-compare-size": "0.4.2",
     "grunt-concurrent": "2.3.1",
     "grunt-connect-proxy": "0.2.0",
-    "grunt-contrib-clean": "^2.0.0",
-    "grunt-contrib-compass": "^1.1.1",
+    "grunt-contrib-clean": "2.0.0",
+    "grunt-contrib-compass": "1.1.1",
     "grunt-contrib-compress": "^1.4.3",
     "grunt-contrib-concat": "1.0.1",
     "grunt-contrib-connect": "^2.0.0",
@@ -125,12 +139,13 @@
     "karma-ng-scenario": "1.0.0",
     "karma-script-launcher": "1.0.0",
     "karma-tapfile-reporter": "0.0.1",
+    "lint-staged": "^6.0.0",
     "load-grunt-tasks": "3.5.2",
     "lodash": "^4.17.11",
     "nue": "0.7.1",
     "phantomas": "^1.20.1",
     "pixrem": "4.0.1",
-    "pre-commit": "^1.2.2",
+    "pre-commit": "1.2.2",
     "protractor": "5.2.2",
     "q": "^1.5.1",
     "q-io": "^1.10.9",
@@ -156,6 +171,8 @@
     "preinstall": "node scripts/npm/install.js",
     "update-webdriver": "./node_modules/protractor/bin/webdriver-manager update",
     "test": "grunt test",
-    "webpagetest": "./node_modules/webpagetest/bin/webpagetest test t.co --key $WPT_API_KEY --first --location Dulles:Chrome --poll --timeout 60 --specs tco-specs.json --reporter spec"
+    "webpagetest": "./node_modules/webpagetest/bin/webpagetest test t.co --key $WPT_API_KEY --first --location Dulles:Chrome --poll --timeout 60 --specs tco-specs.json --reporter spec",
+    "lint": "eslint ./ --cache --ignore-pattern .gitignore",
+    "lintme": "lint-staged"
   }
 }
