@@ -1,8 +1,8 @@
 {
-  "name": "bower-pom",
+  "name": "nabla-servers-bower",
   "description": "Bower components",
   "branchVersion": "^1.0.2",
-  "branchPattern": "1.0.2",
+  "branchPattern": "1.0.*",
   "version": "1.0.2",
   "keywords": [
     "nabla",
@@ -29,7 +29,7 @@
     "url": "https://github.com/AlbanAndrieu/nabla-servers-bower/issues"
   },
   "pre-commit": [
-    "lintme"
+    "lint"
   ],
   "lint-staged": {
     "*.js": [
@@ -42,10 +42,10 @@
     ]
   },
   "engines": {
-    "node": ">=7.8.0",
-    "npm": ">=4.2.0",
+    "node": ">=11.12.0",
+    "npm": ">=6.13.6",
     "node-gyp": ">=3.0.3",
-    "grunt": ">=1.0.1"
+    "grunt": ">=1.2.0"
   },
   "engine-strict": true,
   "dependencies": {
@@ -60,9 +60,9 @@
     "codeclimate-test-reporter": "^0.5.1",
     "connect-pushstate": "1.1.0",
     "cssnano": "^4.1.10",
-    "eslint": "^4.15.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-prettier": "^2.6.0",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "6.10.1",
+    "eslint-plugin-prettier": "3.1.2",
     "grunt": "1.0.4",
     "grunt-angular-templates": "1.1.0",
     "grunt-autoprefixer": "3.0.4",
@@ -139,7 +139,7 @@
     "karma-ng-scenario": "1.0.0",
     "karma-script-launcher": "1.0.0",
     "karma-tapfile-reporter": "0.0.1",
-    "lint-staged": "^6.0.0",
+    "lint-staged": "10.1.2",
     "load-grunt-tasks": "3.5.2",
     "lodash": "^4.17.11",
     "nue": "0.7.1",
@@ -169,9 +169,10 @@
   },
   "scripts": {
     "preinstall": "node scripts/npm/install.js",
-    "update-webdriver": "./node_modules/protractor/bin/webdriver-manager update",
+    "update-webdriver": "webdriver-manager update --versions.chrome 2.42",
+    "postinstall": "webdriver-manager update --versions.chrome 2.42 || true",
     "test": "grunt test",
-    "webpagetest": "./node_modules/webpagetest/bin/webpagetest test t.co --key $WPT_API_KEY --first --location Dulles:Chrome --poll --timeout 60 --specs tco-specs.json --reporter spec",
+    "webpagetest": "./node_modules/webpagetest/bin/webpagetest test http://localhost:9090/test/#/ --key $WPT_API_KEY --first --location Dulles:Chrome --poll --timeout 60 --specs tco-specs.json --reporter spec",
     "lint": "eslint ./ --cache --ignore-pattern .gitignore",
     "lintme": "lint-staged"
   }

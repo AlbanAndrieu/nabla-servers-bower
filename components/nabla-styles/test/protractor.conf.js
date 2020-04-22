@@ -37,8 +37,8 @@ exports.config = {
   chromeDriver: "../node_modules/protractor/selenium/chromedriver",
   //seleniumServerJar: '../node_modules/protractor/selenium/selenium-server-standalone-2.45.0.jar',
   onPrepare: function() {
-    require("jasmine-bail-fast");
-    jasmine.getEnv().bailFast();
+    //require("jasmine-bail-fast");
+    //jasmine.getEnv().bailFast();
 
     var jasmineReporters = require("jasmine-reporters");
     jasmine.getEnv().addReporter(
