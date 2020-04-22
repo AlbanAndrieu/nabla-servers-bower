@@ -69,7 +69,7 @@ module.exports = function(grunt) {
     gittag: "grunt-git",
     gitpush: "grunt-git",
     ngtemplates: "grunt-angular-templates",
-    protractor: "grunt-protractor-runner",
+    protractor: "grunt-protractor-runner"
     //buildcontrol: 'grunt-build-control'
   });
 
@@ -86,7 +86,7 @@ module.exports = function(grunt) {
   // Configurable paths for the application
   var appConfig = {
     app: require("./bower.json").appPath || "app",
-    dist: "dist",
+    dist: "dist"
   };
 
   // Define the configuration for all the tasks
@@ -111,7 +111,7 @@ module.exports = function(grunt) {
       verbose: true,
       install: {
         //just run 'grunt bower:install' and you'll see files from your Bower packages in lib directory
-      },
+      }
       //install: {
       //  options: {
       //    copy: false
@@ -123,18 +123,18 @@ module.exports = function(grunt) {
     watch: {
       bower: {
         files: ["bower.json"],
-        tasks: ["wiredep"],
+        tasks: ["wiredep"]
       },
       js: {
         files: ["<%= config.app %>/scripts/{,*/}*.js"],
         tasks: ["newer:jshint:all"],
         options: {
-          livereload: "<%= connect.options.livereload %>",
-        },
+          livereload: "<%= connect.options.livereload %>"
+        }
       },
       jsTest: {
         files: ["test/spec/{,*/}*.js"],
-        tasks: ["newer:jshint:test", "test:watch", "karma"],
+        tasks: ["newer:jshint:test", "test:watch", "karma"]
       },
       //less: {
       //  files: ['<%= config.app %>/styles/less/{,*/}*.less'],
@@ -142,10 +142,10 @@ module.exports = function(grunt) {
       //},
       compass: {
         files: ["<%= config.app %>/styles/{,*/}*.{scss,sass}"],
-        tasks: ["compass:server", "postcss"],
+        tasks: ["compass:server", "postcss"]
       },
       gruntfile: {
-        files: ["Gruntfile.js"],
+        files: ["Gruntfile.js"]
       },
       //styles: {
       //  files: ['<%= config.app %>/styles/{,*/}*.css'],
@@ -157,14 +157,14 @@ module.exports = function(grunt) {
 
       livereload: {
         options: {
-          livereload: "<%= connect.options.livereload %>",
+          livereload: "<%= connect.options.livereload %>"
         },
         files: [
           "<%= config.app %>/{,*/}*.html",
           ".tmp/styles/{,*/}*.css",
-          "<%= config.app %>/images/{,*/}*",
-        ],
-      },
+          "<%= config.app %>/images/{,*/}*"
+        ]
+      }
     },
 
     // The actual grunt server settings
@@ -177,12 +177,12 @@ module.exports = function(grunt) {
         livereload: 35730,
         analytics: {
           account: "UA-56011797-1",
-          domainName: "nabla.mobi",
+          domainName: "albandrieu.com"
         },
         discussions: {
           shortName: "nabla",
           url: "http://albandrieu.com",
-          dev: false,
+          dev: false
         },
         middleware: function(connect, options) {
           var proxy = require("grunt-connect-proxy/lib/utils").proxyRequest;
@@ -207,9 +207,9 @@ module.exports = function(grunt) {
             },
             serveStatic(options.base[0]),
             serveIndex(options.base[0]),
-            proxy,
+            proxy
           ];
-        },
+        }
       },
       livereload: {
         options: {
@@ -221,7 +221,7 @@ module.exports = function(grunt) {
 
             // Setup the proxy
             var middlewares = [
-              require("grunt-connect-proxy/lib/utils").proxyRequest,
+              require("grunt-connect-proxy/lib/utils").proxyRequest
             ];
 
             // Serve static files.
@@ -241,10 +241,10 @@ module.exports = function(grunt) {
                 serveStatic("./bower_components")
               ),
               connect().use("/app/styles", serveStatic("./app/styles")),
-              serveStatic(appConfig.app),
+              serveStatic(appConfig.app)
             ];
-          },
-        },
+          }
+        }
       },
       test: {
         options: {
@@ -257,18 +257,18 @@ module.exports = function(grunt) {
                 "/bower_components",
                 serveStatic("./bower_components")
               ),
-              serveStatic(appConfig.app),
+              serveStatic(appConfig.app)
             ];
-          },
-        },
+          }
+        }
       },
       dist: {
         options: {
           //port: 9003,
           open: true,
-          base: "<%= config.dist %>",
-        },
-      },
+          base: "<%= config.dist %>"
+        }
+      }
       //proxies: [{
       //  context: '/login/',
       //  host: zone,
@@ -286,43 +286,43 @@ module.exports = function(grunt) {
     jshint: {
       options: {
         jshintrc: ".jshintrc",
-        reporter: require("jshint-stylish"),
+        reporter: require("jshint-stylish")
       },
       all: [
         "Gruntfile.js",
         "<%= config.app %>/scripts/{,*/}*.js",
         "!<%= config.app %>/scripts/vendor/*",
-        "test/spec/{,*/}*.js",
-      ],
+        "test/spec/{,*/}*.js"
+      ]
     },
 
     jscs: {
       options: {
-        config: ".jscs.json",
+        config: ".jscs.json"
       },
       all: {
         src: [
           "Gruntfile.js",
           "<%= config.app %>/scripts/{,*/}*.js",
           "!<%= config.app %>/scripts/vendor/*",
-          "test/spec/{,*/}*.js",
-        ],
-      },
+          "test/spec/{,*/}*.js"
+        ]
+      }
     },
 
     less: {
       development: {
         options: {
           compress: true,
-          paths: ["styles/less/*/"],
+          paths: ["styles/less/*/"]
         },
         files: {
           "<%= config.app %>/styles/css/nabla-theme.css":
             "<%= config.app %>/styles/less/nabla-theme.less",
           "<%= config.app %>/styles/css/nabla-bootstrap.css":
-            "<%= config.app %>/styles/less/nabla-bootstrap.less",
-        },
-      },
+            "<%= config.app %>/styles/less/nabla-bootstrap.less"
+        }
+      }
     },
 
     // Mocha testing framework configuration options
@@ -331,10 +331,10 @@ module.exports = function(grunt) {
         options: {
           run: true,
           urls: [
-            "http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html",
-          ],
-        },
-      },
+            "http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html"
+          ]
+        }
+      }
     },
 
     // Empties folders to start fresh
@@ -347,20 +347,20 @@ module.exports = function(grunt) {
               ".tmp",
               "<%= config.dist %>/*",
               "!<%= config.dist %>/.git*",
-              "bower_repo",
-            ],
-          },
-        ],
+              "bower_repo"
+            ]
+          }
+        ]
       },
       bower_repo: {
         files: [
           {
             dot: true,
-            src: ["bower_repo/*", "!bower_repo/.git"],
-          },
-        ],
+            src: ["bower_repo/*", "!bower_repo/.git"]
+          }
+        ]
       },
-      server: ".tmp",
+      server: ".tmp"
     },
 
     // Add vendor prefixed styles
@@ -368,8 +368,8 @@ module.exports = function(grunt) {
       options: {
         processors: [
           //require('pixrem')(), // add fallbacks for rem units
-          require("autoprefixer")({ browsers: "last 2 versions" }), // add vendor prefixes
-        ],
+          require("autoprefixer")({ browsers: "last 2 versions" }) // add vendor prefixes
+        ]
       },
       dist: {
         files: [
@@ -377,10 +377,10 @@ module.exports = function(grunt) {
             expand: true,
             cwd: ".tmp/styles/",
             src: "{,*/}*.css",
-            dest: ".tmp/styles/",
-          },
-        ],
-      },
+            dest: ".tmp/styles/"
+          }
+        ]
+      }
     },
 
     // Automatically inject Bower components into the HTML file
@@ -388,7 +388,7 @@ module.exports = function(grunt) {
       app: {
         ignorePath: /^\/|\.\.\//,
         src: ["<%= config.app %>/index.html"],
-        exclude: ["bower_components/bootstrap/dist/css/bootstrap.css"],
+        exclude: ["bower_components/bootstrap/dist/css/bootstrap.css"]
       },
       test: {
         devDependencies: true,
@@ -399,20 +399,20 @@ module.exports = function(grunt) {
           js: {
             block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
             detect: {
-              js: /'(.*\.js)'/gi,
+              js: /'(.*\.js)'/gi
             },
             replace: {
-              js: "'{{filePath}}',",
-            },
-          },
-        },
+              js: "'{{filePath}}',"
+            }
+          }
+        }
       },
       sass: {
         src: ["<%= config.app %>/styles/{,*/}*.{scss,sass}"],
         //exclude: ['bootstrap-sass-official'],
-        ignorePath: /(\.\.\/){1,2}bower_components\//,
+        ignorePath: /(\.\.\/){1,2}bower_components\//
         //exclude: ['font-awesome']
-      },
+      }
     },
 
     // Compiles Sass to CSS and generates necessary files if requested
@@ -430,18 +430,18 @@ module.exports = function(grunt) {
         httpFontsPath: "/styles/fonts",
         relativeAssets: false,
         assetCacheBuster: false,
-        raw: "Sass::Script::Number.precision = 10\n",
+        raw: "Sass::Script::Number.precision = 10\n"
       },
       dist: {
         options: {
-          generatedImagesDir: "<%= config.dist %>/images/generated",
-        },
+          generatedImagesDir: "<%= config.dist %>/images/generated"
+        }
       },
       server: {
         options: {
-          sourcemap: true,
-        },
-      },
+          sourcemap: true
+        }
+      }
     },
 
     browserSync: {
@@ -453,18 +453,18 @@ module.exports = function(grunt) {
             "<%= config.app %>/styles/**/*.css",
             "<%= config.app %>/scripts/**/*.js",
             "<%= config.app %>/images/**/*.{ico,png,jpg,jpeg,gif,webp,svg}",
-            ".tmp/**/*.{css,js}",
-          ],
-        },
+            ".tmp/**/*.{css,js}"
+          ]
+        }
       },
       options: {
         watchTask: true,
         online: false,
         //browser: ["google chrome", "firefox"],
         //server: '<%= config.app %>'
-        proxy: "localhost:8001",
+        proxy: "localhost:8001"
         //proxy: SERVER_HOST + ":" + SERVER_PORT
-      },
+      }
     },
 
     // Renames files for browser caching purposes
@@ -481,9 +481,9 @@ module.exports = function(grunt) {
           "<%= config.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}",
           "!<%= config.dist %>/images/no-filerev/{,*/}*.{png,jpg,jpeg,gif,webp,svg}",
           //'<%= config.dist %>/*.{ico,png}',
-          "<%= config.dist %>/styles/fonts/*",
-        ],
-      },
+          "<%= config.dist %>/styles/fonts/*"
+        ]
+      }
     },
 
     // Reads HTML for usemin blocks to enable smart builds that automatically
@@ -502,12 +502,12 @@ module.exports = function(grunt) {
               // Disabled as we'll be using a manual
               // cssmin configuration later. This is
               // to ensure we work well with grunt-uncss
-              css: ["cssmin"], //disable when using uncss
+              css: ["cssmin"] //disable when using uncss
             },
-            post: {},
-          },
-        },
-      },
+            post: {}
+          }
+        }
+      }
     },
 
     // Performs rewrites based on filerev and the useminPrepare configuration
@@ -519,9 +519,9 @@ module.exports = function(grunt) {
         assetsDirs: [
           "<%= config.dist %>",
           "<%= config.dist %>/images",
-          "<%= config.dist %>/styles",
-        ],
-      },
+          "<%= config.dist %>/styles"
+        ]
+      }
     },
 
     // The following *-min tasks will produce minified files in the dist folder
@@ -544,13 +544,13 @@ module.exports = function(grunt) {
       dist: {
         files: {
           "<%= config.dist %>/scripts/scripts.js": [
-            "<%= config.dist %>/scripts/scripts.js",
+            "<%= config.dist %>/scripts/scripts.js"
           ],
           "<%= config.dist %>/scripts/vendor.js": [
-            "<%= config.dist %>/scripts/vendor.js",
-          ],
-        },
-      },
+            "<%= config.dist %>/scripts/vendor.js"
+          ]
+        }
+      }
     },
     // concat: {
     //   dist: {}
@@ -560,15 +560,15 @@ module.exports = function(grunt) {
       dist: {
         options: {
           position: "top",
-          banner: "<%= banner %>",
+          banner: "<%= banner %>"
         },
         files: {
           src: [
             "<%= config.dist %>/styles/*.css",
-            "<%= config.dist %>/scripts/*.js",
-          ],
-        },
-      },
+            "<%= config.dist %>/scripts/*.js"
+          ]
+        }
+      }
     },
 
     uncss: {
@@ -582,7 +582,7 @@ module.exports = function(grunt) {
             //'../bower_components/nabla-header/styles/css/nabla-header.css',
             //'../bower_components/bootstrap/dist/css/bootstrap.css',
             "../bower_components/github-fork-ribbon-css/gh-fork-ribbon.ie.css",
-            "../.tmp/styles/main.css",
+            "../.tmp/styles/main.css"
           ],
           // Ignore css selectors for async content with complete selector or regexp
           // Only needed if using Bootstrap
@@ -598,17 +598,17 @@ module.exports = function(grunt) {
             /ec-.*/,
             /dropdown-menu/,
             /\.collapsing/,
-            /\.collapse/,
-          ],
+            /\.collapse/
+          ]
         },
         files: {
           ".tmp/styles/main.css": [
-            "<%= config.app %>/{,*/}*.html",
+            "<%= config.app %>/{,*/}*.html"
             //'./bower_components/nabla-notification/{,*/}*.html',
             //'./bower_components/nabla-header/{,*/}*.html'
-          ],
-        },
-      },
+          ]
+        }
+      }
     },
 
     critical: {
@@ -619,17 +619,17 @@ module.exports = function(grunt) {
           css: [
             ".tmp/styles/main.css",
             ".tmp/styles/blog.css",
-            ".tmp/styles/carousel.css",
+            ".tmp/styles/carousel.css"
             //'test/fixture/styles/bootstrap.css'
           ],
           width: 320,
-          height: 70,
+          height: 70
         },
         src: "<%= config.dist %>/index.html",
         //dest: 'styles/critical.css'
         //dest: 'index.html'
-        dest: "<%= config.dist %>/index.html",
-      },
+        dest: "<%= config.dist %>/index.html"
+      }
     },
 
     penthouse: {
@@ -639,11 +639,11 @@ module.exports = function(grunt) {
         //url: SERVER_URL + SERVER_CONTEXT,
         url: "http://localhost:9090/#/",
         width: 1280,
-        height: 800,
-      },
+        height: 800
+      }
     },
     compare_size: {
-      files: ["app/styles/**", "dist/styles/**"],
+      files: ["app/styles/**", "dist/styles/**"]
     },
 
     // The following *-min tasks produce minified files in the dist folder
@@ -654,10 +654,10 @@ module.exports = function(grunt) {
             expand: true,
             cwd: "<%= config.app %>/images",
             src: "{,*/}*.{png,jpg,jpeg,gif}",
-            dest: "<%= config.dist %>/images",
-          },
-        ],
-      },
+            dest: "<%= config.dist %>/images"
+          }
+        ]
+      }
     },
 
     svgmin: {
@@ -667,10 +667,10 @@ module.exports = function(grunt) {
             expand: true,
             cwd: "<%= config.app %>/images",
             src: "{,*/}*.svg",
-            dest: "<%= config.dist %>/images",
-          },
-        ],
-      },
+            dest: "<%= config.dist %>/images"
+          }
+        ]
+      }
     },
 
     htmlmin: {
@@ -684,17 +684,17 @@ module.exports = function(grunt) {
           removeEmptyAttributes: true,
           removeAttributeQuotes: true,
           removeRedundantAttributes: true,
-          useShortDoctype: true,
+          useShortDoctype: true
         },
         files: [
           {
             expand: true,
             cwd: "<%= config.dist %>",
             src: ["*.html", "views/{,*/}*.html"],
-            dest: "<%= config.dist %>",
-          },
-        ],
-      },
+            dest: "<%= config.dist %>"
+          }
+        ]
+      }
     },
 
     // Copies remaining files to places other tasks can use
@@ -714,8 +714,8 @@ module.exports = function(grunt) {
               "images/{,*/}*.{webp}",
               "styles/fonts/{,*/}*.*",
               "fonts/{,*/}*.*",
-              "resources/{,*/}*.*",
-            ],
+              "resources/{,*/}*.*"
+            ]
             //}, {
             //  expand: true,
             //  cwd: '.tmp/styles/',
@@ -727,13 +727,13 @@ module.exports = function(grunt) {
             cwd: ".",
             src:
               "bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*",
-            dest: "<%= config.dist %>",
+            dest: "<%= config.dist %>"
           },
           {
             expand: true,
             cwd: ".",
             src: "bower_components/font-awesome/fonts/*",
-            dest: "<%= config.dist %>",
+            dest: "<%= config.dist %>"
             //}, {
             //  expand: true,
             //  cwd: 'bower_components/font-awesome/fonts/',
@@ -745,14 +745,14 @@ module.exports = function(grunt) {
             //  cwd: 'bower_components/bootstrap/dist',
             //  src: 'fonts/*',
             //  dest: '<%= config.dist %>'
-          },
-        ],
+          }
+        ]
       },
       styles: {
         expand: true,
         cwd: "<%= config.app %>/styles",
         dest: ".tmp/styles/",
-        src: "{,*/}*.css",
+        src: "{,*/}*.css"
       },
       bower_repo: {
         files: [
@@ -764,27 +764,27 @@ module.exports = function(grunt) {
               //'<%= config.app %>/styles/less/*.less',
               "<%= config.app %>/images/*.svg",
               "<%= config.app %>/views/*.html",
-              "*.json",
+              "*.json"
             ],
-            dest: "bower_repo",
-          },
-        ],
-      },
+            dest: "bower_repo"
+          }
+        ]
+      }
     },
 
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: ["copy:styles", "compass:server"],
       test: ["copy:styles", "compass"],
-      dist: ["copy:styles", "compass:dist", "imagemin", "svgmin"],
+      dist: ["copy:styles", "compass:dist", "imagemin", "svgmin"]
     },
 
     ngdocs: {
       options: {
         scripts: ["angular.js", "../src.js"],
-        html5Mode: false,
+        html5Mode: false
       },
-      all: ["app/**/*.js"],
+      all: ["app/**/*.js"]
     },
 
     // Test settings
@@ -792,8 +792,8 @@ module.exports = function(grunt) {
       unit: {
         configFile: "test/karma.conf.js",
         //browsers: ['PhantomJS', 'Chrome', 'Firefox'],
-        singleRun: true,
-      },
+        singleRun: true
+      }
     },
 
     replace: {
@@ -807,13 +807,13 @@ module.exports = function(grunt) {
             from:
               ".tmp/bower_components/bootstrap-sass-official/assets/fonts/bootstrap/",
             to:
-              "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/",
+              "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/"
           },
           {
             from: "/.tmp/bower_components/font-awesome/fonts/",
-            to: "../bower_components/font-awesome/fonts/",
-          },
-        ],
+            to: "../bower_components/font-awesome/fonts/"
+          }
+        ]
       },
       // Sets DEBUG_MODE to FALSE in dist
       debugMode: {
@@ -822,9 +822,9 @@ module.exports = function(grunt) {
         replacements: [
           {
             from: /\/\*DEBUG_MODE\*\/.{1,}\/\*DEBUG_MODE\*\//gi,
-            to: "/*DEBUG_MODE*/false/*DEBUG_MODE*/",
-          },
-        ],
+            to: "/*DEBUG_MODE*/false/*DEBUG_MODE*/"
+          }
+        ]
       },
       // Sets VERSION_TAG for cache busting
       versionTag: {
@@ -836,10 +836,10 @@ module.exports = function(grunt) {
             to:
               "/*VERSION_TAG_START*/" +
               new Date().getTime() +
-              "/*VERSION_TAG_END*/",
-          },
-        ],
-      },
+              "/*VERSION_TAG_END*/"
+          }
+        ]
+      }
     },
 
     protractor: {
@@ -849,9 +849,9 @@ module.exports = function(grunt) {
         args: {
           //seleniumServerJar: 'node_modules/protractor/selenium/selenium-server-standalone-2.39.0.jar',
           //chromeDriver: 'node_modules/protractor/selenium/chromedriver.exe'
-        },
+        }
       },
-      run: {},
+      run: {}
     },
 
     //env: {
@@ -870,21 +870,21 @@ module.exports = function(grunt) {
         format: "tap",
         //format: 'junit',
         //ruleset: 'yblog',
-        cdns: "nabla.mobi,albandrieu.com,albandri,localhost,127.0.0.1",
+        cdns: "albandrieu.com,albandrieu.com,albandri,localhost,127.0.0.1",
         threshold:
           '\'{"overall": "B", "ycdn": "F", "yexpires": "F", "ynumreq": "E", "yminify": "B", "ycompress": "B", "ydns": "D", "yno404": "F", "yexpressions": "B", "ymindom": "F"}\'',
         urls: [
           SERVER_URL + SERVER_CONTEXT,
-          SERVER_URL + SERVER_CONTEXT + "#/about",
+          SERVER_URL + SERVER_CONTEXT + "#/about"
         ],
         //headers: '\'{"Cookie": "'JSESSIONID=0003EB22CC71A700D676B1E0B6558325;user=%7B%22loginName%22%3A%22nabla%22%2C%22userName"}\'',
         //reports: ['target/surefire-reports/yslow-main.xml',
         //          'target/surefire-reports/yslow-about.xml']
-        reports: ["target/yslow-main.tap", "target/yslow-about.tap"],
+        reports: ["target/yslow-main.tap", "target/yslow-about.tap"]
       },
       your_target: {
-        files: [],
-      },
+        files: []
+      }
     },
 
     phantomas: {
@@ -897,20 +897,20 @@ module.exports = function(grunt) {
             gzipRequests: {
               // receive warning, when less compressed assets are loaded then 10 ( might be useful for checking server configurations )
               type: "<",
-              value: 10,
-            },
+              value: 10
+            }
           },
           indexPath: "./build/phantomas/",
           options: {
             timeout: 30,
             //cookie: ''JSESSIONID=0003EB22CC71A700D676B1E0B6558325;user=%7B%22loginName%22%3A%22nabla%22%2C%22userName',
             verbose: true,
-            debug: true,
+            debug: true
           },
           url: SERVER_URL + SERVER_CONTEXT,
-          buildUi: true,
-        },
-      },
+          buildUi: true
+        }
+      }
     },
 
     "phantomcss-gitdiff": {
@@ -921,15 +921,15 @@ module.exports = function(grunt) {
           cleanupComparisonImages: false,
           //viewportSize: [1024, 768], //desktop
           viewportSize: [320, 400], //mobile
-          gitDiff: true,
+          gitDiff: true
         },
         files: [
           {
             cwd: "dist/",
-            src: "*.html",
-          },
-        ],
-      },
+            src: "*.html"
+          }
+        ]
+      }
     },
 
     resemble: {
@@ -939,11 +939,11 @@ module.exports = function(grunt) {
         //url: 'http://0.0.0.0:8000/dist',
         url: SERVER_URL + SERVER_CONTEXT,
         //debug: true,
-        gm: false,
+        gm: false
       },
       desktop: {
         options: {
-          width: 1100,
+          width: 1100
         },
         files: [
           {
@@ -951,9 +951,9 @@ module.exports = function(grunt) {
             //expand: true,
             //src: ['**/*.html'],
             src: ["*.html"],
-            dest: "desktop",
-          },
-        ],
+            dest: "desktop"
+          }
+        ]
       },
       //desktop: {
       //  options: {
@@ -971,7 +971,7 @@ module.exports = function(grunt) {
       //},
       mobile: {
         options: {
-          width: 450,
+          width: 450
         },
         files: [
           {
@@ -979,10 +979,10 @@ module.exports = function(grunt) {
             //expand: true,
             //src: ['**/*.html'],
             src: ["*.html"],
-            dest: "mobile",
-          },
-        ],
-      },
+            dest: "mobile"
+          }
+        ]
+      }
     },
 
     sitespeedio: {
@@ -990,16 +990,16 @@ module.exports = function(grunt) {
         options: {
           url: "http://albandrieu.com:9090/",
           deepth: 1,
-          resultBaseDir: "./build/sitespeedio/",
-        },
-      },
+          resultBaseDir: "./build/sitespeedio/"
+        }
+      }
     },
 
     pagespeed: {
       options: {
         nokey: true,
         //url: 'http://albandrieu.com/'
-        url: "http://albandrieu.com:9090/",
+        url: "http://albandrieu.com:9090/"
       },
       //prod: {
       //  options: {
@@ -1014,9 +1014,9 @@ module.exports = function(grunt) {
           paths: ["/#/about", "/#/"],
           locale: "en_GB",
           strategy: "desktop",
-          threshold: 80,
-        },
-      },
+          threshold: 80
+        }
+      }
     },
 
     pagespeed_junit: {
@@ -1025,24 +1025,24 @@ module.exports = function(grunt) {
         //key: '<API_KEY>',
         reports: ["target/surefire-reports/TEST-pagespeed.xml"],
         threshold: 10,
-        ruleThreshold: 2,
-      },
+        ruleThreshold: 2
+      }
     },
 
     wpt: {
       options: {
         locations: ["Paris_wpt"],
-        key: process.env.WPT_API_KEY,
+        key: process.env.WPT_API_KEY
       },
       sideroad: {
         options: {
           url: [
-            "http://albandrieu.com:9090/",
+            "http://albandrieu.com:9090/"
             //'http://albandrieu.com:8380/jenkins/'
-          ],
+          ]
         },
-        dest: "./build/sideroad/",
-      },
+        dest: "./build/sideroad/"
+      }
     },
 
     perfbudget: {
@@ -1053,40 +1053,40 @@ module.exports = function(grunt) {
           key: process.env.WPT_API_KEY,
           budget: {
             render: "2000",
-            SpeedIndex: "3000",
-          },
-        },
-      },
+            SpeedIndex: "3000"
+          }
+        }
+      }
     },
 
     "gh-pages": {
       options: {
         base: "dist",
-        dotfiles: true,
+        dotfiles: true
       },
-      src: ["**/*"],
+      src: ["**/*"]
     },
 
     zap_start: {
       options: {
         host: ZAP_HOST,
         port: ZAP_PORT,
-        daemon: true,
-      },
+        daemon: true
+      }
     },
     zap_spider: {
       options: {
         url: SERVER_URL,
         host: ZAP_HOST,
-        port: ZAP_PORT,
-      },
+        port: ZAP_PORT
+      }
     },
     zap_scan: {
       options: {
         url: SERVER_URL,
         host: ZAP_HOST,
-        port: ZAP_PORT,
-      },
+        port: ZAP_PORT
+      }
     },
     zap_alert: {
       options: {
@@ -1096,40 +1096,40 @@ module.exports = function(grunt) {
           "Content-Type header missing",
           "Private IP disclosure",
           "X-Content-Type-Options header missing",
-          "X-Frame-Options header not set",
-        ],
-      },
+          "X-Frame-Options header not set"
+        ]
+      }
     },
     zap_report: {
       options: {
         dir: "build/reports/zaproxy",
         host: ZAP_HOST,
         port: ZAP_PORT,
-        html: true,
-      },
+        html: true
+      }
     },
     zap_stop: {
       options: {
         host: ZAP_HOST,
-        port: ZAP_PORT,
-      },
+        port: ZAP_PORT
+      }
     },
     zap_results: {
       options: {
-        risks: ["High"],
+        risks: ["High"]
         //risks: ['High', 'Medium', 'Low', 'Informational']
-      },
+      }
     },
 
     versioncheck: {
       options: {
         skip: ["semver", "npm", "lodash"],
-        hideUpToDate: false,
-      },
+        hideUpToDate: false
+      }
     },
 
     checkDependencies: {
-      this: {},
+      this: {}
     },
 
     bump: {
@@ -1139,8 +1139,8 @@ module.exports = function(grunt) {
         prereleaseName: "build",
         commit: false,
         createTag: false,
-        push: false,
-      },
+        push: false
+      }
     },
 
     gitclone: {
@@ -1148,36 +1148,36 @@ module.exports = function(grunt) {
         options: {
           repository:
             "https://github.com/AlbanAndrieu/nabla-bower-nabla-styles.git",
-          directory: "bower_repo",
-        },
-      },
+          directory: "bower_repo"
+        }
+      }
     },
 
     gitadd: {
       dist: {
         options: {
           cwd: "bower_repo",
-          all: true,
-        },
-      },
+          all: true
+        }
+      }
     },
 
     gitcommit: {
       dist: {
         options: {
           cwd: "bower_repo",
-          message: "Release " + TAG_PREFIX + "<%= pkg.version %>",
-        },
-      },
+          message: "Release " + TAG_PREFIX + "<%= pkg.version %>"
+        }
+      }
     },
 
     gittag: {
       dist: {
         options: {
           cwd: "bower_repo",
-          tag: TAG_PREFIX + "<%= pkg.version %>",
-        },
-      },
+          tag: TAG_PREFIX + "<%= pkg.version %>"
+        }
+      }
     },
 
     gitpush: {
@@ -1185,10 +1185,10 @@ module.exports = function(grunt) {
         options: {
           cwd: "bower_repo",
           branch: "master",
-          tags: true,
-        },
-      },
-    },
+          tags: true
+        }
+      }
+    }
   });
 
   grunt.registerTask(
@@ -1218,7 +1218,7 @@ module.exports = function(grunt) {
         //'configureProxies:server',
         "connect:livereload",
         "browserSync",
-        "watch",
+        "watch"
       ]);
     }
   );
@@ -1293,12 +1293,12 @@ module.exports = function(grunt) {
     "perfbudget",
     "resemble",
     //'zap_stop'
-    "zap_results",
+    "zap_results"
   ]);
 
   grunt.registerTask("prepare", [
     //'clean:bower',
-    "bower",
+    "bower"
   ]);
 
   grunt.registerTask("integration-test", ["zap"]);
@@ -1313,14 +1313,14 @@ module.exports = function(grunt) {
         "wiredep:test",
         //'ngconstant:dev',
         "concurrent:test",
-        "postcss",
+        "postcss"
       ]);
     }
 
     grunt.task.run([
       "connect:test",
       //'mocha',
-      "karma",
+      "karma"
     ]);
   });
 
@@ -1341,7 +1341,7 @@ module.exports = function(grunt) {
     "newer:jshint",
     "newer:jscs",
     "build",
-    "test",
+    "test"
   ]);
 
   grunt.registerTask("build", [
@@ -1367,7 +1367,7 @@ module.exports = function(grunt) {
     "critical",
     "htmlmin",
     "replace:dist",
-    "usebanner",
+    "usebanner"
   ]);
 
   grunt.registerTask("docs", ["clean:docs", "ngdocs"]);
@@ -1377,7 +1377,7 @@ module.exports = function(grunt) {
   grunt.registerTask("publish", function(releaseType) {
     grunt.task.run([
       //'bump:' + releaseType,
-      "deploy",
+      "deploy"
     ]);
   });
 
@@ -1389,7 +1389,7 @@ module.exports = function(grunt) {
       "gitadd",
       "gitcommit",
       "gittag",
-      "gitpush",
+      "gitpush"
     ]);
   });
 };

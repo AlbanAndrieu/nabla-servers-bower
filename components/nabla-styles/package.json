@@ -140,7 +140,7 @@
     "karma-ng-scenario": "1.0.0",
     "karma-script-launcher": "1.0.0",
     "karma-tapfile-reporter": "0.0.1",
-    "lint-staged": "10.1.2"
+    "lint-staged": "10.1.2",
     "load-grunt-tasks": "5.1.0",
     "lodash": "4.0.0",
     "nue": "0.7.1",

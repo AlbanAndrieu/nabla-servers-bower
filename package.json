@@ -29,7 +29,7 @@
     "url": "https://github.com/AlbanAndrieu/nabla-servers-bower/issues"
   },
   "pre-commit": [
-    "lint"
+    "lintme"
   ],
   "lint-staged": {
     "*.js": [
