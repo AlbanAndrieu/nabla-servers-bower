@@ -502,8 +502,8 @@ module.exports = function(grunt) {
     grunt.task.run([
       'newer:jshint',
       'newer:jscs',
-      'checkDependencies',
-      'versioncheck'
+      'checkDependencies'
+      //'versioncheck'
     ]);
   });
 

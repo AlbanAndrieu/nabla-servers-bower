@@ -1327,9 +1327,9 @@ module.exports = function(grunt) {
   grunt.registerTask("check", function() {
     grunt.task.run([
       "newer:jshint",
-      "newer:jscs",
+      "newer:jscs"
       //'checkDependencies',
-      "versioncheck",
+      //"versioncheck",
     ]);
   });
 
