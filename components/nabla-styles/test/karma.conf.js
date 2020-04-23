@@ -35,6 +35,7 @@ module.exports = function(config) {
       'karma-firefox-launcher',
       'karma-ie-launcher',
       'karma-junit-reporter',
+      'karma-tapfile-reporter',
       'karma-coverage',
       'karma-jasmine'
     ],
@@ -54,7 +55,7 @@ module.exports = function(config) {
       reporters: [
         // reporters not supporting the `file` property
         { type: 'html', subdir: 'report-html' },
-        { type: 'lcov', subdir: 'report-lcov'},
+        { type: 'lcov', subdir: 'report-lcov' },
         // reporters supporting the `file` property, use `subdir` to directly
         // output them in the `dir` directory
         { type: 'cobertura', subdir: '.', file: 'cobertura.txt' },
@@ -96,10 +97,18 @@ module.exports = function(config) {
     // - Safari (only Mac; has to be installed with `npm install karma-safari-launcher`)
     // - PhantomJS (is dead : https://semaphoreci.com/blog/2018/03/27/phantomjs-is-dead-use-chrome-headless-in-continuous-integration.html)
     // - IE (only Windows; has to be installed with `npm install karma-ie-launcher`)
-    browsers: ['ChromeHeadless'],
+    browsers: ['ChromeHeadlessNoSandbox'],
+    // browsers: ['Chrome', 'ChromeHeadless', 'ChromeHeadlessNoSandbox'],
+    customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox']
+      }
+    },
 
     // If browser does not capture in given timeout [ms], kill it
     captureTimeout: 60000,
+    browserNoActivityTimeout: 30000,
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
