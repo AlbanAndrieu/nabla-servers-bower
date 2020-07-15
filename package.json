@@ -140,7 +140,7 @@
     "karma-tapfile-reporter": "0.0.1",
     "lint-staged": "10.1.2",
     "load-grunt-tasks": "5.1.0",
-    "lodash": "4.17.11",
+    "lodash": "4.17.19",
     "nue": "0.7.1",
     "phantomas": "1.20.1",
     "pixrem": "5.0.0",
