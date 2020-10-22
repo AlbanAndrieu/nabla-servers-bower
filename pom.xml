@@ -177,6 +177,7 @@
 							</arguments>
 						</configuration>
 					</execution>
+					<!--
 					<execution>
 						<id>exec-grunt-publish</id>
 						<phase>deploy</phase>
@@ -190,125 +191,10 @@
 							</arguments>
 						</configuration>
 					</execution>
+					-->
 				</executions>
 			</plugin>
-			<!--
-            <plugin>
-                <groupId>com.github.eirslett</groupId>
-                <artifactId>frontend-maven-plugin</artifactId>
-                <version>${maven.frontend.plugin.version}</version>
-                <executions>
-                    -->
-			<!--install \-\-no-optional
-                    <execution>
-                        <id>install node and npm</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>install-node-and-npm</goal>
-                        </goals>
-                    </execution>
 
-                    <execution>
-                        <id>npm install</id>
-                        <phase>process-sources</phase>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>install</arguments>
-                        </configuration>
-                    </execution>
-                    -->
-			<!--
-                    <execution>
-                        <id>install node and yarn</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>install-node-and-yarn</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>yarn install</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>yarn</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>install</arguments>
-                        </configuration>
-                    </execution>
-                    -->
-			<!--
-                    <execution>
-                        <id>grunt check</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>grunt</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>check</arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>grunt default</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>grunt</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>default</arguments>
-                        </configuration>
-                    </execution>
-                    -->
-			<!--release:prepare
-                    release:update-versions-->
-			<!--
-                    <execution>
-                        <id>grunt bump</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>grunt</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>bump</arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>grunt publish</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>grunt</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>publish</arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-                <configuration>
-                    <nodeVersion>v${node.version}</nodeVersion>
-                    <yarnVersion>v${yarn.version}</yarnVersion>
-                </configuration>
-            </plugin>
-            -->
-			<!--
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>clean-bower</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>./clean.sh</executable>
-                            <workingDirectory>${basedir}</workingDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
