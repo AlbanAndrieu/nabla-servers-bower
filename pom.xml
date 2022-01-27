@@ -5,9 +5,11 @@
 	<!-- @version $Revision: $ $Date: $ $Author: $ $State: $ -->
 	<!-- @formatter:off -->
 	<parent>
-		<groupId>com.nabla.project.servers.sample</groupId>
+		<groupId>com.nabla.project.sample</groupId>
 		<artifactId>sample</artifactId>
 		<version>1.0.1-SNAPSHOT</version>
+		<relativePath></relativePath>
+		<!-- lookup parent from repository -->
 	</parent>
 	<artifactId>bower-pom</artifactId>
 	<version>1.0.3-SNAPSHOT</version>

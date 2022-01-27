@@ -6,25 +6,25 @@ WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 # shellcheck source=/dev/null
 source "${WORKING_DIR}/scripts/step-0-color.sh"
 
-#sudo apt install phantomjs
-#./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.37
-#npm install -g bower@1.8.4 grunt@1.0.3 grunt-cli@1.2.0 nsp@2.6.1 webdriver-manager@12.1.0
+echo -e "${magenta} ./node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update --versions.chrome 97.0.4692.71 ${NC}"
+echo -e "${magenta} npm install -g bower@1.8.13 grunt-cli@1.4.3 webdriver-manager@12.1.8 ${NC}"
 #npm run update-webdriver
-#webdriver-manager update --chrome --versions.chrome=2.37
+#webdriver-manager update --chrome --versions.chrome=97.0.4692.71
 
 echo -e "${magenta} grunt serve:dist --debug ${NC}"
 
 rm -f package-lock.json || true
 ./clean.sh
 
+echo -e "${green} ./mvnw install -Dserver=jetty9x ${NC}"
 ./mvnw install -Dserver=jetty9x
 
 echo -e "${green} ./mvnw clean install org.codehaus.cargo:cargo-maven2-plugin:run -Dserver=jetty9x ${NC}"
 
-npm list  > list.log
+npm list > list.log || true
 
 #sudo npm install -g npm-license
-npm-license || true
+echo -e "${magenta} npm-license ${NC}"
 
 #docker-compose -f docker-compose.yml -p TEST ps
 
