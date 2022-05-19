@@ -17,9 +17,10 @@ rm -f package-lock.json || true
 ./clean.sh
 
 echo -e "${green} ./mvnw install -Dserver=jetty9x ${NC}"
-./mvnw install -Dserver=jetty9x
+echo -e "${green} ./mvnw install ${NC}"
+./mvnw install
 
-echo -e "${green} ./mvnw clean install org.codehaus.cargo:cargo-maven2-plugin:run -Dserver=jetty9x ${NC}"
+echo -e "${green} ./mvnw clean install org.codehaus.cargo:cargo-maven2-plugin:run ${NC}"
 
 npm list > list.log || true
 
