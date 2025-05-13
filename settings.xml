@@ -189,12 +189,18 @@ under the License.
       <mirrorOf>*</mirrorOf>
       <url>http://192.168.1.57:8081/repository/maven-public/</url>
     </mirror>
-    -->
     <mirror>
       <id>nexus</id>
       <mirrorOf>*</mirrorOf>
-      <url>http://albandrieu.com:8081/repository/maven-public/</url>
-    </mirror>
+      <url>https://nexus.albandrieu.com/repository/maven-public/</url>
+    </mirror>    
+    -->
+    
+    <mirror>
+      <id>nexus</id>
+      <mirrorOf>*</mirrorOf>
+      <url>https://nexus.albandrieu.com/nexus/content/groups/public/</url>
+    </mirror>    
   </mirrors>
 
   <!-- profiles
@@ -330,7 +336,7 @@ under the License.
         <repository>
             <id>nexus-releases</id>
             <name>Nexus Staging Repository</name>
-            <url>http://albandrieu.com:8081/repository/maven-releases/</url>
+            <url>https://nexus.albandrieu.com/nexus/content/repositories/releases</url>
             <layout>default</layout>
             <snapshots>
                 <enabled>false</enabled>
@@ -342,7 +348,7 @@ under the License.
         <repository>
             <id>nexus-snapshots</id>
             <name>Nexus Snapshot Repository</name>
-            <url>http://albandrieu.com:8081/repository/maven-snapshots/</url>
+            <url>https://nexus.albandrieu.com/nexus/content/repositories/snapshots</url>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>daily</updatePolicy>
